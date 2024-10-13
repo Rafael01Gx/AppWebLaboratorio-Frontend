@@ -1,0 +1,59 @@
+/src
+  ├── /app
+  │     ├── /core
+  │     │     ├── /services
+  │     │     ├── /guards
+  │     │     └── /interceptors
+  │     ├── /shared
+  │     │     ├── /components
+  │     │     ├── /directives
+  │     │     ├── /pipes
+  │     │     └── /models
+  │     ├── /features
+  │     │     ├── /feature1
+  │     │     │     ├── /components
+  │     │     │     ├── /services
+  │     │     │     └── /models
+  │     │     ├── /feature2
+  │     │     │     ├── /components
+  │     │     │     ├── /services
+  │     │     │     └── /models
+  │     ├── /pages
+  │     │     ├── /home
+  │     │     │     ├── /components
+  │     │     │     └── /services
+  │     │     ├── /about
+  │     │     │     ├── /components
+  │     │     │     └── /services
+  │     ├── /layouts
+  │     │     ├── /header
+  │     │     └── /footer
+  │     └── /
+  │           ├── /
+  │           └── /
+  ├── /environments
+  │     ├── environment.ts
+  │     └── environment.development.ts
+  ├── /scss
+  │     ├── /base
+  │     ├── /layout
+  │     ├── /theme
+  │     ├── /components
+  │     └── _index.scss
+  ├── main.ts
+  ├── index.html
+  └── styles.scss
+  
+
+-------------------------------------------------------------------------------------
+
+Descrição das Pastas:
+core: Contém serviços, guards e interceptors que são usados em toda a aplicação.
+shared: Componentes, diretivas, pipes e modelos reutilizáveis.
+features: Módulos específicos de funcionalidades, cada um com suas próprias pastas de componentes, serviços e modelos.
+pages: Componentes de página, organizados por funcionalidades ou seções da aplicação.
+layouts: Componentes de layout como cabeçalho e rodapé.
+assets: Arquivos estáticos como imagens e estilos globais.
+environments: Arquivos de configuração para diferentes ambientes (desenvolvimento, produção, etc.).
+styles: Arquivos de estilos globais.
+Espero que isso ajude a visualizar melhor a hierarquia das pastas! Se precisar de mais alguma coisa, estou à disposição.
