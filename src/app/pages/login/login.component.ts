@@ -31,6 +31,7 @@ export class LoginComponent {
 
   matError = signal('')
   matError2 = signal('')
+ 
 
   public loginForm = new FormGroup({
     email: new FormControl('',[Validators.required ,emailValidator()]),

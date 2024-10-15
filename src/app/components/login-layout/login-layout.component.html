@@ -10,13 +10,15 @@
     <ng-content></ng-content>
 
     <div class="btn-div">
-      <button (click)="submit()" mat-raised-button>{{ primaryBtnText }}</button>
+      <button class="primary-btn" (click)="submit()" mat-flat-button [disabled]="disablePrimaryBtn">{{ primaryBtnText }}</button>
       <div class="divisor">
         <div></div>
         <span> ou </span>
         <div></div>
       </div>
-      <button (click)="navigate()" mat-flat-button>{{ secondaryBtnText }}</button>
+      <button (click)="navigate()" mat-raised-button>
+        {{ secondaryBtnText }}
+      </button>
     </div>
   </section>
   <section class="main-section">

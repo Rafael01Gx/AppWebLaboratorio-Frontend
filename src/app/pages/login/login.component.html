@@ -1,4 +1,4 @@
-<app-login-layout title="Login" primaryBtnText="Entrar" secondaryBtnText="Solicitar acesso" (submit)="submit()" (navigate)="navigate()" >
+<app-login-layout title="Login" primaryBtnText="Entrar" secondaryBtnText="Solicitar acesso" (submit)="submit()" (navigate)="navigate()" [disablePrimaryBtn]="!loginForm.valid">
 
     
     <form [formGroup]="loginForm">
