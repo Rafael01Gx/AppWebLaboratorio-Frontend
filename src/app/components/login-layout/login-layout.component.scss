@@ -40,7 +40,7 @@
         justify-content: center;
         width: 100%;
 
-        gap: 25px;
+        gap: 15px;
 
         .divisor {
           display: flex;
@@ -71,6 +71,9 @@
           &:disabled{
             opacity: 0.8;
           }
+        }
+        a{
+            text-align: center;
         }
       }
     }

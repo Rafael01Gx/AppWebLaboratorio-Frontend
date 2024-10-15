@@ -11,14 +11,16 @@
 
     <div class="btn-div">
       <button class="primary-btn" (click)="submit()" mat-flat-button [disabled]="disablePrimaryBtn">{{ primaryBtnText }}</button>
-      <div class="divisor">
+      @if(title == "Login"){      
+        <div  class="divisor">
         <div></div>
         <span> ou </span>
         <div></div>
-      </div>
-      <button (click)="navigate()" mat-raised-button>
+      </div>}
+      <button [hidden]="title== 'Sigin'" (click)="navigate()" mat-raised-button>
         {{ secondaryBtnText }}
       </button>
+      <span [hidden]="title != 'Sigin'"> Já tem uma conta? <a [routerLink]="['/login']" >Entrar</a></span>
     </div>
   </section>
   <section class="main-section">

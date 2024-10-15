@@ -2,21 +2,24 @@
 
     
     <form [formGroup]="loginForm">
+        <span [hidden]="!errorMessage().length">{{errorMessage()}}</span>
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email" placeholder="Ex. pat@exemplo.com">
             @if (loginForm.get('email')?.errors) {
                 <mat-error>{{matError()}}</mat-error>
-              }
-          </mat-form-field>  
-          
-          <mat-form-field>
+            }
+        </mat-form-field>  
+        
+        <mat-form-field>
             <mat-label>Senha</mat-label>
             <input type="password" matInput formControlName="password" placeholder="********">
             @if (loginForm.get('password')?.errors) {
                 <mat-error>{{matError2()}}</mat-error>
-              }
+            }
           </mat-form-field> 
+
+
     </form>
 
 </app-login-layout>

@@ -1,10 +1,11 @@
 import { MatButtonModule } from '@angular/material/button';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-layout',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatButtonModule,RouterLink],
   templateUrl: './login-layout.component.html',
   styleUrl: './login-layout.component.scss'
 })
