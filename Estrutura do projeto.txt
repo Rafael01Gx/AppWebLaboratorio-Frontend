@@ -8,6 +8,7 @@
   │     │     ├── /components
   │     │     ├── /directives
   │     │     ├── /pipes
+  │     │     ├── /interfaces
   │     │     └── /models
   │     ├── /features
   │     │     ├── /feature1
@@ -57,3 +58,7 @@ assets: Arquivos estáticos como imagens e estilos globais.
 environments: Arquivos de configuração para diferentes ambientes (desenvolvimento, produção, etc.).
 styles: Arquivos de estilos globais.
 Espero que isso ajude a visualizar melhor a hierarquia das pastas! Se precisar de mais alguma coisa, estou à disposição.
+
+
+
+

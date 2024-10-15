@@ -1,12 +1,25 @@
 <main>
-  <section>
-    <img src="/img/logo_SFND.png" alt="">
-    <h2></h2>
-    <button></button>
-    <div><span> ou </span></div>
-    <button></button>
+  <section class="form-section">
+    <img
+      src="/img/logo_SFND.png"
+      alt="Logotipo Laboratório Físico AMM"
+      width="250px"
+    />
+    <h2>{{ title }}</h2>
+
+    <ng-content></ng-content>
+
+    <div class="btn-div">
+      <button (click)="submit()" mat-raised-button>{{ primaryBtnText }}</button>
+      <div class="divisor">
+        <div></div>
+        <span> ou </span>
+        <div></div>
+      </div>
+      <button (click)="navigate()" mat-flat-button>{{ secondaryBtnText }}</button>
+    </div>
   </section>
-  <section>
+  <section class="main-section">
     <h1>Aplicaçao LBF</h1>
     <img src="" alt="" />
   </section>
