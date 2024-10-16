@@ -1,0 +1,25 @@
+:host{
+    header{
+        i{
+            color: var(--gray-800);
+        }
+        .logout{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover{
+                cursor: pointer;
+                box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+            border-radius: 2px;
+            }
+
+           i{
+  
+           }
+        }
+
+    }
+
+}

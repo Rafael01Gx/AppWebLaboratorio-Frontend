@@ -1,0 +1,19 @@
+
+<nav [class.retracted]="!showText">
+   <i  (click)="toggleText()"  class="material-icons expand">arrow_right</i>
+   <div class="container" >
+      
+      <ul>
+    @for (item of menu; track item) {
+      <li>
+         <a [routerLink]="[item.link]" routerLinkActive="router-link-active" >
+            <i class="material-icons">{{item.ico}}</i>
+            <p *ngIf="showText">{{item.name}}</p>
+         </a>
+
+      </li>
+    }
+   </ul>
+   </div>
+   
+</nav>

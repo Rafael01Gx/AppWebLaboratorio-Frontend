@@ -7,9 +7,14 @@
     --orange-red: oklch(63.32% 0.24 31.68);
 
     --gray-900: oklch(19.37% 0.006 300.98);
+    --gray-800: oklch(28.17% 0.010 301.43);
     --gray-700: oklch(36.98% 0.014 302.71);
     --gray-400: oklch(70.9% 0.015 304.04);
     --gray-100: #EEEEEE;
+
+    --red-10:#c02a00;
+
+    --ligth-white-gradient: linear-gradient(to top,rgb(225, 225, 225),white);
 
     --red-to-pink-to-purple-vertical-gradient: linear-gradient(
       180deg,
@@ -24,6 +29,7 @@
       var(--vivid-pink) 50%,
       var(--electric-violet) 100%
     );
+
 
     --pill-accent: var(--bright-blue);
 }
