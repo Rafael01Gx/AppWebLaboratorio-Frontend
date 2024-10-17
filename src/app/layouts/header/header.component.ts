@@ -16,6 +16,7 @@ export class HeaderComponent {
 
   logout() {
     sessionStorage.removeItem('auth-token');
-    this.#router.navigate(['']);
+    
+    this.#router.navigate(['/login']);
   }
 }

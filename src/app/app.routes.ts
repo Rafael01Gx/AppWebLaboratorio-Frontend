@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './core/services/auth-guard/auth-guard.service';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
    {
@@ -17,5 +18,10 @@ export const routes: Routes = [
    {
       path: 'criarconta',
       component: SignupComponent
+     }
+     ,
+   {
+      path: 'dashboard',
+      component: DashboardComponent
      }
 ];

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { LoginResponse } from '../../../shared/models/LoginResponse.type';
+
 import { tap } from 'rxjs';
+import { LoginResponse } from '../../../shared/models/loginResponse.type';
 
 @Injectable({
   providedIn: 'root'

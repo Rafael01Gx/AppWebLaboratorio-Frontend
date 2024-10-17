@@ -16,7 +16,7 @@ export class SidenavComponent {
     {
       ico: 'dashboard',
       name: 'Dashboard',
-      link: '',
+      link: '/dashboard',
     },
     {
       ico: 'edit_square',

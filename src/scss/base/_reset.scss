@@ -1,26 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-overflow: hidden;
+  overflow: hidden;
 }
 body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  display: block;
-  position: relative;
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row: auto auto;
+}
+main{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 5px;
+
+  .sidenav-container{
+
+  }
+  .main-container{
+    flex-grow: 1;
+    margin-top: 3px;
+    padding: 15px;
+  }
   
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 .w-100 {
   width: 100%;

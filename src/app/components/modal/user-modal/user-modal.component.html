@@ -1,0 +1,45 @@
+<div class="user-modal">
+    <h1 mat-dialog-title>Editar Usuário</h1>
+
+    <div class="form-container">
+
+        <div mat-dialog-content style="width: 100%;">
+
+            <mat-form-field  style="width: 100%;">
+              <mat-label>Nome</mat-label>
+              <input matInput [(ngModel)]="data.name" readonly>
+            </mat-form-field>
+          
+            <mat-form-field  style="width: 100%;">
+              <mat-label>Email</mat-label>
+              <input matInput [(ngModel)]="data.email" readonly>
+            </mat-form-field>
+          
+            
+            
+            <mat-form-field  style="width: 100%;">
+                <mat-label>Nível</mat-label>
+                <mat-select [(value)]="data.level">
+                    @for (item of options; track item) {
+                        <mat-option [value]="item">{{item}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <div class="check-box">
+                <p>Autorizado?</p>
+                <mat-checkbox [(ngModel)]="data.authorization" class="example-margin"> @if (data.authorization) {Sim}@else {Não}</mat-checkbox>
+            </div>
+          
+
+          </div>
+    </div>
+
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button [mat-dialog-close]="data">Salvar</button>
+    </div>
+    
+
+</div>
