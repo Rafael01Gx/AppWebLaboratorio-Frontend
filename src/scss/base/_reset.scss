@@ -11,13 +11,13 @@ body {
   padding: 0;
   height: 100%;
   overflow: hidden;
+  
 }
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row: auto auto;
+  //display: grid;
+//  grid-template-columns: 100%;
+ // grid-row: auto auto;
 }
 main{
   width: 100%;
@@ -35,7 +35,9 @@ main{
   }
   
 }
-
+.m-hover:hover{
+  cursor: pointer;
+ }
 
 
 .w-100 {
@@ -43,4 +45,13 @@ main{
 }
 a {
   text-decoration: none;
+}
+.red-10{
+  color: var(--red-10);
+}
+.red{
+  color: red;
+}
+.green{
+  color: green;
 }

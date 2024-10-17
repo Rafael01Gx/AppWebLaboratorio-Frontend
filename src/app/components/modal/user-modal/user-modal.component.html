@@ -4,6 +4,7 @@
     <div class="form-container">
 
         <div mat-dialog-content style="width: 100%;">
+       <input type="hidden" name="id" [(ngModel)]="data._id" #id>
 
             <mat-form-field  style="width: 100%;">
               <mat-label>Nome</mat-label>
@@ -19,7 +20,7 @@
             
             <mat-form-field  style="width: 100%;">
                 <mat-label>Nível</mat-label>
-                <mat-select [(value)]="data.level">
+                <mat-select [(value)]="data.level" #level>
                     @for (item of options; track item) {
                         <mat-option [value]="item">{{item}}</mat-option>
                     }
@@ -28,7 +29,7 @@
 
             <div class="check-box">
                 <p>Autorizado?</p>
-                <mat-checkbox [(ngModel)]="data.authorization" class="example-margin"> @if (data.authorization) {Sim}@else {Não}</mat-checkbox>
+                <mat-checkbox [(ngModel)]="data.authorization" #authorization class="example-margin"> @if (data.authorization) {Sim}@else {Não}</mat-checkbox>
             </div>
           
 
@@ -38,7 +39,7 @@
 
     <div mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancelar</button>
-      <button mat-button [mat-dialog-close]="data">Salvar</button>
+      <button mat-button [mat-dialog-close]="data" (click)="httpUpdateUserAdm(data._id!, data.authorization!, data.level!)">Salvar</button>
     </div>
     
 
