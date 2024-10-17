@@ -4,6 +4,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './core/services/auth-guard/auth-guard.service';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { OsPageComponent } from './pages/os-page/os-page.component';
 
 export const routes: Routes = [
    {
@@ -23,5 +24,9 @@ export const routes: Routes = [
    {
       path: 'dashboard',
       component: DashboardComponent
+     },
+     {
+      path: 'ordensdeservico',
+      component: OsPageComponent
      }
 ];

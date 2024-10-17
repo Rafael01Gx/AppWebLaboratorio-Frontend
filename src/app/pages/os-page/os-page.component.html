@@ -1,0 +1,30 @@
+<app-header [pageIco]="pageIco" [pageTitle]="pageTitle"></app-header>
+<main>
+    <div class="sidenav-container">
+        <app-sidenav></app-sidenav>
+    </div>
+    <div class="main-container">
+        <app-main>
+        <!-- ngContent-->
+
+        <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z3 w-100 h-100">
+            <mat-tab label="Nova" > 
+                <app-nova-os />
+            </mat-tab>
+            <!--Tab 2-->
+            <mat-tab label="Pendentes">            
+                <app-os-pendentes/>            
+            </mat-tab>
+            <!--Tab 3-->
+            <mat-tab label="Finalizadas">
+
+                <app-os-finalizadas/>
+                
+            </mat-tab>
+          </mat-tab-group>
+
+        <!-- ngContent-->
+        </app-main> 
+    </div>
+  
+</main>

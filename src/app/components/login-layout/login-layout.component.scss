@@ -65,12 +65,21 @@
           font-size: 16px;
           font-weight: 500;
           &.primary-btn{
+            border: 1px solid var(--red-10);
             background: var(--red-to-pink-to-purple-horizontal-gradient);
             color: whitesmoke;
+            &:hover{
+            background: linear-gradient(
+              45deg,
+              var(--orange-red) 0%,
+              var(--vivid-pink) 40%,
+              var(--electric-violet) 100%
+            );
+          }
+            }
           }
           &:disabled{
             opacity: 0.8;
-          }
         }
         a{
             text-align: center;

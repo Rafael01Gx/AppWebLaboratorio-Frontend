@@ -1,0 +1,22 @@
+<div class="form-container h-100 w-100">
+    <form [formGroup]="ordemDeServicoForm">
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@exemplo.com">
+            @if (false) {
+                <mat-error></mat-error>
+            }
+        </mat-form-field>  
+        
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="********">
+            @if (false) {
+                <mat-error></mat-error>
+            }
+          </mat-form-field> 
+    
+    
+    </form>
+</div>

@@ -19,9 +19,9 @@ export class SidenavComponent {
       link: '/dashboard',
     },
     {
-      ico: 'edit_square',
-      name: 'Novo',
-      link: '',
+      ico: 'description',
+      name: 'OS',
+      link: '/ordensdeservico',
     },
 
     {
