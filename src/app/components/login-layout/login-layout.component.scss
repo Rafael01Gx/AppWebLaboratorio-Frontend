@@ -16,13 +16,30 @@
     }
     .main-section {
       gap: 8px;
-
       flex-grow: 1;
+      background-image: url('/img/backgroundLBF.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      box-shadow: var(--vivid-pink) 1px 1.95px 2.6px  ;
+           
+      
+      filter:  opacity(.8) blur(8px) grayscale(1);
+      transition: filter 0.3s ease-in-out;
+      &:hover{
+        filter:  opacity(.8) blur(5px) grayscale(0.6);
+
+      }
     }
     .form-section {
       flex-grow: 0.1;
       padding: 0 35px;
-      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+      box-shadow: var(--vivid-pink) 1px 5px 30px  ;
+      transition: box-shadow 0.3s ease-in-out;
+      &:hover{
+        box-shadow: var(--electric-violet) 2px 10px 15px  ;
+        
+      }
 
       img {
         margin-bottom: 35px;
@@ -65,6 +82,7 @@
           font-size: 16px;
           font-weight: 500;
           &.primary-btn{
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
             border: 1px solid var(--red-10);
             background: var(--red-to-pink-to-purple-horizontal-gradient);
             color: whitesmoke;
