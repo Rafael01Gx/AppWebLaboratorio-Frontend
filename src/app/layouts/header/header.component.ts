@@ -12,6 +12,8 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  hidden = false;
+
   #router = inject(Router);
 
   @Input() pageIco: string = '';

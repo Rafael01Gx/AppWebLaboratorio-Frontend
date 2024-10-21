@@ -1,4 +1,5 @@
 <div class="form-container h-100 w-100">
+
   <mat-card class="user-info">
     <form [formGroup]="profileForm">
       <input type="hidden" formControlName="id" />
@@ -24,77 +25,109 @@
   </mat-card>
   <div class="divisor">
     <div></div>
-    <span> Amostras </span>
+    <span> Solicitação de ensaios</span>
     <div></div>
   </div>
   <!------------------------------------------------------>
 
   <mat-card class="formulario">
-    <form class="tabela-header">
-    <div class="tabela-header-row1" >
-      <mat-form-field>
-        <mat-label>Identificaçao</mat-label>
-        <input type="text" matInput formControlName="nome_amostra" />
-      </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Data da amostra</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="data_amostra">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
-      <mat-form-field>
-        <mat-label>Ensaios</mat-label>
-        <mat-select [formControl]="toppings" multiple>
-          @for (topping of toppingList; track topping) {
-          <mat-option [value]="topping">{{ topping }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    </form>
-    
-    <div class="tablela">
-       
+    <form [formGroup]="amostraForm" class="tabela-header">
+      <div class="tabela-header-row1">
+        <mat-form-field>
+          <mat-label>Identificaçao</mat-label>
+          <input type="text" matInput formControlName="nome_amostra" />
+        </mat-form-field>
 
-            <table mat-table [dataSource]="dataSource">
-          
-              <!-- Position Column -->
-              <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-              </ng-container>
-          
-              <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-              </ng-container>
-          
-              <!-- Weight Column -->
-              <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef> Weight </th>
-                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-              </ng-container>
-          
-              <!-- Symbol Column -->
-              <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-              </ng-container>
-          
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-          
-            <mat-paginator [pageSizeOptions]="[5]"
-                           showFirstLastButtons
-                           aria-label="Selecione as amostras">
-            </mat-paginator>
-          
-          
+        <mat-form-field>
+          <mat-label>Data da amostra</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="data_amostra"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       </div>
+      <div class="tabela-header-row2">
+        <mat-form-field>
+          <mat-label>Ensaios</mat-label>
+          <mat-select
+            multiple
+            formControlName="ensaios_solicitados"
+          >
+            @for (ensaios of listaDeEnsaios; track ensaios) {
+            <mat-option [value]="ensaios">{{ ensaios }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <button mat-fab (click)="addAmostra()" [disabled]="!amostraForm.valid">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </form>
 
+    <div class="tablela">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef>Num.</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.num || element.num }}
+          </td>
+        </ng-container>
 
+        <!-- Name Column -->
+        <ng-container matColumnDef="nome_amostra">
+          <th mat-header-cell *matHeaderCellDef>Identificaçao</th>
+          <td mat-cell *matCellDef="let element">{{ element.nome_amostra }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="data_amostra">
+          <th mat-header-cell *matHeaderCellDef>Data</th>
+          <td mat-cell *matCellDef="let element">{{ element.data_amostra }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="ensaios_solicitados">
+          <th mat-header-cell *matHeaderCellDef>Ensaios</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ensaios_solicitados }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5]"
+        showFirstLastButtons
+        aria-label="Selecione as amostras"
+      >
+      </mat-paginator>
+    </div>
+    
+  </mat-card>
+
+  <mat-card class="formulario-footer">
+  
+    <form [formGroup]="obsForm">
+    <mat-form-field>
+      <mat-label>Observação:</mat-label>
+      <textarea formControlName="observacao"
+        matInput
+        placeholder="Ex. Informações sobre envio ou coleta..."
+      ></textarea>
+    </mat-form-field>
+    <div class="form-action">
+      <button (click)="enviarOs()" mat-raised-button>Enviar OS</button>
+    </div>
+  </form>
   </mat-card>
 </div>

@@ -17,7 +17,7 @@ import {
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { IAmostrasCollection } from '../../shared/interfaces/amostra';
+import { IAmostra, IAmostrasCollection } from '../../shared/interfaces/amostra';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -25,37 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
-
+import { MatIcon } from '@angular/material/icon';
+import { OrdemDeServicoService } from '../../core/services/ordem-de-servico/ordem-de-servico.service';
 
 @Component({
   selector: 'app-nova-os',
@@ -73,8 +44,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatPaginatorModule,
     MatSelectModule,
     NgxMaskDirective,
-    NgxMaskPipe,
-
+    NgxMaskPipe,MatIcon,
     MatSortModule,
     MatDatepickerModule
   ],
@@ -82,12 +52,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './nova-os.component.scss',
 })
 export class NovaOsComponent implements AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   #userService = inject(UserService);
+  #ordemDeServicoService = inject(OrdemDeServicoService);
   #toastr = inject(ToastrService);
   #user = signal<IUserData>({});
 
-  toppings = new FormControl('');
-  toppingList: string[] = [
+  ensaios = new FormControl('');
+  listaDeEnsaios: string[] = [
     'Granulometria',
     'RDI',
     'Redutibilidade',
@@ -99,24 +72,19 @@ export class NovaOsComponent implements AfterViewInit {
   ];
 
   amostras: IAmostrasCollection = {
-    1: {
-      nome_amostra: 'Bjorn',
-      data_amostra: '24/02/2024',
-      ensaios_solicitados: 'RDI, IMEDIATA,PPC',
-    },
-    2: {
-      nome_amostra: 'Bjorn2',
-      data_amostra: '24/02/2024',
-      ensaios_solicitados: 'RDI, IMEDIATA,PPC',
-    },
-    3: {
-      nome_amostra: 'Bjorn3',
-      data_amostra: '24/02/2024',
-      ensaios_solicitados: 'RDI, IMEDIATA,PPC',
-    },
   };
+  public amostraForm = new FormGroup({
+    nome_amostra: new FormControl('', Validators.required),
+    data_amostra: new FormControl('', Validators.required),
+    ensaios_solicitados: new FormControl([], Validators.required)
+  });
 
-  public profileForm = new FormGroup({
+  public obsForm = new FormGroup({
+    observacao: new FormControl('')
+
+});
+
+public profileForm = new FormGroup({
     id: new FormControl(''),
     name: new FormControl(''),
     email: new FormControl(''),
@@ -140,19 +108,46 @@ export class NovaOsComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
   
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = [ 'num','nome_amostra', 'data_amostra', 'ensaios_solicitados'];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dataSource = new MatTableDataSource<IAmostra>(
+    Object.entries(this.amostras).map(([num, amostra]) => ({ num: num, ...amostra }))
+  );
 
 
-  /* public  atualizar() {
-    this.#userService.httpUpdateUserById(this.profileForm.value.id!,this.profileForm.value.name!,this.profileForm.value.email!,this.profileForm.value.phone!,this.profileForm.value.password!,this.profileForm.value.confirmpassword!).subscribe({
+  addAmostra() {
+    const dataAmostra = new Date(this.amostraForm.value.data_amostra!);
+    const formattedDate = dataAmostra.toLocaleDateString('pt-BR');  
+    const newAmostra: IAmostra = {
+      nome_amostra: this.amostraForm.value.nome_amostra!,
+      data_amostra: formattedDate,
+      ensaios_solicitados: this.amostraForm.value.ensaios_solicitados!.join(', '), 
+    };
+
+    const newId = Object.keys(this.amostras).length + 1;
+
+    this.amostras[newId] = newAmostra;
+
+    this.dataSource.data = Object.entries(this.amostras).map(([num, amostra]) => ({ num: num, ...amostra }));
+
+    this.amostraForm.reset();
+    console.log(this.amostras)
+  }
+  
+  
+
+   public  enviarOs() {
+   if(Object.keys(this.amostras).length > 0){
+    this.#ordemDeServicoService.httpCriarOrdemDeServico(this.amostras,this.obsForm.value.observacao!).subscribe({
       next: () => {
-        this.#toastr.success("Usuário atualizado!");
+        this.#toastr.success("Ordem de serviço criada com sucesso!");
       },
       error: (err) => this.#toastr.error(err.error.message),
     });
-  }*/
+   }else{
+    this.#toastr.info("Ordem de serviço não contém 'amostras'!")
+   }
+  }
 }

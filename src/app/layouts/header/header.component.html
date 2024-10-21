@@ -10,7 +10,7 @@
         <span>Olá, {{name}}!</span>    
         <mat-icon [routerLink]="['/']" >home</mat-icon>
         <mat-icon [routerLink]="['/perfil']" >person</mat-icon>
-        <mat-icon matBadge="!" class="ico-message">notifications</mat-icon>
+        <mat-icon matBadge="!" [matBadgeHidden]="hidden" aria-hidden="false" class="ico-message">notifications</mat-icon>
     </div>
     <div (click)="logout()" class="logout" ><i  class="material-icons">logout</i></div>
 </header>
