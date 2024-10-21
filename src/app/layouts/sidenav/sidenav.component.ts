@@ -15,7 +15,7 @@ export class SidenavComponent {
   menu = [
     {
       ico: 'description',
-      name: 'OS',
+      name: 'Minhas OS',
       link: '/ordensdeservico',
     },
 
@@ -32,7 +32,7 @@ export class SidenavComponent {
     {
       ico: 'settings',
       name: 'Configurações',
-      link: '',
+      link: '/configuracoes',
     },
   ];
 

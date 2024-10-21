@@ -6,6 +6,7 @@ import { AuthGuard } from './core/services/auth-guard/auth-guard.service';
 import { DashboardComponent } from './pages/manage-accounts/manage-accounts.component';
 import { OsPageComponent } from './pages/os-page/os-page.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.component';
 
 export const routes: Routes = [
    {
@@ -33,5 +34,9 @@ export const routes: Routes = [
      {
       path: 'perfil',
       component: UserProfileComponent
+     },
+     {
+      path: 'configuracoes',
+      component: ConfiguracoesComponent
      }
 ];

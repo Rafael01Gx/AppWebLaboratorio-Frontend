@@ -11,6 +11,7 @@ import { IAmostra } from '../../../shared/interfaces/amostra';
 export class OrdemDeServicoService {
   #http = inject(HttpClient);
   #criarOsUrl = signal(`${environment.api_url}/ordemdeservico/criar`);
+  #listarOsByUserIdUrl = signal(`${environment.api_url}/ordemdeservico/listar`);
 
   
 
@@ -27,6 +28,22 @@ export class OrdemDeServicoService {
       })
     );   
   }
+
+  
+  //Criar OS
+  #setListarOrdemDeServicoByUserId = signal<IOrdemDeServicoResponse| null>(null);
+  public getListarOrdemDeServicoByUserId = this.#setOrdemDeServico.asReadonly();
+
+  public httpListarOrdemDeServicoByUserId(): Observable<IOrdemDeServicoResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.get<IOrdemDeServicoResponse>(`${this.#listarOsByUserIdUrl()}`,{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setListarOrdemDeServicoByUserId.set(res);
+      })
+    );   
+  }
+
 
   constructor() {}
 }
