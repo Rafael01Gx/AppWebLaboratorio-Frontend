@@ -1,4 +1,4 @@
-import { IUserData } from './../../shared/interfaces/user';
+import { IUserData } from '../../shared/interfaces/user';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
@@ -26,14 +26,13 @@ import { DeletModalComponent } from '../../components/modal/delete-modal/delete-
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    JsonPipe
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: './manage-accounts.component.html',
+  styleUrls: ['./manage-accounts.component.scss'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-  pageIco = 'dashboard'; // Materials icons name
-  pageTitle = 'Dashboard';
+  pageIco = 'manage_accounts'; // Materials icons name
+  pageTitle = 'Gerenciar contas';
   #userService = inject(UserService);
   listUsers: IUserData[] = [];
   displayedColumns: string[] = ['name', 'email', 'phone', 'authorization', 'level','Excluir'];

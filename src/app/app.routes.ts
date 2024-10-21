@@ -3,14 +3,15 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './core/services/auth-guard/auth-guard.service';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardComponent } from './pages/manage-accounts/manage-accounts.component';
 import { OsPageComponent } from './pages/os-page/os-page.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
    {
       path: '',
       component: HomeComponent,
-      canActivate:[AuthGuard],
+      canActivate:[AuthGuard]
      },
    {
     path: 'login',
@@ -22,11 +23,15 @@ export const routes: Routes = [
      }
      ,
    {
-      path: 'dashboard',
+      path: 'gerenciar-contas',
       component: DashboardComponent
      },
      {
       path: 'ordensdeservico',
       component: OsPageComponent
+     },
+     {
+      path: 'perfil',
+      component: UserProfileComponent
      }
 ];

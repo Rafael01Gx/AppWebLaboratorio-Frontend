@@ -1,0 +1,97 @@
+<app-header [pageIco]="pageIco" [pageTitle]="pageTitle"></app-header>
+<main>
+  <div class="sidenav-container">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="main-container">
+    <app-main>
+      <!-- ngContent-->
+       <mat-card>
+           <h2>Editar perfil:</h2>
+
+        <form [formGroup]="profileForm">
+            <input type="hidden" formControlName="id">
+            <mat-form-field>
+              <mat-label>Nome</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="name"
+                placeholder="Digite seu nome Ex. Ana"
+              />
+              @if (profileForm.get('name')?.errors) {
+              <mat-error>O nome é obrigatório!</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                formControlName="email"
+                placeholder="Ex. ana@exemplo.com"
+              />
+              @if (!profileForm.get('email')?.errors) {
+              <mat-error>E-mail inválido!</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contato</mat-label>
+                <input
+                  type="tel"
+                  matInput
+                  formControlName="phone"
+                  placeholder="(xx) - x xxxx-xxxx" 
+                  mask="(00) 0 0000-0000"
+                />
+              </mat-form-field>
+
+            <div  class="divisor">
+                <div></div>
+                <span> Senha </span>
+                <div></div>
+              </div>
+
+              <div><mat-checkbox formControlName="alterarSenha" labelPosition ="before">Atualizar a senha ? </mat-checkbox>@if(profileForm.get('alterarSenha')?.value){ Sim }</div>
+              
+              @if(profileForm.get('alterarSenha')?.value){
+            <mat-form-field>
+              <mat-label>Senha</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="password"
+                placeholder="********"
+              />
+              @if (!profileForm.get('password')?.value) {
+              <mat-error>A senha é obrigatória!</mat-error>
+  
+              }
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Confirme a senha</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="confirmpassword"
+                placeholder="********"
+              />
+              @if (profileForm.get('confirmpassword')?.value !=
+              profileForm.get('password')?.value) {
+              <mat-error>As senhas não conferem!</mat-error>
+              }
+            </mat-form-field>
+        }
+
+            <div class="form-actions">
+                <button mat-button [routerLink]="['/']" routerLinkActive="router-link-active" >Cancelar</button>
+                <button mat-button (click)="atualizar()">Salvar</button>         
+            </div>
+          </form>
+  
+
+       </mat-card>
+      <!-- ngContent-->
+    </app-main>
+  </div>
+</main>

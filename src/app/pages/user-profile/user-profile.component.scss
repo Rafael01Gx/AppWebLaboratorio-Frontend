@@ -1,0 +1,41 @@
+:host{
+mat-card{
+    padding: 10px;
+    h2{
+        font-size: 1.2em;
+    }
+    form{
+        display: flex;
+        flex-flow: column wrap;
+        gap: 15px;
+        padding: 10px;
+
+        mat-form-field{
+            width: 300px;
+        }
+
+        .divisor {
+            display: flex;
+            align-items: center;
+            justify-content: baseline;
+  
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            gap: 20px;
+            width: 100%;
+  
+            div {
+              flex-grow: 1;
+              height: 1px;
+              background-color: var(--gray-400);
+            }
+        }
+        .form-actions{
+           display: flex;
+           align-items: center;
+           justify-content: end;
+        }
+    }
+}
+}

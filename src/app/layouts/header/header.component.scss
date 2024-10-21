@@ -41,8 +41,13 @@
           display: flex;
           align-items: center;
           justify-content: end;
+          gap: 10px;
           
-          margin-right: 10px;
+          margin-right: 20px;
+
+          .ico-message{
+            
+          }
         }
 
         .logout{
@@ -55,6 +60,10 @@
                 cursor: pointer;
                 box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
             border-radius: 2px;
+
+            i{
+              color: var(--red-10);
+            }
             }
         }
 

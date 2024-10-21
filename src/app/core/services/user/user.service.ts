@@ -16,6 +16,7 @@ export class UserService {
   #updateUserByIdUrl = signal(`${environment.api_url}/users/edit`);
   #updateUserAdmdUrl = signal(`${environment.api_url}/users/adm/edit`);
   #deletUserByIdUrl = signal(`${environment.api_url}/users/adm/delete`);
+  #CheckUserUrl = signal(`${environment.api_url}/users/`);
   
 
   //Buscar Todos os usuarios
@@ -36,7 +37,7 @@ export class UserService {
   #setUserById = signal<IUserData | null>(null);
   public getUserById = this.#setUserById.asReadonly();
 
-  public httpUserById(id: string): Observable<IUserData> {
+  public httpUserById(id:string): Observable<IUserData> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
     return this.#http.get<IUserData>(`${this.#userByIdUrl()}/${id}`, { headers }).pipe(
       shareReplay(),
@@ -46,6 +47,20 @@ export class UserService {
       })
     );   
   }
+    //Buscar Usuario atual
+    #setCheckUser = signal<IUserData | null>(null);
+    public getCheckUser= this.#setUserById.asReadonly();
+  
+    public httpCheckUser(): Observable<IUserData> {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+      return this.#http.get<IUserData>(`${this.#CheckUserUrl()}`, { headers }).pipe(
+        shareReplay(),
+        tap((res) => {
+          this.#setCheckUser.set(res);
+         
+        })
+      );   
+    }
 
   //Atualizar Usuario
   #setUpdateUserById = signal<IUserData | null>(null);
@@ -54,7 +69,7 @@ export class UserService {
 
   public httpUpdateUserById(id: string,name: string, email: string, phone: string, password: string, confirmpassword: string ): Observable<IUserData> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<IUserData>(`${this.#updateUserByIdUrl()}/${id}`, { headers ,name,email,phone,password,confirmpassword}).pipe(
+    return this.#http.patch<IUserData>(`${this.#updateUserByIdUrl()}/${id}`,{name,email,phone,password,confirmpassword},{ headers}).pipe(
       shareReplay(),
       tap((res) => {
         this.#setUpdateUserById.set(res);

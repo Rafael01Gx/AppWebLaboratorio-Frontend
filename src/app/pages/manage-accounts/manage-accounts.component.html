@@ -20,25 +20,25 @@
 
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
-          <!-- ID Column -->
+ 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
             <td (click)="openDialog(row)" mat-cell *matCellDef="let row">{{ row.name }}</td>
           </ng-container>
 
-          <!-- Progress Column -->
+   
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
             <td (click)="openDialog(row)" mat-cell *matCellDef="let row">{{ row.email }}</td>
           </ng-container>
 
-          <!-- phone -->
+        
           <ng-container matColumnDef="phone">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
             <td (click)="openDialog(row)" mat-cell *matCellDef="let row">{{ row.phone }}</td>
           </ng-container>
 
-          <!-- Authorization -->
+
           <ng-container matColumnDef="authorization">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Autorização</th>
             <td (click)="openDialog(row)" mat-cell *matCellDef="let row">@if(row.authorization){
@@ -47,13 +47,12 @@
                 <i class="material-icons red">block</i>    
               }</td>
           </ng-container>
-           <!-- Nível -->
+
            <ng-container matColumnDef="level">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nível</th>
             <td (click)="openDialog(row)" mat-cell *matCellDef="let row">{{ row.level }}</td>
           </ng-container>
 
-          <!-- Excluir -->
           <ng-container matColumnDef="Excluir">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
             <td class="t-center" (click)="openDialogDelet('0ms', '0ms',row)" mat-cell *matCellDef="let row"><i class="material-icons red-10 m-hover">delete_forever</i></td>
@@ -62,7 +61,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>
 
-          <!-- Row shown when there is no matching data. -->
+
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" colspan="4">
                 Nenhum dado que corresponda ao filtro "{{ input.value }}"

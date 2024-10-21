@@ -14,11 +14,6 @@ export class SidenavComponent {
 
   menu = [
     {
-      ico: 'dashboard',
-      name: 'Dashboard',
-      link: '/dashboard',
-    },
-    {
       ico: 'description',
       name: 'OS',
       link: '/ordensdeservico',
@@ -28,6 +23,11 @@ export class SidenavComponent {
       ico: 'science',
       name: 'SGS',
       link: '',
+    },
+    {
+      ico: 'manage_accounts',
+      name: 'Contas',
+      link: '/gerenciar-contas',
     },
     {
       ico: 'settings',
