@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCard } from '@angular/material/card';
 import { OrdemDeServicoService } from '../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../shared/interfaces/ordemdeservico';
+import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../shared/interfaces/IOrdemDeservico.interface';
 
 @Component({
   selector: 'app-os-pendentes',

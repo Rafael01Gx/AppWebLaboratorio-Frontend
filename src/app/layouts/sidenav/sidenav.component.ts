@@ -1,22 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SidenavService } from '../../core/services/sidenav/exibir-txt.service';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [RouterLink,CommonModule],
+  imports: [RouterLink, CommonModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent {
-  showText = true;
+export class SidenavComponent implements OnInit {
+  ngOnInit() {
+    this.exibirTxt = this.sidenavService.getExibirTxt();
+  }
+
+  exibirTxt: boolean;
+
+  constructor(private sidenavService: SidenavService) {
+    this.exibirTxt = this.sidenavService.getExibirTxt();
+  }
+
+  toggleTxt() {
+    this.exibirTxt = !this.exibirTxt;
+    this.sidenavService.setExibirTxt(this.exibirTxt);
+  }
 
   menu = [
     {
       ico: 'description',
       name: 'Minhas OS',
       link: '/ordensdeservico',
+    },
+    {
+      ico: 'task',
+      name: 'Amostras',
+      link: '',
     },
 
     {
@@ -35,8 +54,4 @@ export class SidenavComponent {
       link: '/configuracoes',
     },
   ];
-
-  toggleText() {
-    this.showText = !this.showText;
-  }
 }

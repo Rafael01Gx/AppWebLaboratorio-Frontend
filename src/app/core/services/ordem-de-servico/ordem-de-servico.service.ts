@@ -2,8 +2,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { INovaOs, IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/ordemdeservico';
-import { IAmostra } from '../../../shared/interfaces/amostra';
+import { INovaOs, IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IAmostra } from '../../../shared/interfaces/IAmostra.interface';
 
 @Injectable({
   providedIn: 'root'

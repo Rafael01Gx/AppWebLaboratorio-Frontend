@@ -1,4 +1,4 @@
-import { IUserData } from '../../shared/interfaces/user';
+import { IUserData } from '../../shared/interfaces/IUser.interface';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
@@ -9,10 +9,10 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MainComponent } from '../../layouts/main/main.component';
 import { UserService } from '../../core/services/user/user.service';
-import { JsonPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from '../../components/modal/user-modal/user-modal.component';
-import { DeletModalComponent } from '../../components/modal/delete-modal/delete-modal.component';
+import { DeletModalComponent } from '../../components/modal/delete-user-modal/delete-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   pageIco = 'manage_accounts'; // Materials icons name
   pageTitle = 'Gerenciar contas';
   #userService = inject(UserService);
+  #toastr = inject(ToastrService)
   listUsers: IUserData[] = [];
   displayedColumns: string[] = ['name', 'email', 'phone', 'authorization', 'level','Excluir'];
   dataSource = new MatTableDataSource<IUserData>([]);
@@ -85,14 +86,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  openDialogDelet(enterAnimationDuration: string, exitAnimationDuration: string,user:IUserData): void {
+
+  openDialogDelet(enterAnimationDuration: string, exitAnimationDuration: string, user: IUserData): void {
     const dialogDelete = this.dialog.open(DeletModalComponent, {
-      width: '250px',data: { ...user },
+      width: '250px',
+      data: { ...user },
       enterAnimationDuration,
       exitAnimationDuration,
     });
-
-    dialogDelete.afterClosed().subscribe(result => this.loadUsers())
+  
+    dialogDelete.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.#userService.httpDeletUserAdm(result).subscribe({
+          next: () => {
+            this.#toastr.success("Usuário deletado!");
+            this.loadUsers();
+          },
+          error: (err) => {
+            this.#toastr.error(err.error.message);                         
+          }
+        });
+      } else {
+        console.log('Modal fechada sem exclusão');
+      }
+    });
   }
   
 }

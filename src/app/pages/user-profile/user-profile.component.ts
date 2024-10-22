@@ -12,7 +12,7 @@ import { passwordValidator } from '../../shared/validators/password.validator';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { UserService } from '../../core/services/user/user.service';
-import { IUserData } from '../../shared/interfaces/user';
+import { IUserData } from '../../shared/interfaces/IUser.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MatCheckbox } from '@angular/material/checkbox';
 

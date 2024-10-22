@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { IUserData } from '../../../shared/interfaces/user';
+import { IUserData } from '../../../shared/interfaces/IUser.interface';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { UsersResponse } from '../../../shared/models/response.type';
 import { UserResponse } from '../../../shared/models/userResponse.type';

@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { LoginService } from '../../core/services/login/login.service';
 import { ToastrService } from 'ngx-toastr';
-import { ILogin } from '../../shared/interfaces/login';
+import { ILogin } from '../../shared/interfaces/lILogin.interface';
 
 @Component({
   selector: 'app-login',

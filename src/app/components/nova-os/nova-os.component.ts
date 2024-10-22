@@ -11,13 +11,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../core/services/user/user.service';
-import { IUserData } from '../../shared/interfaces/user';
+import { IUserData } from '../../shared/interfaces/IUser.interface';
 import {
   MatTable,
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { IAmostra, IAmostrasCollection } from '../../shared/interfaces/amostra';
+import { IAmostra, IAmostrasCollection } from '../../shared/interfaces/IAmostra.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';

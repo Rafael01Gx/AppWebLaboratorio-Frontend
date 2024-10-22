@@ -7,7 +7,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../shared/interfaces/ordemdeservico';
+import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../shared/interfaces/IOrdemDeservico.interface';
 
 @Component({
   selector: 'app-os-finalizadas',
