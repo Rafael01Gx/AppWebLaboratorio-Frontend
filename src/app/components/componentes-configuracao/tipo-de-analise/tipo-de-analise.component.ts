@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,8 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { ToastrService } from 'ngx-toastr';
 import {
   ITipoAnalise,
@@ -27,7 +27,6 @@ import {
 import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
 import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { U } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-tipo-de-analise',
@@ -37,7 +36,6 @@ import { U } from '@angular/cdk/keycodes';
     MatLabel,
     ReactiveFormsModule,
     MatCard,
-    ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -51,8 +49,7 @@ import { U } from '@angular/cdk/keycodes';
   templateUrl: './tipo-de-analise.component.html',
   styleUrl: './tipo-de-analise.component.scss',
 })
-export class TipoDeAnaliseComponent {
-  // #ordemDeServicoService = inject(OrdemDeServicoService);
+export class TipoDeAnaliseComponent implements OnInit {
   #toastr = inject(ToastrService);
   #tipoDeAnaliseService = inject(TipoDeAnaliseService);
 
@@ -72,25 +69,27 @@ export class TipoDeAnaliseComponent {
   listTipoDeAnalise: ITipoAnalise['tipo_de_analise'] = [];
   dataSource = new MatTableDataSource(this.listTipoDeAnalise);
 
-  displayedColumns: string[] = ['item','tipo', 'classe','Excluir'];
+  displayedColumns: string[] = ['item', 'tipo', 'classe', 'Excluir'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
     this.#tipoDeAnaliseService
-    .httpListarTipoDeAnalise()
-    .subscribe((response: ITipoDeAnaliseResponse) => {
-      if (response && response.tipo_de_analise) {
-        this.listTipoDeAnalise = response.tipo_de_analise.map((item, index) => ({
-          ...item,
-          item: index + 1 
-        }));
-        this.dataSource.data = this.listTipoDeAnalise;
-      } else {
-        this.#toastr.error(response.message);
-      }
-    });
+      .httpListarTipoDeAnalise()
+      .subscribe((response: ITipoDeAnaliseResponse) => {
+        if (response && response.tipo_de_analise) {
+          this.listTipoDeAnalise = response.tipo_de_analise.map(
+            (item, index) => ({
+              ...item,
+              item: index + 1,
+            })
+          );
+          this.dataSource.data = this.listTipoDeAnalise;
+        } else {
+          this.#toastr.error(response.message);
+        }
+      });
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -105,63 +104,73 @@ export class TipoDeAnaliseComponent {
     }
   }
 
-  incluir(){
-    if(this.tipoDeAnaliseForm.valid){
-      this.#tipoDeAnaliseService.httpCriarTipoDeAnalise(this.tipoDeAnaliseForm.value.tipo!,this.tipoDeAnaliseForm.value.classe!).subscribe({
-        next: () => {
-          this.#toastr.success("Análise/Ensaio cadastrada com sucesso!");
-        },
-        error: (err) => this.#toastr.error(err.error.message),
-        complete:() => this.loadListAnalise()
-      });
-     }
+  incluir() {
+    if (this.tipoDeAnaliseForm.valid) {
+      this.#tipoDeAnaliseService
+        .httpCriarTipoDeAnalise(
+          this.tipoDeAnaliseForm.value.tipo!,
+          this.tipoDeAnaliseForm.value.classe!
+        )
+        .subscribe({
+          next: () => {
+            this.tipoDeAnaliseForm.reset();
+            this.#toastr.success('Análise/Ensaio cadastrada com sucesso!');
+          },
+          error: (err) => this.#toastr.error(err.error.message),
+          complete: () => {
+            this.loadListAnalise()
+            
+
+          },
+        });
     }
-  
-
-
-  loadListAnalise(): void {
-    this.#tipoDeAnaliseService.httpListarTipoDeAnalise().subscribe(response => {
-      if (response && response.tipo_de_analise) {
-        this.listTipoDeAnalise = response.tipo_de_analise.map((item, index) => ({
-          ...item,
-          item: index + 1
-        }));
-        this.dataSource.data = this.listTipoDeAnalise;
-      } else {
-        this.#toastr.error(response.message);
-      }
-    });
   }
 
+  loadListAnalise(): void {
+    this.#tipoDeAnaliseService
+      .httpListarTipoDeAnalise()
+      .subscribe((response) => {
+        if (response && response.tipo_de_analise) {
+          this.listTipoDeAnalise = response.tipo_de_analise.map(
+            (item, index) => ({
+              ...item,
+              item: index + 1,
+            })
+          );
+          this.dataSource.data = this.listTipoDeAnalise;
+        } else {
+          this.#toastr.error(response.message);
+        }
+      });
+  }
 
-
-  openDialogDelet(enterAnimationDuration: string, exitAnimationDuration: string, tipo_de_analise: ITipoAnalise): void {
+  openDialogDelet(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    tipo_de_analise: ITipoAnalise
+  ): void {
     const dialogDelete = this.dialog.open(DeletModalComponent, {
       width: '250px',
       data: { ...tipo_de_analise },
       enterAnimationDuration,
       exitAnimationDuration,
     });
-  
-     dialogDelete.afterClosed().subscribe(result => {
-      
+
+    dialogDelete.afterClosed().subscribe((result) => {
       if (result) {
         this.#tipoDeAnaliseService.httpDeletarTipoDeAnalise(result).subscribe({
           next: () => {
-            this.#toastr.success("Análise removida!");
+            this.#toastr.success('Análise removida!');
             this.loadListAnalise();
           },
           error: (err) => {
-            this.#toastr.error(err.error.message);                         
-          }
+            this.#toastr.error(err.error.message);
+          },
         });
       } else {
         console.log('Modal fechada sem exclusão');
       }
-    });  
+    });
   }
-  constructor(private dialog: MatDialog) { 
-
-  }
-  
+  constructor(private dialog: MatDialog) {}
 }

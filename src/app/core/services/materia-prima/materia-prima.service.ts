@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
+import { IMateriaPrimaResponse } from '../../../shared/interfaces/IMateriasPrimas.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,55 +16,55 @@ export class MateriaPrimaService {
   #excluirMateriaPrimaUrl = signal(`${environment.api_url}/materiaprima/deletar`);
 
   
-  #setTipoDeAnalise = signal<ITipoDeAnaliseResponse| null>(null);
-  public getTipoDeAnalise = this.#setTipoDeAnalise.asReadonly();
+  #setMateriaPrima = signal<IMateriaPrimaResponse| null>(null);
+  public getMateriaPrima = this.#setMateriaPrima.asReadonly();
 
-  public httpCriarTipoDeAnalise(tipo:string,classe:string): Observable<ITipoDeAnaliseResponse> {
+  public httpCriarMateriaPrima(nome_descricao:string,classe_tipo:string): Observable<IMateriaPrimaResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.post<ITipoDeAnaliseResponse>(this.#criarTipoDeAnaliseUrl(),{tipo,classe} ,{ headers }).pipe(
+    return this.#http.post<IMateriaPrimaResponse>(this.#criarMateriaPrimaUrl(),{nome_descricao,classe_tipo} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
-        this.#setTipoDeAnalise.set(res);
+        this.#setMateriaPrima.set(res);
       })
     );   
   }
 
-  #setListarTipoDeAnalise = signal<ITipoDeAnaliseResponse| null>(null);
-  public getListarTipoDeAnalise = this.#setListarTipoDeAnalise.asReadonly();
+  #setListarMateriaPrima = signal<IMateriaPrimaResponse| null>(null);
+  public getListarMateriaPrima = this.#setListarMateriaPrima.asReadonly();
 
-  public httpListarTipoDeAnalise(): Observable<ITipoDeAnaliseResponse> {
+  public httpListarMateriaPrima(): Observable<IMateriaPrimaResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.get<ITipoDeAnaliseResponse>(this.#listarTipoDeAnaliseUrl(),{ headers }).pipe(
+    return this.#http.get<IMateriaPrimaResponse>(this.#listarMateriaPrimaUrl(),{ headers }).pipe(
       shareReplay(),
       tap((res) => {
-        this.#setListarTipoDeAnalise.set(res);
+        this.#setListarMateriaPrima.set(res);
       })
     );   
   }
 
-  #setEditarTipoDeAnalise = signal<ITipoDeAnaliseResponse| null>(null);
-  public getEditarTipoDeAnalise = this.#setEditarTipoDeAnalise.asReadonly();
+  #setEditarMateriaPrima = signal<IMateriaPrimaResponse| null>(null);
+  public getEditarMateriaPrima = this.#setEditarMateriaPrima.asReadonly();
 
-  public httpEditarTipoDeAnalise(id: string,tipo:string,classe:string): Observable<ITipoDeAnaliseResponse> {
+  public httpEditarMateriaPrima(id: string,nome_descricao:string,classe_tipo:string): Observable<IMateriaPrimaResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<ITipoDeAnaliseResponse>(`${this.#editarTipoDeAnaliseUrl()}${id}`,{tipo,classe} ,{ headers }).pipe(
+    return this.#http.patch<IMateriaPrimaResponse>(`${this.#editarMateriaPrimaUrl()}${id}`,{nome_descricao,classe_tipo} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
-        this.#setEditarTipoDeAnalise.set(res);
+        this.#setEditarMateriaPrima.set(res);
       })
     );   
   }
   
 
-  #setDeletarTipoDeAnalise = signal<ITipoDeAnaliseResponse| null>(null);
-  public getDeletarTipoDeAnalise = this.#setDeletarTipoDeAnalise.asReadonly();
+  #setDeletarMateriaPrima = signal<IMateriaPrimaResponse| null>(null);
+  public getDeletarMateriaPrima = this.#setDeletarMateriaPrima.asReadonly();
 
-  public httpDeletarTipoDeAnalise(id:string): Observable<ITipoDeAnaliseResponse> {
+  public httpDeletarTipoDeAnalise(id:string): Observable<IMateriaPrimaResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.delete<ITipoDeAnaliseResponse>(`${this.#excluirTipoDeAnaliseUrl()}/${id}`,{ headers }).pipe(
+    return this.#http.delete<IMateriaPrimaResponse>(`${this.#excluirMateriaPrimaUrl()}/${id}`,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
-        this.#setDeletarTipoDeAnalise.set(res);
+        this.#setDeletarMateriaPrima.set(res);
       })
     );   
   }
