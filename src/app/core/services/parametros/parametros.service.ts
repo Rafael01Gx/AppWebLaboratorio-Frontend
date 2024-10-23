@@ -19,9 +19,9 @@ export class ParametrosService {
   #setParametros = signal<IParametrosResponse| null>(null);
   public getParametros = this.#setParametros.asReadonly();
 
-  public httpCriarParametros(tipo_de_analise:string,unidade_de_medida:string,descricao:string): Observable<IParametrosResponse> {
+  public httpCriarParametros(tipo_de_analise:{},descricao:string,unidade_de_medida:string): Observable<IParametrosResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.post<IParametrosResponse>(this.#criarParametrosUrl(),{tipo_de_analise,unidade_de_medida,descricao} ,{ headers }).pipe(
+    return this.#http.post<IParametrosResponse>(this.#criarParametrosUrl(),{tipo_de_analise,descricao,unidade_de_medida} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setParametros.set(res);
@@ -59,7 +59,7 @@ export class ParametrosService {
   #setDeletarParametros = signal<IParametrosResponse| null>(null);
   public getDeletarParametros = this.#setDeletarParametros.asReadonly();
 
-  public httpDeletarTipoDeAnalise(id:string): Observable<IParametrosResponse> {
+  public httpDeletarParametros(id:string): Observable<IParametrosResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
     return this.#http.delete<IParametrosResponse>(`${this.#excluirParametrosUrl()}/${id}`,{ headers }).pipe(
       shareReplay(),

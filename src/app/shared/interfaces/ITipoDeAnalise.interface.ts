@@ -1,8 +1,8 @@
 export interface ITipoAnalise {
     tipo_de_analise:{
-    _id:string,
-    tipo?: string,
-    classe?: string
+    _id?:string,
+    tipo: string,
+    classe: string
 }[]
 }
 
