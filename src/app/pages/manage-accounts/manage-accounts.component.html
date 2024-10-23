@@ -34,8 +34,8 @@
 
         
           <ng-container matColumnDef="phone">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
-            <td (click)="openDialog(row)" mat-cell *matCellDef="let row">{{ row.phone }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Contato</th>
+            <td (click)="openDialog(row)" mat-cell *matCellDef="let row">{{ row.phone | mask: '(00) 0 0000-0000'}}</td>
           </ng-container>
 
 
@@ -70,7 +70,7 @@
         </table>
 
         <mat-paginator
-          [pageSizeOptions]="[8]"
+          [pageSizeOptions]="[8,15,30,50]"
           aria-label="Selecione a página de usuários"
         ></mat-paginator>
       </div>

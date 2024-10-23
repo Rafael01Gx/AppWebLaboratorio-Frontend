@@ -68,7 +68,7 @@
               <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.tipo }}</td>
             </ng-container>
             <ng-container matColumnDef="tipo_de_analise.classe">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>classe</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Classe</th>
               <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.classe }}</td>
             </ng-container>
 
@@ -90,8 +90,8 @@
           </table>
     
           <mat-paginator
-            [pageSizeOptions]="[8]"
-            aria-label="Selecione a página de usuários"
+            [pageSizeOptions]="[8,15,30,50]"
+            aria-label="Selecione"
           ></mat-paginator>
         </div>
           </div>

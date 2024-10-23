@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from '../../components/modal/user-modal/user-modal.component';
 import { DeletModalComponent } from '../../components/modal/delete-user-modal/delete-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,7 @@ import { ToastrService } from 'ngx-toastr';
     MatInputModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule,
+    MatPaginatorModule,NgxMaskPipe
   ],
   templateUrl: './manage-accounts.component.html',
   styleUrls: ['./manage-accounts.component.scss'],
