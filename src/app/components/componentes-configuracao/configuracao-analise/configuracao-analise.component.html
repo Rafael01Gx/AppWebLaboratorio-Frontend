@@ -1,105 +1,124 @@
 <mat-card>
+  <form [formGroup]="configDeAnaliseForm">
+    <mat-form-field>
+      <mat-label>Matéria-prima</mat-label>
+      <mat-select formControlName="materia_prima">
+        @for (item of materiasPrimas; track item) {
+        <mat-option [value]="item">{{ item.nome_descricao }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Análise</mat-label>
+      <mat-select
+        (selectionChange)="filtrar($event.value)"
+        formControlName="tipo_de_analise"
+      >
+        @for (item of tiposDeAnalises; track item) {
+        <mat-option [value]="item">{{ item.tipo }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
 
-    <form [formGroup]="parametrosForm">
-        
+  <div class="divisor">
+    <div></div>
+    <span> Configuração de Análise</span>
+    <div></div>
+  </div>
+  @if (configDeAnaliseForm.valid) {
+    <mat-card class="formulario-area">
+      <form [formGroup]="parametrosForm" >
         <mat-form-field>
-            <mat-label>Selecione</mat-label>
-            <mat-select  formControlName="tipo_de_analise">
-              @for (item of classeTipo; track item) {
-                <mat-option [value]="item" >{{item.tipo}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        <mat-form-field>
-          <mat-label>Valor/Descrição</mat-label>
-          <input type="text" matInput formControlName="descricao"  />
+          <mat-label>Item</mat-label>
+          <mat-select formControlName="item">
+            @for (item of parametros_filtrados; track item) {
+            <mat-option [value]="item.descricao+item.unidade_de_medida"
+              >{{ item.descricao }} {{ item.unidade_de_medida }}</mat-option
+            >
+            }
+          </mat-select>
         </mat-form-field>
+  
         <mat-form-field>
-          <mat-label>Unidade de medida</mat-label>
-          <input type="text" matInput formControlName="unidade_de_medida"  />
+          <mat-label>Unidade do Resultado</mat-label>
+          <input
+            type="text"
+            placeholder=""
+            aria-label="Number"
+            matInput
+            formControlName="unidade_resultado"
+            [matAutocomplete]="autoGroup"
+          />
+          <mat-autocomplete #autoGroup="matAutocomplete">
+            @for (group of unidadesGroupOptions | async ; track group) { @for
+            (nome of group.nomes; track nome) {
+            <mat-option [value]="nome">{{ nome }}</mat-option>
+            } }
+          </mat-autocomplete>
         </mat-form-field>
-
-          <button (click)=" incluir()" [hidden]="!parametrosForm.valid" mat-icon-button aria-label="Botão adicionar">
-            <mat-icon>add</mat-icon>
-          </button>
-    
-    </form>
-
-    <div class="divisor">
-      <div></div>
-      <span> Matérias-primas</span>
-      <div></div>
-    </div>
-
-
-
-
- <div class="tabela">
-            
-        <mat-form-field class="w-100">
-          <mat-label>Filtro</mat-label>
+        <mat-form-field style="width: 175px">
+          <mat-label>Casas decicmais</mat-label>
           <input
             matInput
-            (keyup)="applyFilter($event)"
-            placeholder=""
-            #input
+            type="number"
+            maxlength="1"
+            formControlName="casas_decimais"
+        
           />
         </mat-form-field>
-    
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="item">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Num.Item</th>
-              <td  mat-cell *matCellDef="let row">{{ row.item }}</td>
-            </ng-container>
-     
-            <ng-container matColumnDef="descricao">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor/Descrição</th>
-              <td  mat-cell *matCellDef="let row">{{ row.descricao }}</td>
-            </ng-container>
-    
-          
-            <ng-container matColumnDef="unidade_de_medida">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Unidade de medida</th>
-              <td mat-cell *matCellDef="let row">{{ row.unidade_de_medida }}</td>
-            </ng-container>
-            <ng-container matColumnDef="tipo_de_analise.tipo">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Ensaio</th>
-              <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.tipo }}</td>
-            </ng-container>
-            <ng-container matColumnDef="tipo_de_analise.classe">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Classe</th>
-              <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.classe }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="excluir" >
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
-              <td  mat-cell *matCellDef="let row" (click)="openDialogDelet('0ms', '0ms',row)"><i class="material-icons red-10 m-hover">delete_forever</i></td>
-            </ng-container>
-    
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>
-    
-    
-            <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">
-                 {{ input.value }}
-              </td>
-            </tr>
-          </table>
-    
-          <mat-paginator
-            [pageSizeOptions]="[8,15,30,50]"
-            aria-label="Selecione"
-          ></mat-paginator>
-        </div>
-          </div>
-
-          
-</mat-card>
-
-
-
-
   
+        <button mat-flat-button aria-label="Botão adicionar" [hidden]="!parametrosForm.valid" (click)="addParametro()">
+          <mat-icon style="margin: 0">add</mat-icon>
+        </button>
+      </form>
+  
+      <div class="tablela">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="num">
+            <th mat-header-cell *matHeaderCellDef>Num.</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.num || element.num }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="item">
+            <th mat-header-cell *matHeaderCellDef>Item</th>
+            <td mat-cell *matCellDef="let element">{{ element.item }}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="unidade_resultado">
+            <th mat-header-cell *matHeaderCellDef>Unidade_resultado</th>
+            <td mat-cell *matCellDef="let element">{{ element.unidade_resultado }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="editar" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Editar</th>
+            <td  mat-cell *matCellDef="let row" (click)="editParametro(row)"><i class="material-icons  m-hover">edit</i></td>
+          </ng-container>
+          <ng-container matColumnDef="remover" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Remover</th>
+            <td  mat-cell *matCellDef="let row" (click)="removeParametro(row)"><i class="material-icons red-10 m-hover" >delete_forever</i></td>
+          </ng-container>
+      
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+  
+        <mat-paginator
+          [pageSizeOptions]="[5]"
+          showFirstLastButtons
+          aria-label="Selecione as amostras"
+        >
+        </mat-paginator>
+      </div>
+  
+      <div class="form-buttons">
+        <button mat-flat-button (click)="salvarConfiguracaoDeAnalise()"><mat-icon>add</mat-icon> incluir</button>
+      </div>
+    </mat-card>
+  }
+
+</mat-card>

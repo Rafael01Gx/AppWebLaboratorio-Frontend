@@ -133,7 +133,6 @@ public profileForm = new FormGroup({
     this.dataSource.data = Object.entries(this.amostras).map(([num, amostra]) => ({ num: num, ...amostra }));
 
     this.amostraForm.reset();
-    console.log(this.amostras)
   }
   
   

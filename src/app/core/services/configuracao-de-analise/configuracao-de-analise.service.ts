@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { IConfiguracaoDeAnaliseResponse } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
+import { IConfiguracaoDeAnaliseResponse, IParametrosDeAnalise } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { Observable, shareReplay, tap } from 'rxjs';
+import { IMateriaPrima } from '../../../shared/interfaces/IMateriasPrimas.interface';
+import { ITipoAnalise } from '../../../shared/interfaces/ITipoDeAnalise.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +20,9 @@ export class ConfiguracaoDeAnaliseService {
   #setConfiguracaoDeAnalise = signal<IConfiguracaoDeAnaliseResponse| null>(null);
   public getConfiguracaoDeAnalise = this.#setConfiguracaoDeAnalise.asReadonly();
 
-  public httpCriarConfiguracaoDeAnalise(tipo:string,classe:string): Observable<IConfiguracaoDeAnaliseResponse> {
+  public httpCriarConfiguracaoDeAnalise(tipo_de_analise:{}, materia_prima:{}, parametros_de_analise:{}): Observable<IConfiguracaoDeAnaliseResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.post<IConfiguracaoDeAnaliseResponse>(this.#criarConfiguracaoDeAnaliseUrl(),{tipo,classe} ,{ headers }).pipe(
+    return this.#http.post<IConfiguracaoDeAnaliseResponse>(this.#criarConfiguracaoDeAnaliseUrl(),{tipo_de_analise, materia_prima, parametros_de_analise} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setConfiguracaoDeAnalise.set(res);

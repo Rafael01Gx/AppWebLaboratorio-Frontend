@@ -45,7 +45,7 @@ export class ParametrosComponent implements OnInit{
   public parametrosForm = new FormGroup({
     tipo_de_analise: new FormControl('', Validators.required),
     descricao: new FormControl('',Validators.required),
-    unidade_de_medida: new FormControl('',Validators.required),
+    unidade_de_medida: new FormControl(''),
   });
 
 
