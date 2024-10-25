@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { IConfiguracaoDeAnaliseResponse, IParametrosDeAnalise } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
+import { IConfiguracaoDeAnaliseResponse, IParametrosDeAnalise, IParametrosDeAnaliseCollection } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { IMateriaPrima } from '../../../shared/interfaces/IMateriasPrimas.interface';
 import { ITipoAnalise } from '../../../shared/interfaces/ITipoDeAnalise.interface';
@@ -46,9 +46,9 @@ export class ConfiguracaoDeAnaliseService {
   #setEditarConfiguracaoDeAnalise = signal<IConfiguracaoDeAnaliseResponse| null>(null);
   public getEditarConfiguracaoDeAnalise = this.#setEditarConfiguracaoDeAnalise.asReadonly();
 
-  public httpEditarConfiguracaoDeAnalise(id: string,tipo:string,classe:string): Observable<IConfiguracaoDeAnaliseResponse> {
+  public httpEditarConfiguracaoDeAnalise(_id: string,parametros_de_analise:IParametrosDeAnaliseCollection): Observable<IConfiguracaoDeAnaliseResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<IConfiguracaoDeAnaliseResponse>(`${this.#editarConfiguracaoDeAnaliseUrl()}${id}`,{tipo,classe} ,{ headers }).pipe(
+    return this.#http.patch<IConfiguracaoDeAnaliseResponse>(`${this.#editarConfiguracaoDeAnaliseUrl()}/${_id}`,{parametros_de_analise} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setEditarConfiguracaoDeAnalise.set(res);
@@ -60,7 +60,7 @@ export class ConfiguracaoDeAnaliseService {
   #setDeletarConfiguracaoDeAnalise = signal<IConfiguracaoDeAnaliseResponse| null>(null);
   public getDeletarConfiguracaoDeAnalise = this.#setDeletarConfiguracaoDeAnalise.asReadonly();
 
-  public httpDeletarTipoDeAnalise(id:string): Observable<IConfiguracaoDeAnaliseResponse> {
+  public httpDeletarConfiguracaoDeAnalise(id:string): Observable<IConfiguracaoDeAnaliseResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
     return this.#http.delete<IConfiguracaoDeAnaliseResponse>(`${this.#excluirConfiguracaoDeAnaliseUrl()}/${id}`,{ headers }).pipe(
       shareReplay(),

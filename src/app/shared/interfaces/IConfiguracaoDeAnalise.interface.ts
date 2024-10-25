@@ -8,7 +8,11 @@ export interface IConfiguracaoDeAnalise {
       tipo: string;
       classe: string;
     };
-    materia_prima:IMateriaPrima
+    materia_prima:{
+      _id: string,
+        nome_descricao: string,
+        classe_tipo :string
+    }
     parametros_de_analise: IParametrosDeAnalise
   
   }[];
@@ -25,5 +29,5 @@ export interface IParametrosDeAnalise{
   
     item: string,
     unidade_resultado: string,
-    casas_decimais: string,
+    casas_decimais: number | string,
 }

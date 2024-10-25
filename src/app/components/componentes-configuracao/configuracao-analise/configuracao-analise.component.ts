@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, Inject, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators,FormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
@@ -14,13 +14,14 @@ import { ITipoAnalise, ITipoDeAnaliseResponse } from '../../../shared/interfaces
 import { ToastrService } from 'ngx-toastr';
 import { MateriaPrimaService } from '../../../core/services/materia-prima/materia-prima.service';
 import { IMateriaPrima, IMateriaPrimaResponse } from '../../../shared/interfaces/IMateriasPrimas.interface';
-import { IParametrosDeAnalise, IParametrosDeAnaliseCollection } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
+import { IConfiguracaoDeAnalise, IParametrosDeAnalise, IParametrosDeAnaliseCollection } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { IParametros, IParametrosResponse } from '../../../shared/interfaces/IParametros.interface';
 import { ParametrosService } from '../../../core/services/parametros/parametros.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ConfiguracaoDeAnaliseService } from '../../../core/services/configuracao-de-analise/configuracao-de-analise.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -44,11 +45,30 @@ import { ConfiguracaoDeAnaliseService } from '../../../core/services/configuraca
 })
 export class ConfiguracaoAnaliseComponent implements OnInit{
 
+  readonly dialogRef = inject(MatDialogRef<ConfiguracaoAnaliseComponent>);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
+
+
+  constructor(
+    public MatDialogRef: MatDialogRef<ConfiguracaoAnaliseComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IConfiguracaoDeAnalise
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close(false);
+  }
+  
+
+
+
 #tipoDeAnaliseService= inject(TipoDeAnaliseService)
 #materiaPrimaService= inject(MateriaPrimaService)
 #parametrosService= inject(ParametrosService)
 #configuracaoDeAnaliseService= inject(ConfiguracaoDeAnaliseService)
 #toastr= inject(ToastrService)
+
+
 
 
 tiposDeAnalises : ITipoAnalise['tipo_de_analise'] = []
@@ -62,23 +82,12 @@ parametros_filtrados : IParametros['parametros']= []
 parametros_de_analise: IParametrosDeAnaliseCollection = {
 };
 
-displayedColumns: string[] = [ 'num','item', 'unidade_resultado', 'editar', 'remover'];
+displayedColumns: string[] = [ 'num','item', 'unidade_resultado', 'remover'];
 
 dataSource = new MatTableDataSource<IParametrosDeAnalise>(
   Object.entries(this.parametros_de_analise).map(([num, parametros_de_analise]) => ({ num: num, ...parametros_de_analise }))
 );
 
-
-editIndex: number | null = null;
-
-  editParametro(row: any) {
-    this.editIndex = row.num;
-    this.parametrosForm.patchValue({
-      item: row.item,
-      unidade_resultado: row.unidade_resultado,
-      casas_decimais: row.casas_decimais
-    });
-  }
 
   removeParametro(row: any) {
     delete this.parametros_de_analise[row.num];
@@ -89,30 +98,33 @@ editIndex: number | null = null;
   }
 
   addParametro() {
-    const newParametros_de_analise: IParametrosDeAnalise = {
-      item: this.parametrosForm.value.item!,
-      unidade_resultado: this.parametrosForm.value.unidade_resultado!,
-      casas_decimais: this.parametrosForm.value.casas_decimais!
-    };
+    const items: string[] = Array.isArray(this.parametrosForm.value.item)
+    ? this.parametrosForm.value.item as string[] : [this.parametrosForm.value.item || '']; 
 
-    if (this.editIndex !== null) {
+    if (Array.isArray(items) && items.length > 0) {
+      items.forEach((item) => {
+        const newParametros_de_analise: IParametrosDeAnalise = {
+          item: item, 
+          unidade_resultado: this.parametrosForm.value.unidade_resultado!,
+          casas_decimais: this.parametrosForm.value.casas_decimais!
+        };
 
-      this.parametros_de_analise[this.editIndex] = newParametros_de_analise;
-      this.editIndex = null; 
+          const newId = Object.keys(this.parametros_de_analise).length + 1;
+          this.parametros_de_analise[newId] = newParametros_de_analise;
+        
+
+        this.dataSource.data = Object.entries(this.parametros_de_analise).map(([num, parametros_de_analise]) => ({
+          num: num,
+          ...parametros_de_analise
+        }));
+      });
     } else {
-    
-      const newId = Object.keys(this.parametros_de_analise).length + 1;
-      this.parametros_de_analise[newId] = newParametros_de_analise;
+      console.error('O campo "item" não é válido.');
     }
-
-    this.dataSource.data = Object.entries(this.parametros_de_analise).map(([num, parametros_de_analise]) => ({
-      num: num,
-      ...parametros_de_analise
-    }));
 
     this.parametrosForm.reset();
   }
-
+  
 
 
 filtrar(selectedTipoDeAnalise: any) {
@@ -151,12 +163,20 @@ ngOnInit(): void {
     } else {
       this.#toastr.error(response.message);
     }
-  });
 
+    
+  });
+  
   this.unidadesGroupOptions = this.parametrosForm.get('unidade_resultado')!.valueChanges.pipe(
     startWith(''),
     map(value => this._filterGroup(value || '')),
   );
+
+}
+
+ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
+
 }
 
   configDeAnaliseForm = new FormGroup({
@@ -176,8 +196,10 @@ ngOnInit(): void {
      this.#configuracaoDeAnaliseService.httpCriarConfiguracaoDeAnalise(this.configDeAnaliseForm.value.tipo_de_analise!,this.configDeAnaliseForm.value.materia_prima!,this.parametros_de_analise!).subscribe({
        next: () => {
          this.#toastr.success("Configuração criada com sucesso!");
+
        },
        error: (err) => this.#toastr.error(err.error.message),
+       complete:()=>   this.dialogRef.close(true)
      });
     }
    }

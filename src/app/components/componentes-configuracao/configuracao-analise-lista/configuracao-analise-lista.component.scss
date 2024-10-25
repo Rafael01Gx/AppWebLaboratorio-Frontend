@@ -1,5 +1,7 @@
-:host {
+:host { 
     mat-card{
+       display: flex;
+       flex-flow: column wrap;
        margin: 20px;
        padding: 20px;
   
@@ -10,6 +12,8 @@
         gap: 20px;
   
         button{
+         background: var(--salmao);
+         color: var(--red-10);
          margin-bottom: 15px;
         }
        }
@@ -33,41 +37,34 @@
          }
   
      }
-
-      .tabela {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-
-    
-        table {
-            width: 100%;
-          }
+  
+     .tabela {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+  
+      table {
+          width: 100%;
+        }
+        
+        .mat-mdc-form-field {
+          font-size: 14px;
+          width: 100%;
           
-          .mat-mdc-form-field {
-            font-size: 14px;
-            width: 100%;
-            
-          }
-          
-          td, th {
-            width: 25%;      
-          }
-          th  {
-           background: var(--gray-100);
-          }
-          .t-center{
-            text-align: center;
-          
-      }
-     }
-
+        }
+        
+        td, th {
+          width: 25%;      
+        }
+        th  {
+         background: var(--gray-100);
+        }
+        .t-center{
+          text-align: center;
+        
     }
-    .form-buttons{
-     margin: auto 20px 20px auto;
-    }
-    
   }
+    }
    
    
-       
+       }
