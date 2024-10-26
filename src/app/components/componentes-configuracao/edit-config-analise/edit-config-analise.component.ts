@@ -81,7 +81,7 @@ export class EditConfigAnaliseComponent implements OnInit {
   ) {
 
   }
-  
+
    id : string = ""
 
 
@@ -187,22 +187,25 @@ export class EditConfigAnaliseComponent implements OnInit {
         map((value) => this._filterGroup(value || ''))
       );
 
-    if (this.data && this.data[0][0]?.parametros_de_analise) {
-      this.parametros_de_analise = this.data[0][0].parametros_de_analise;
-
-      this.dataSource.data = Object.entries(this.parametros_de_analise).map(
-        ([num, parametros_de_analise]) => ({
-          num: num,
-          ...parametros_de_analise,
-        })
-      );
-    }
-    this.configDeAnaliseForm.patchValue({
-      materia_prima: this.data[0][0].materia_prima.nome_descricao,
-      tipo_de_analise: this.data[0][0].tipo_de_analise.tipo,
-    });
-
-this.id = this.data[1]
+      this.parametros_de_analise = {};
+      this.dataSource.data = [];
+    
+      if (this.data && this.data[0][0]?.parametros_de_analise) {
+        this.parametros_de_analise = this.data[0][0].parametros_de_analise;
+    
+        this.dataSource.data = Object.entries(this.parametros_de_analise).map(
+          ([num, parametros_de_analise]) => ({
+            num: num,
+            ...parametros_de_analise,
+          })
+        );
+      }
+      this.configDeAnaliseForm.patchValue({
+        materia_prima: this.data[0][0].materia_prima.nome_descricao,
+        tipo_de_analise: this.data[0][0].tipo_de_analise.tipo,
+      });
+    
+      this.id = this.data[1];
   }
 
   ngAfterViewInit() {

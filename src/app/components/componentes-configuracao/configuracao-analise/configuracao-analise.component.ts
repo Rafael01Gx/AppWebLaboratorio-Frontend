@@ -82,7 +82,7 @@ parametros_filtrados : IParametros['parametros']= []
 parametros_de_analise: IParametrosDeAnaliseCollection = {
 };
 
-displayedColumns: string[] = [ 'num','item', 'unidade_resultado', 'remover'];
+displayedColumns: string[] = [ 'num','item', 'unidade_resultado', 'ordenar','remover'];
 
 dataSource = new MatTableDataSource<IParametrosDeAnalise>(
   Object.entries(this.parametros_de_analise).map(([num, parametros_de_analise]) => ({ num: num, ...parametros_de_analise }))
@@ -280,6 +280,25 @@ ngAfterViewInit() {
     return this.unidadesGroup;
   }
 
+  moveParametro(index: number, direction: 'up' | 'down') {
+
+    const data = this.dataSource.data;
+
+    if (direction === 'up' && index > 0) {
+
+      [data[index - 1], data[index]] = [data[index], data[index - 1]];
+    } else if (direction === 'down' && index < data.length - 1) {
+
+      [data[index], data[index + 1]] = [data[index + 1], data[index]];
+    }
+  
+    this.dataSource.data = data.map((item, i) => ({
+      ...item,
+      num: i + 1 
+    }));
+  }
+
+  
 
 }
 
@@ -293,5 +312,6 @@ export const _filter = (opt: string[], value: string): string[] => {
 
   return opt.filter(item => item.toLowerCase().includes(filterValue));
 };
+
 
 

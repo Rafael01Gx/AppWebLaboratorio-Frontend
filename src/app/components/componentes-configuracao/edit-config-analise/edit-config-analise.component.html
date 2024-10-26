@@ -101,7 +101,7 @@
   
             <ng-container matColumnDef="remover" >
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Remover</th>
-              <td  mat-cell *matCellDef="let row" (click)="removeParametro(row)"><i class="material-icons red-10 m-hover" >delete_forever</i></td>
+              <td  mat-cell *matCellDef="let row" ><i class="material-icons red-10 m-hover" (click)="removeParametro(row)">delete_forever</i></td>
             </ng-container>
         
     

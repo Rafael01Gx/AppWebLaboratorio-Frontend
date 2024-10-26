@@ -44,11 +44,11 @@
 
             <ng-container matColumnDef="editar" >
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Editar</th>
-              <td  mat-cell *matCellDef="let row" (click)="openDialogEditAnalise('0ms','0ms',row._id)" ><i class="material-icons red-10 m-hover " style="color: #005cbb ;">edit</i></td>
+              <td  mat-cell *matCellDef="let row"  ><i class="material-icons red-10 m-hover " style="color: #005cbb ;" (click)="openDialogEditAnalise('0ms','0ms',row._id)">edit</i></td>
             </ng-container>
             <ng-container matColumnDef="excluir" >
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
-              <td  mat-cell *matCellDef="let row" (click)="openDialogDelet('0ms', '0ms',row)"><i class="material-icons red-10 m-hover">delete_forever</i></td>
+              <td  mat-cell *matCellDef="let row" ><i class="material-icons red-10 m-hover" (click)="openDialogDelet('0ms', '0ms',row)">delete_forever</i></td>
             </ng-container>
     
     

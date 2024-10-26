@@ -26,8 +26,8 @@ export interface IParametrosDeAnaliseCollection{
     [key: string]: IParametrosDeAnalise
 }
 export interface IParametrosDeAnalise{
-  
-    item: string,
-    unidade_resultado: string,
-    casas_decimais: number | string,
+  item: string,
+  unidade_resultado: string,
+  casas_decimais: number | string,
+ 
 }
