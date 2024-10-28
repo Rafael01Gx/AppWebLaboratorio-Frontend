@@ -97,7 +97,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   
     dialogDelete.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         this.#userService.httpDeletUserAdm(result).subscribe({
           next: () => {

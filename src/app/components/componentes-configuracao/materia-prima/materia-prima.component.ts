@@ -21,12 +21,14 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { MateriaPrimaService } from '../../../core/services/materia-prima/materia-prima.service';
 import {
+  IMateria_Prima,
   IMateriaPrima,
   IMateriaPrimaResponse,
 } from '../../../shared/interfaces/IMateriasPrimas.interface';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.component';
+import { NgIf } from '@angular/common';
 //-----
 @Component({
   selector: 'app-materia-prima',
@@ -44,7 +46,7 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
     MatSelect,
     MatOption,
     MatPaginator,
-    MatTableModule,
+    MatTableModule,NgIf
   ],
   templateUrl: './materia-prima.component.html',
   styleUrl: './materia-prima.component.scss',
@@ -52,6 +54,9 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
 export class MateriaPrimaComponent implements OnInit {
   #toastr = inject(ToastrService);
   #materiaPrimaService = inject(MateriaPrimaService);
+
+  isEditing = false;
+  editingItemId: string | null = null;
 
   public materiaprimaForm = new FormGroup({
     nome_descricao: new FormControl('', [
@@ -81,6 +86,7 @@ export class MateriaPrimaComponent implements OnInit {
     'item',
     'nome_descricao',
     'classe_tipo',
+    'Editar',
     'excluir',
   ];
 
@@ -88,7 +94,9 @@ export class MateriaPrimaComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.#materiaPrimaService.httpListarMateriaPrima().subscribe((response: IMateriaPrimaResponse) => {
+    this.#materiaPrimaService
+      .httpListarMateriaPrima()
+      .subscribe((response: IMateriaPrimaResponse) => {
         if (response && response.materiaPrimas) {
           this.listMateriasPrimas = response.materiaPrimas.map(
             (item, index) => ({
@@ -117,37 +125,62 @@ export class MateriaPrimaComponent implements OnInit {
 
   incluir() {
     if (this.materiaprimaForm.valid) {
-      this.#materiaPrimaService
-        .httpCriarMateriaPrima(
-          this.materiaprimaForm.value.nome_descricao!,
-          this.materiaprimaForm.value.classe_tipo!
-        )
-        .subscribe({
-          next: () => {
-            this.#toastr.success('Materia-prima cadastrada com sucesso!');
-          },
-          error: (err) => this.#toastr.error(err.error.message),
-          complete: () => this.loadListAnalise(),
-        });
+      if (this.isEditing && this.editingItemId) {
+        this.#materiaPrimaService
+          .httpEditarMateriaPrima(this.editingItemId,
+            this.materiaprimaForm.value.nome_descricao!,
+            this.materiaprimaForm.value.classe_tipo!
+          )
+          .subscribe({
+            next: () => {
+              this.#toastr.success('Materia-prima cadastrada com sucesso!');
+            },
+            error: (err) => this.#toastr.error(err.error.message),
+            complete: () => this.loadListAnalise(),
+          });
+      } else {
+        this.#materiaPrimaService
+          .httpCriarMateriaPrima(
+            this.materiaprimaForm.value.nome_descricao!,
+            this.materiaprimaForm.value.classe_tipo!
+          )
+          .subscribe({
+            next: () => {
+              this.#toastr.success('Materia-prima cadastrada com sucesso!');
+            },
+            error: (err) => this.#toastr.error(err.error.message),
+            complete: () => this.loadListAnalise(),
+          });
+      }
     }
   }
 
+  editarItem(item: IMateria_Prima) {
+    this.materiaprimaForm.patchValue({
+      nome_descricao: item.nome_descricao,
+      classe_tipo: item.classe_tipo,
+    });
+    this.isEditing = true;
+    this.editingItemId = item._id;
+  }
+  cancelarEdicao() {
+    this.materiaprimaForm.reset();
+    this.isEditing = false;
+    this.editingItemId = null;
+  }
+
   loadListAnalise(): void {
-    this.#materiaPrimaService
-      .httpListarMateriaPrima()
-      .subscribe((response) => {
-        if (response && response.materiaPrimas) {
-          this.listMateriasPrimas = response.materiaPrimas.map(
-            (item, index) => ({
-              ...item,
-              item: index + 1,
-            })
-          );
-          this.dataSource.data = this.listMateriasPrimas;
-        } else {
-          this.#toastr.error(response.message);
-        }
-      });
+    this.#materiaPrimaService.httpListarMateriaPrima().subscribe((response) => {
+      if (response && response.materiaPrimas) {
+        this.listMateriasPrimas = response.materiaPrimas.map((item, index) => ({
+          ...item,
+          item: index + 1,
+        }));
+        this.dataSource.data = this.listMateriasPrimas;
+      } else {
+        this.#toastr.error(response.message);
+      }
+    });
   }
 
   openDialogDelet(

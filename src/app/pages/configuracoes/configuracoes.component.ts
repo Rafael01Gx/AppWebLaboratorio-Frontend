@@ -19,7 +19,7 @@ import { ConfiguracaoAnaliseListaComponent } from '../../components/componentes-
 })
 export class ConfiguracoesComponent {
   pageIco = 'settings'; //Materials icons name
-  pageTitle = 'configurações';
+  pageTitle = 'Configurações';
 
 
   

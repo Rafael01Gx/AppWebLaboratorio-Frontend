@@ -62,6 +62,33 @@
 
 
   }
+  @media (max-width: 600px){
+    nav {
+      width: 100lvw;
+
+      .material-icons{
+&.expand{
+  display: none;
+}
+      }
+      .container {
+
+        margin: 10px 0 ;
+        ul {
+          flex-flow: row;
+          li {
+              p {
+                display: none;
+              }
+            }
+          }
+        }
+    }
+    
+  
+  
+    }
+  
 
 
 }

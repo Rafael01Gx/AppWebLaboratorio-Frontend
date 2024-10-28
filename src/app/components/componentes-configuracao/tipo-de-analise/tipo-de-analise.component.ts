@@ -27,6 +27,8 @@ import {
 import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
 import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ITipoDeAnalise } from '../../../shared/models/IResponseData';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-tipo-de-analise',
@@ -45,6 +47,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatOption,
     MatPaginator,
     MatTableModule,
+    NgIf
   ],
   templateUrl: './tipo-de-analise.component.html',
   styleUrl: './tipo-de-analise.component.scss',
@@ -52,6 +55,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class TipoDeAnaliseComponent implements OnInit {
   #toastr = inject(ToastrService);
   #tipoDeAnaliseService = inject(TipoDeAnaliseService);
+
+  isEditing = false;
+  editingItemId: string | null = null;
 
   public tipoDeAnaliseForm = new FormGroup({
     tipo: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -69,7 +75,7 @@ export class TipoDeAnaliseComponent implements OnInit {
   listTipoDeAnalise: ITipoAnalise['tipo_de_analise'] = [];
   dataSource = new MatTableDataSource(this.listTipoDeAnalise);
 
-  displayedColumns: string[] = ['item', 'tipo', 'classe', 'Excluir'];
+  displayedColumns: string[] = ['item', 'tipo', 'classe', 'Editar','Excluir'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -106,24 +112,54 @@ export class TipoDeAnaliseComponent implements OnInit {
 
   incluir() {
     if (this.tipoDeAnaliseForm.valid) {
-      this.#tipoDeAnaliseService
-        .httpCriarTipoDeAnalise(
-          this.tipoDeAnaliseForm.value.tipo!,
-          this.tipoDeAnaliseForm.value.classe!
-        )
-        .subscribe({
-          next: () => {
-            this.tipoDeAnaliseForm.reset();
-            this.#toastr.success('Análise/Ensaio cadastrada com sucesso!');
-          },
-          error: (err) => this.#toastr.error(err.error.message),
-          complete: () => {
-            this.loadListAnalise()
-            
-
-          },
-        });
+      if (this.isEditing && this.editingItemId) {
+        this.#tipoDeAnaliseService
+          .httpEditarTipoDeAnalise(
+            this.editingItemId,
+            this.tipoDeAnaliseForm.value.tipo!,
+            this.tipoDeAnaliseForm.value.classe!
+          )
+          .subscribe({
+            next: () => {
+              this.tipoDeAnaliseForm.reset();
+              this.#toastr.success('Análise/Ensaio atualizado com sucesso!');
+              this.isEditing = false;
+              this.editingItemId = null;
+              this.loadListAnalise();
+            },
+            error: (err) => this.#toastr.error(err.error.message),
+          });
+      } else {
+        this.#tipoDeAnaliseService
+          .httpCriarTipoDeAnalise(
+            this.tipoDeAnaliseForm.value.tipo!,
+            this.tipoDeAnaliseForm.value.classe!
+          )
+          .subscribe({
+            next: () => {
+              this.tipoDeAnaliseForm.reset();
+              this.#toastr.success('Análise/Ensaio cadastrada com sucesso!');
+              this.loadListAnalise();
+            },
+            error: (err) => this.#toastr.error(err.error.message),
+          });
+      }
     }
+  }
+
+  editarItem(item:ITipoDeAnalise) {
+    this.tipoDeAnaliseForm.patchValue({
+      tipo: item.tipo,
+      classe: item.classe,
+    });
+    this.isEditing = true;
+    this.editingItemId = item._id; 
+
+  }
+  cancelarEdicao() {
+    this.tipoDeAnaliseForm.reset();
+    this.isEditing = false;
+    this.editingItemId = null;
   }
 
   loadListAnalise(): void {

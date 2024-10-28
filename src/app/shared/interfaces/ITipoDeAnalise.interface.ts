@@ -1,9 +1,6 @@
+import { ITipoDeAnalise } from './../models/IResponseData';
 export interface ITipoAnalise {
-    tipo_de_analise:{
-    _id:string,
-    tipo: string,
-    classe: string
-}[]
+    tipo_de_analise:ITipoDeAnalise[]
 }
 
 export interface ITipoDeAnaliseResponse {

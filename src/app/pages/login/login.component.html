@@ -13,7 +13,7 @@
         
         <mat-form-field>
             <mat-label>Senha</mat-label>
-            <input type="password" matInput formControlName="password" placeholder="********">
+            <input type="password" matInput formControlName="password" placeholder="********"  (keydown.enter)="submit()">
             @if (loginForm.get('password')?.errors) {
                 <mat-error>{{matError2()}}</mat-error>
             }

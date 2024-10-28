@@ -34,8 +34,8 @@ export class SidenavComponent implements OnInit {
     },
     {
       ico: 'task',
-      name: 'Amostras',
-      link: '',
+      name: 'Análises',
+      link: '/analises',
     },
 
     {

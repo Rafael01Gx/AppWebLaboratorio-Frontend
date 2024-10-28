@@ -7,6 +7,7 @@ import { DashboardComponent } from './pages/manage-accounts/manage-accounts.comp
 import { OsPageComponent } from './pages/os-page/os-page.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.component';
+import { AnalisesComponent } from './pages/analises/analises.component';
 
 export const routes: Routes = [
    {
@@ -38,5 +39,9 @@ export const routes: Routes = [
      {
       path: 'configuracoes',
       component: ConfiguracoesComponent
+     },
+     {
+      path: 'analises',
+      component: AnalisesComponent
      }
 ];

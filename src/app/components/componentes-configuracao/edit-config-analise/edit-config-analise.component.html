@@ -38,8 +38,8 @@
             <mat-label>Item</mat-label>
             <mat-select formControlName="item" multiple>
               @for (item of parametros; track item) {
-              <mat-option [value]="item.descricao+item.unidade_de_medida"
-                >{{ item.descricao }} {{ item.unidade_de_medida }}</mat-option             >
+              <mat-option [value]="item.descricao+(item.unidade_de_medida || '')"
+                >{{ item.descricao }} {{ item.unidade_de_medida || ''}}</mat-option             >
               }
 
             </mat-select>

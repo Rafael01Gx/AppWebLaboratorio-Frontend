@@ -16,7 +16,8 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
 import { ParametrosService } from '../../../core/services/parametros/parametros.service';
 import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
 import { ITipoAnalise, ITipoDeAnaliseResponse } from '../../../shared/interfaces/ITipoDeAnalise.interface';
-import { IParametros } from '../../../shared/interfaces/IParametros.interface';
+import { IParametro, IParametros } from '../../../shared/interfaces/IParametros.interface';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-parametros',
@@ -33,7 +34,7 @@ import { IParametros } from '../../../shared/interfaces/IParametros.interface';
     MatSelect,
     MatOption,
     MatPaginator,
-    MatTableModule,],
+    MatTableModule,NgIf],
   templateUrl: './parametros.component.html',
   styleUrl: './parametros.component.scss'
 })
@@ -41,6 +42,10 @@ export class ParametrosComponent implements OnInit{
   #toastr = inject(ToastrService);
   #parametrosService = inject(ParametrosService);
   #tipoDeAnaliseService = inject(TipoDeAnaliseService);
+
+  
+  isEditing = false;
+  editingItemId: string | null = null;
 
   public parametrosForm = new FormGroup({
     tipo_de_analise: new FormControl('', Validators.required),
@@ -60,6 +65,7 @@ export class ParametrosComponent implements OnInit{
     'unidade_de_medida',
     'tipo_de_analise.tipo',
     'tipo_de_analise.classe',
+    'Editar',
     'excluir',
   ];
 
@@ -124,6 +130,21 @@ export class ParametrosComponent implements OnInit{
         });
     }
   }
+  editarItem(item: IParametro) {
+    this.parametrosForm.patchValue({
+      tipo_de_analise: item.tipo_de_analise.tipo,
+      descricao: item.descricao,
+      unidade_de_medida: item.unidade_de_medida,
+    });
+    this.isEditing = true;
+    this.editingItemId = item._id;
+  }
+  cancelarEdicao() {
+    this.parametrosForm.reset();
+    this.isEditing = false;
+    this.editingItemId = null;
+  }
+
 
   loadListAnalise(): void {
     this.#parametrosService

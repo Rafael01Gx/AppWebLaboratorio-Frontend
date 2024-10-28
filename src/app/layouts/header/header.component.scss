@@ -68,6 +68,47 @@
         }
 
       }
+
+
+      @media (max-width : 600px) {
+
+        .header {
+          width: 100lvw;
+          height: 7lvh;
+          padding: 15px;
+        
+        
+          .img-container {
+
+            margin-left:5px ;
+          }
+          .text-container {
+         
+                display: none;
+          
+          }
+          .nav-container {
+            flex-grow: 4;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            gap: 10px;
+            span{
+              display: none;
+            }
+
+          }
+  
+          .logout{
+            margin-left: auto;
+
+  
+             
+          }
+  
+        }
+        
+      }
       
 
 }

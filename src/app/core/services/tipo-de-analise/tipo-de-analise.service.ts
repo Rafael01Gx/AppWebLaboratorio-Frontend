@@ -46,7 +46,7 @@ export class TipoDeAnaliseService {
 
   public httpEditarTipoDeAnalise(id: string,tipo:string,classe:string): Observable<ITipoDeAnaliseResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<ITipoDeAnaliseResponse>(`${this.#editarTipoDeAnaliseUrl()}${id}`,{tipo,classe} ,{ headers }).pipe(
+    return this.#http.patch<ITipoDeAnaliseResponse>(`${this.#editarTipoDeAnaliseUrl()}/${id}`,{tipo,classe} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setEditarTipoDeAnalise.set(res);

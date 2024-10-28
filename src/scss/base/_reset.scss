@@ -15,7 +15,7 @@ body {
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   //display: grid;
-//  grid-template-columns: 100%;
+ //  grid-template-columns: 100%;
  // grid-row: auto auto;
 }
 main{
@@ -24,13 +24,16 @@ main{
   display: flex;
   gap: 5px;
 
-  .sidenav-container{
 
-  }
   .main-container{
     flex-grow: 1;
     margin-top: 3px;
     padding: 15px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100lvw;
+    flex-direction: column;
   }
   
 }
@@ -56,4 +59,11 @@ a {
 }
 .green{
   color: green;
+}
+.cancelar{
+  background-color: var(--red-10) !important;
+  color: var(--gray-100) !important;
+}
+.editar{
+  color: #005cbb !important ;
 }
