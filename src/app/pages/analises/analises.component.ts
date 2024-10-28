@@ -2,15 +2,49 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { MainComponent } from '../../layouts/main/main.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-analises',
   standalone: true,
-  imports: [HeaderComponent,MainComponent,SidenavComponent],
+  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,NgClass],
   templateUrl: './analises.component.html',
   styleUrl: './analises.component.scss'
 })
 export class AnalisesComponent {
   pageIco = 'task'; //Materials icons name
   pageTitle = 'Análises';
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+  isActive(link: string): boolean {
+    return this.router.url.includes(link);
+  }
+
+  linkAnalises= [
+    {
+      ico: 'block',
+      name: 'Aguardando',
+      link: '/aguardando-autorizacao',
+    },
+    {
+      ico: 'hourglass_disabled',
+      name: 'Aguardando Análise',
+      link: '/aguardando-analise',
+    },
+    {
+      ico: 'hourglass_bottom',
+      name: 'Em andamento',
+      link: '/analise-em-andamento',
+    },
+    {
+      ico: 'check_small',
+      name: 'Finalizadas',
+      link: '/finalizadas',
+    },
+  ]
+
+
 }

@@ -30,4 +30,4 @@ export interface IConfiguracaoAnaliseData {
     casas_decimais: number;
   }
   
-  export type IResponseData = [IConfiguracaoAnaliseData[], string];
+  export type IResponseData = [IConfiguracaoAnaliseData];

@@ -29,7 +29,6 @@ import { MateriaPrimaService } from '../../../core/services/materia-prima/materi
 import { ParametrosService } from '../../../core/services/parametros/parametros.service';
 import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
 import {
-  IConfiguracaoDeAnalise,
   IParametrosDeAnaliseCollection,
   IParametrosDeAnalise,
 } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
@@ -38,6 +37,7 @@ import {
   IMateriaPrimaResponse,
 } from '../../../shared/interfaces/IMateriasPrimas.interface';
 import {
+  IParametro,
   IParametros,
   IParametrosResponse,
 } from '../../../shared/interfaces/IParametros.interface';
@@ -103,7 +103,9 @@ export class EditConfigAnaliseComponent implements OnInit {
 
   parametros_de_analise: IParametrosDeAnaliseCollection = {};
 
-  displayedColumns: string[] = ['num', 'item', 'unidade_resultado', 'remover'];
+  parametros_filtrados : IParametro[]= []
+
+  displayedColumns: string[] = ['num', 'item', 'unidade_resultado','ordenar', 'remover'];
 
   dataSource = new MatTableDataSource<IParametrosDeAnalise>(
     Object.entries(this.parametros_de_analise).map(
@@ -150,6 +152,13 @@ export class EditConfigAnaliseComponent implements OnInit {
     this.parametrosForm.reset();
   }
 
+  
+filtrar() {
+    this.parametros_filtrados = this.parametros.filter(parametro =>
+      parametro.tipo_de_analise.tipo === this.data[0].tipo_de_analise.tipo
+    )
+}
+
   ngOnInit(): void {
     this.#tipoDeAnaliseService
       .httpListarTipoDeAnalise()
@@ -175,6 +184,7 @@ export class EditConfigAnaliseComponent implements OnInit {
       .subscribe((response: IParametrosResponse) => {
         if (response && response.parametros) {
           this.parametros = response.parametros;
+          this.filtrar();
         } else {
           this.#toastr.error(response.message);
         }
@@ -190,8 +200,8 @@ export class EditConfigAnaliseComponent implements OnInit {
       this.parametros_de_analise = {};
       this.dataSource.data = [];
     
-      if (this.data && this.data[0][0]?.parametros_de_analise) {
-        this.parametros_de_analise = this.data[0][0].parametros_de_analise;
+      if (this.data && this.data[0]?.parametros_de_analise) {
+        this.parametros_de_analise = this.data[0].parametros_de_analise;
     
         this.dataSource.data = Object.entries(this.parametros_de_analise).map(
           ([num, parametros_de_analise]) => ({
@@ -201,16 +211,18 @@ export class EditConfigAnaliseComponent implements OnInit {
         );
       }
       this.configDeAnaliseForm.patchValue({
-        materia_prima: this.data[0][0].materia_prima.nome_descricao,
-        tipo_de_analise: this.data[0][0].tipo_de_analise.tipo,
+       materia_prima: this.data[0].materia_prima.nome_descricao,
+      tipo_de_analise: this.data[0].tipo_de_analise.tipo,
       });
     
-      this.id = this.data[1];
+      this.id = this.data[0]._id;
+     
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
 
   configDeAnaliseForm = new FormGroup({
     materia_prima: new FormControl('', [
@@ -246,6 +258,25 @@ export class EditConfigAnaliseComponent implements OnInit {
     }
   }
 
+  moveParametro(index: number, direction: 'up' | 'down') {
+
+    const data = this.dataSource.data;
+
+    if (direction === 'up' && index > 0) {
+
+      [data[index - 1], data[index]] = [data[index], data[index - 1]];
+    } else if (direction === 'down' && index < data.length - 1) {
+
+      [data[index], data[index + 1]] = [data[index + 1], data[index]];
+    }
+  
+    this.dataSource.data = data.map((item, i) => ({
+      ...item,
+      num: i + 1 
+    }));
+  }
+
+  
   unidadesGroupOptions!: Observable<UnidadesGroup[]>;
 
   unidadesGroup = [

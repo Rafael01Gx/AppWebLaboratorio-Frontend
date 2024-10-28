@@ -17,6 +17,7 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
 import { MatDialog } from '@angular/material/dialog';
 import { ConfiguracaoAnaliseComponent } from '../configuracao-analise/configuracao-analise.component';
 import { EditConfigAnaliseComponent } from '../edit-config-analise/edit-config-analise.component';
+import { IResponseData } from '../../../shared/models/IResponseData';
 
 @Component({
   selector: 'app-configuracao-analise-lista',
@@ -154,13 +155,13 @@ export class ConfiguracaoAnaliseListaComponent implements OnInit {
     });
   }
 
-  openDialogEditAnalise(enterAnimationDuration: string, exitAnimationDuration: string,_id:string): void {
+  openDialogEditAnalise(enterAnimationDuration: string, exitAnimationDuration: string,row:IResponseData): void {
     const dialogEdit = this.dialog.open(EditConfigAnaliseComponent, {
       minHeight: '85vh',
       maxHeight: '85vh',
       minWidth: '65vw',
       maxWidth: '65vw',
-      data: [this.listConfigAnalises, _id],
+      data: [row],
 
       enterAnimationDuration,
       exitAnimationDuration,

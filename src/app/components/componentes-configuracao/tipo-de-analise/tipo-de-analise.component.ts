@@ -190,6 +190,7 @@ export class TipoDeAnaliseComponent implements OnInit {
       data: { ...tipo_de_analise },
       enterAnimationDuration,
       exitAnimationDuration,
+      
     });
 
     dialogDelete.afterClosed().subscribe((result) => {

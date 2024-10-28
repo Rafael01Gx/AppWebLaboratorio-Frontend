@@ -13,8 +13,6 @@ import { IModalDelete } from '../../../shared/interfaces/IModal.interface';
 export class DeletModalComponent {
   readonly dialogRef = inject(MatDialogRef<DeletModalComponent>);
 
-
-
   constructor(
     public MatDialogRef: MatDialogRef<DeletModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IModalDelete
