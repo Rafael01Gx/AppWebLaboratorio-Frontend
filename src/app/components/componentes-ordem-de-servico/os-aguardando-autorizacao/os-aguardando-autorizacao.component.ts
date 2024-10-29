@@ -1,29 +1,27 @@
-import { MatDialog } from '@angular/material/dialog';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCard } from '@angular/material/card';
-import { OrdemDeServicoService } from '../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../shared/interfaces/IOrdemDeservico.interface';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatSortModule, MatSort } from '@angular/material/sort';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
+import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-os-pendentes',
+  selector: 'app-os-aguardando-autorizacao',
   standalone: true,
-  imports: [ 
-    MatFormFieldModule,
+  imports: [    MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatCard
-  ],
-  templateUrl: './os-pendentes.component.html',
-  styleUrl: './os-pendentes.component.scss'
+    MatCard],
+  templateUrl: './os-aguardando-autorizacao.component.html',
+  styleUrl: './os-aguardando-autorizacao.component.scss'
 })
-export class OsPendentesComponent implements OnInit {
+export class OsAguardandoAutorizacaoComponent {
   pageIco = 'manage_accounts';
   pageTitle = 'Gerenciar contas';
   #ordemDeServicoService = inject(OrdemDeServicoService);
@@ -41,7 +39,7 @@ export class OsPendentesComponent implements OnInit {
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status !== 'Concluída');
+        this.listOs = response.ordemsDeServico.filter(os => os.status == "Aguardando Autorização");
         this.dataSource.data = this.listOs; 
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');

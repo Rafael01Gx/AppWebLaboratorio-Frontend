@@ -10,14 +10,14 @@ import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../../core/services/user/user.service';
-import { IUserData } from '../../shared/interfaces/IUser.interface';
+import { UserService } from '../../../core/services/user/user.service';
+import { IUserData } from '../../../shared/interfaces/IUser.interface';
 import {
   MatTable,
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { IAmostra, IAmostrasCollection } from '../../shared/interfaces/IAmostra.interface';
+import { IAmostra, IAmostrasCollection } from '../../../shared/interfaces/IAmostra.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -26,7 +26,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
-import { OrdemDeServicoService } from '../../core/services/ordem-de-servico/ordem-de-servico.service';
+import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
 
 @Component({
   selector: 'app-nova-os',

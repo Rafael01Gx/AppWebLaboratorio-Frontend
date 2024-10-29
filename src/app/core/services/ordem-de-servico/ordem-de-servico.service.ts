@@ -12,10 +12,11 @@ export class OrdemDeServicoService {
   #http = inject(HttpClient);
   #criarOsUrl = signal(`${environment.api_url}/ordemdeservico/criar`);
   #listarOsByUserIdUrl = signal(`${environment.api_url}/ordemdeservico/listar`);
+  #listarTodasOrdensDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/listar/todas`);
 
   
 
-  //Criar OS
+
   #setOrdemDeServico = signal<IOrdemDeServicoResponse| null>(null);
   public getOrdemDeServico = this.#setOrdemDeServico.asReadonly();
 
@@ -30,9 +31,9 @@ export class OrdemDeServicoService {
   }
 
   
-  //Criar OS
+
   #setListarOrdemDeServicoByUserId = signal<IOrdemDeServicoResponse| null>(null);
-  public getListarOrdemDeServicoByUserId = this.#setOrdemDeServico.asReadonly();
+  public getListarOrdemDeServicoByUserId = this.#setListarOrdemDeServicoByUserId.asReadonly();
 
   public httpListarOrdemDeServicoByUserId(): Observable<IOrdemDeServicoResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
@@ -43,6 +44,20 @@ export class OrdemDeServicoService {
       })
     );   
   }
+
+  #setListarTodasOrdensDeServico = signal<IOrdemDeServicoResponse| null>(null);
+  public getListarTodasOrdensDeServico = this.#setListarTodasOrdensDeServico.asReadonly();
+
+  public httpListarTodasOrdensDeServico(): Observable<IOrdemDeServicoResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.get<IOrdemDeServicoResponse>(`${this.#listarTodasOrdensDeServicoUrl()}`,{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setListarTodasOrdensDeServico.set(res);
+      })
+    );   
+  }
+
 
 
   constructor() {}

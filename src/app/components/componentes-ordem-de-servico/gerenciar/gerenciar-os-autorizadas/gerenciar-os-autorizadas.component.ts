@@ -1,29 +1,28 @@
-import { MatDialog } from '@angular/material/dialog';
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { OrdemDeServicoService } from '../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../shared/interfaces/IOrdemDeservico.interface';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatSortModule, MatSort } from '@angular/material/sort';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { OrdemDeServicoService } from '../../../../core/services/ordem-de-servico/ordem-de-servico.service';
+import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../../../shared/interfaces/IOrdemDeservico.interface';
 
 @Component({
-  selector: 'app-os-finalizadas',
+  selector: 'app-gerenciar-os-autorizadas',
   standalone: true,
-  imports: [MatFormFieldModule,
+  imports: [ MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
     MatCard],
-  templateUrl: './os-finalizadas.component.html',
-  styleUrl: './os-finalizadas.component.scss'
+  templateUrl: './gerenciar-os-autorizadas.component.html',
+  styleUrl: './gerenciar-os-autorizadas.component.scss'
 })
-export class OsFinalizadasComponent {
-  pageIco = 'manage_accounts';
-  pageTitle = 'Gerenciar contas';
+export class GerenciarOsAutorizadasComponent {
+
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
   listOs: IOrdemDeServico['ordemsDeServico'] = []; 
@@ -37,9 +36,9 @@ export class OsFinalizadasComponent {
   constructor(private MatDialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
+    this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status == 'Concluída');
+        this.listOs = response.ordemsDeServico.filter(os => os.status == "Autorizada");
         this.dataSource.data = this.listOs; 
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');

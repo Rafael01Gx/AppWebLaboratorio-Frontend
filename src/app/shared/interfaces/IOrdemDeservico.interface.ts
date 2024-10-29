@@ -6,12 +6,7 @@ export interface IOrdemDeServico {
     ordemsDeServico?: {
       _id: string;
       numeroOs?: string;
-      solicitante?: {
-        _id: string;
-        name: string;
-        email: string;
-        phone: string;
-      };
+      solicitante?: ISolicitante;
       amostras: {
         [key: string]: {
           nome_amostra: string;
@@ -28,4 +23,11 @@ export interface IOrdemDeServico {
   export interface IOrdemDeServicoResponse {
     ordemsDeServico: IOrdemDeServico["ordemsDeServico"];
     message: string;
+  }
+
+  export interface ISolicitante{
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
   }

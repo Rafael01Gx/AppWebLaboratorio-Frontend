@@ -1,22 +1,22 @@
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { MainComponent } from '../../layouts/main/main.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-analises',
+  selector: 'app-manage-os',
   standalone: true,
   imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,NgClass,RouterLinkActive,RouterOutlet],
-  templateUrl: './analises.component.html',
-  styleUrl: './analises.component.scss'
+  templateUrl: './manage-os.component.html',
+  styleUrl: './manage-os.component.scss'
 })
-export class AnalisesComponent {
-  pageIco = 'task'; //Materials icons name
-  pageTitle = 'Análises';
+export class ManageOsComponent {
+  pageIco = 'manage_search'; //Materials icons name
+  pageTitle = 'Gerenciar OS';
 
 
 
@@ -27,14 +27,14 @@ export class AnalisesComponent {
       link: 'aguardando-autorizacao',
     },
     {
-      ico: 'hourglass_disabled',
-      name: 'Aguardando Análise',
+      ico: 'start',
+      name: 'Autorizada',
       link: 'aguardando-analise',
     },
     {
-      ico: 'hourglass_bottom',
-      name: 'Em andamento',
-      link: 'analise-em-andamento',
+      ico: 'commit',
+      name: 'Em Execução',
+      link: 'os-em-andamento',
     },
     {
       ico: 'check_small',
