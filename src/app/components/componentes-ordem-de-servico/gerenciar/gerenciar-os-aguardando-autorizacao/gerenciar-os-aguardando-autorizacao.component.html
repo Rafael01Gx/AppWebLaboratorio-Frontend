@@ -13,49 +13,80 @@
             />
           </mat-form-field>
       
-          <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
-      
-              <ng-container matColumnDef="numeroOs">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Num.OS</th>
-                <td  mat-cell *matCellDef="let row">{{ row.numeroOs }}</td>
-              </ng-container>
-      
-       
-              <ng-container matColumnDef="data_solicitacao">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Data da solicitacao</th>
-                <td  mat-cell *matCellDef="let row">{{ row.data_solicitacao }}</td>
-              </ng-container>
-      
-            
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                <td mat-cell *matCellDef="let row">{{ row.status }}</td>
-              </ng-container>
-      
-      
-              <ng-container matColumnDef="authorization">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Autorização</th>
-                <td mat-cell *matCellDef="let row">@if(row.authorization){
-                  <i class="material-icons green" >check</i>             
-                  }@else {
-                    <i class="material-icons red">block</i>    
-                  }</td>
-              </ng-container>
-      
-              <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>
-      
-      
-              <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">
-                   {{ input.value }}
-                </td>
-              </tr>
-            </table>
+          <div class="mat-elevation-z8  ">
+            <table mat-table
+            [dataSource]="dataSource" multiTemplateDataRows
+            class="mat-elevation-z8">
+       @for (column of displayedColumns; track column) {
+         <ng-container matColumnDef="{{column}}">
+           <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+           <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+         </ng-container>
+       }
+       <ng-container matColumnDef="expand">
+         <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+         <td mat-cell *matCellDef="let element">
+           <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+             @if (expandedElement === element) {
+               <mat-icon>keyboard_arrow_up</mat-icon>
+             } @else {
+               <mat-icon>keyboard_arrow_down</mat-icon>
+             }
+           </button>
+         </td>
+       </ng-container>
+     
+       <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+       <ng-container matColumnDef="expandedDetail">
+         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+           <div class="detalhes"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+
+               <div class="container">
+                <p>Informações do solicitante:</p>
+                 <ul>
+                   <li><strong>Nome:</strong>&nbsp;{{element.solicitante.name}} </li>
+                   <li><strong>E-mail:</strong>&nbsp;<a [href]="'mailto:' + element.solicitante.email">{{ element.solicitante.email }}</a></li>
+                   <li><strong>Contato:</strong>&nbsp;{{element.solicitante.phone | mask:"(00) 0 0000-0000"}}</li>
+                   @if(element.observacao){
+                    <li><strong>Obs:</strong>&nbsp; {{element.observacao}}</li>
+                   }
+                 </ul>
+               </div>
+
+               <div class="container">
+                <p> Amostras :</p>
+                 <ul>
+                  @for (item of getAmostrasValues(element.amostras); track item) {
+                    <li><strong>Identificação:</strong>&nbsp; {{item.nome_amostra}}</li>
+                    <li><strong>Data:</strong>&nbsp; {{item.data_amostra}}</li>
+                    <li><strong>Ensaios solicitados:</strong>&nbsp; {{item.ensaios_solicitados}}</li>
+                    <hr>
+                  }
+
+                 </ul>                
+               </div>
+
+               <div class="btn-container">
+                <button mat-raised-button (click)="openDialog(element)">Editar</button>
+               </div>
+
+           </div>
+         </td>
+       </ng-container>
+     
+       <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+       <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+           class="example-element-row"
+           [class.example-expanded-row]="expandedElement === element"
+           (click)="expandedElement = expandedElement === element ? null : element">
+       </tr>
+       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+     </table>
       
             <mat-paginator
-              [pageSizeOptions]="[8]"
+              [pageSizeOptions]="[8,15,30,50]"
               aria-label="Selecione a página de usuários"
             ></mat-paginator>
           </div>

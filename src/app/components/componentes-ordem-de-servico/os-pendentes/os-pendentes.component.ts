@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCard } from '@angular/material/card';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 
 @Component({
   selector: 'app-os-pendentes',
@@ -28,7 +28,7 @@ export class OsPendentesComponent implements OnInit {
   pageTitle = 'Gerenciar contas';
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
-  listOs: IOrdemDeServico['ordemsDeServico'] = []; 
+  listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
   displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status'];

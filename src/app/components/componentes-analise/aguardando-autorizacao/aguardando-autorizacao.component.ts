@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AmostraService } from '../../../core/services/amostra/amostra.service';
-import { IAmostra, IAmostrasResponse } from '../../../shared/interfaces/IAmostra.interface';
+import { IAmostra, IAmostrasCollection, IAmostrasResponse } from '../../../shared/interfaces/IAmostra.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -30,25 +30,24 @@ export class AguardandoAutorizacaoComponent implements OnInit {
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)
 
-  lista_amostras: IAmostra[] = [];
+  lista_amostras: IAmostrasCollection[] = [] ;
 
 
   displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados'];
-  dataSource = new MatTableDataSource<IAmostra>();
+  dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = response.amostras
-      this.dataSource.data = Object.entries(this.lista_amostras).map(([num, amostra]) => ({ num: num, ...amostra }))
-      console.log(this.dataSource)
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Aguardando Autorização');
+      this.dataSource.data = this.lista_amostras
+
     } else {
       this.#toastr.error(response.message);
     }
   });
 
-  console.log(this.dataSource)
 }
 
 

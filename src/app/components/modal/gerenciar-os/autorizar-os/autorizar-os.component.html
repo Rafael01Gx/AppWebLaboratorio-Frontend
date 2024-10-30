@@ -1,0 +1,41 @@
+<div class="modal">
+    <h1 mat-dialog-title>Editar Status - Ordem de Serviço</h1>
+
+    <div class="form-container">
+
+        <div mat-dialog-content style="width: 100%;">
+
+      
+<form [formGroup]="osStatusForm">
+
+            <mat-form-field  style="width: 100%;">
+              <mat-label>Num. Ordem de Serviço</mat-label>
+              <input type="text" matInput formControlName="numeroOs" readonly>
+            </mat-form-field>
+
+            
+            <mat-form-field style="width: 100%;">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                  @for (state of opcoes_status; track state) {
+                    <mat-option [value]="state">{{state}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            
+
+           
+        </form>
+
+          
+          
+    </div>
+
+</div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button [mat-dialog-close]="data" (click)="httpEditarOrdemDeServico()">Salvar</button>
+    </div>
+    
+
+</div>

@@ -13,6 +13,7 @@ export class OrdemDeServicoService {
   #criarOsUrl = signal(`${environment.api_url}/ordemdeservico/criar`);
   #listarOsByUserIdUrl = signal(`${environment.api_url}/ordemdeservico/listar`);
   #listarTodasOrdensDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/listar/todas`);
+  #editarOrdemDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/editar`);
 
   
 
@@ -54,6 +55,20 @@ export class OrdemDeServicoService {
       shareReplay(),
       tap((res) => {
         this.#setListarTodasOrdensDeServico.set(res);
+      })
+    );   
+  }
+
+
+  #setListarEditarOrdensDeServico = signal<IOrdemDeServicoResponse| null>(null);
+  public getEditarOrdensDeServico = this.#setListarEditarOrdensDeServico.asReadonly();
+
+  public httpEditarOrdemDeServico(id:string,status:string): Observable<IOrdemDeServicoResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.patch<IOrdemDeServicoResponse>(`${this.#editarOrdemDeServicoUrl()}/${id}`,{status},{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setListarEditarOrdensDeServico.set(res);
       })
     );   
   }

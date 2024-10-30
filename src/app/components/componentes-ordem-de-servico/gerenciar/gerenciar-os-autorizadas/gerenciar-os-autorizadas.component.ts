@@ -7,7 +7,7 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../../../shared/interfaces/IOrdemDeservico.interface';
+import {IOrdemDeServicoResponse, IOrdensDeServico } from '../../../../shared/interfaces/IOrdemDeservico.interface';
 
 @Component({
   selector: 'app-gerenciar-os-autorizadas',
@@ -25,7 +25,7 @@ export class GerenciarOsAutorizadasComponent {
 
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
-  listOs: IOrdemDeServico['ordemsDeServico'] = []; 
+  listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
   displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status'];
