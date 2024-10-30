@@ -27,6 +27,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
+import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
+import { ITipoAnalise, ITipoDeAnaliseResponse } from '../../../shared/interfaces/ITipoDeAnalise.interface';
 
 @Component({
   selector: 'app-nova-os',
@@ -58,18 +60,12 @@ export class NovaOsComponent implements AfterViewInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);
   #toastr = inject(ToastrService);
   #user = signal<IUserData>({});
+  #tipoDeAnaliseService= inject(TipoDeAnaliseService)
+  
 
   ensaios = new FormControl('');
-  listaDeEnsaios: string[] = [
-    'Granulometria',
-    'RDI',
-    'Redutibilidade',
-    'Densidade',
-    'Crepitação',
-    'A.Imediatas',
-    'PPC',
-    'A.Química',
-  ];
+
+  listaDeEnsaios : ITipoAnalise['tipo_de_analise'] = []
 
   amostras: IAmostrasCollection = {
   };
@@ -102,6 +98,15 @@ public profileForm = new FormGroup({
         phone: response.phone,
       });
     });
+
+    this.#tipoDeAnaliseService.httpListarTipoDeAnalise().subscribe((response: ITipoDeAnaliseResponse)=>{
+      if (response && response.tipo_de_analise) {
+        this.listaDeEnsaios = response.tipo_de_analise
+      } else {
+        this.#toastr.error(response.message);
+      }
+    });
+  
 
   }
 
@@ -142,6 +147,9 @@ public profileForm = new FormGroup({
     this.#ordemDeServicoService.httpCriarOrdemDeServico(this.amostras,this.obsForm.value.observacao!).subscribe({
       next: () => {
         this.#toastr.success("Ordem de serviço criada com sucesso!");
+        this.amostraForm.reset();
+        this.amostras= {}
+        this.dataSource.data= []
       },
       error: (err) => this.#toastr.error(err.error.message),
     });

@@ -61,7 +61,7 @@
             formControlName="ensaios_solicitados"
           >
             @for (ensaios of listaDeEnsaios; track ensaios) {
-            <mat-option [value]="ensaios">{{ ensaios }}</mat-option>
+            <mat-option [value]="ensaios.tipo">{{ ensaios.tipo }}</mat-option>
             }
           </mat-select>
         </mat-form-field>

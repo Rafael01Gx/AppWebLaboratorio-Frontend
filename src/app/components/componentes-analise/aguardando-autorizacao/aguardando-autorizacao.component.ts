@@ -40,7 +40,7 @@ export class AguardandoAutorizacaoComponent implements OnInit {
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Aguardando Autorização');
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status == 'Aguardando Autorização');
       this.dataSource.data = this.lista_amostras
 
     } else {
