@@ -60,10 +60,17 @@ a {
 .green{
   color: green;
 }
+.blue{
+  color:  #005cbb;
+}
+
 .cancelar{
   background-color: var(--red-10) !important;
   color: var(--gray-100) !important;
 }
 .editar{
   color: #005cbb !important ;
+}
+.d-flex{
+  display: flex !important;
 }

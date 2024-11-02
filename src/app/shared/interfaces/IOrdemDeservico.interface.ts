@@ -26,6 +26,9 @@ export interface IOrdensDeServico {
     amostras: IAmostrasCollection
     data_solicitacao: string;
     status: string;
+    data_recepcao?:string;
+    prazo_inicio_fim?:string;
+    observacao?:string;
     createdAt: string;
     updatedAt: string;
   }

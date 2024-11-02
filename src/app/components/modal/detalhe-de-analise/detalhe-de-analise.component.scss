@@ -1,0 +1,64 @@
+:host {
+  mat-card {
+    display: flex;
+    width: 100%;
+border-radius: 5px;
+    .close-bar {
+      width: 100%;
+      height: 25px;
+      background: var(--red-to-pink-to-purple-horizontal-gradient);
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      mat-icon {
+        margin-right: 5px;
+        color: white;
+        transition: color 0.1s ease-in-out;
+        &:hover{
+            cursor: pointer;
+            color: red;
+        }
+      }
+    }
+    mat-card-header {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      color: var(--gray-700);
+      background: var(--ligth-white-gradient);
+
+      border-radius: 5px;
+      img {
+        margin-right: auto;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      .os-number {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+          justify-content: center;
+        margin-left: auto;
+        font-weight: 500;
+    
+
+        span{
+          border-top: 1px solid var(--gray-400);
+          color: var(--blue-10);
+        }
+      }
+
+    }
+
+    mat-card-content{
+      display: flex;
+      flex-direction: column;
+
+    }
+  }
+}

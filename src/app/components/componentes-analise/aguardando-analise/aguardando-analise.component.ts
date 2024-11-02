@@ -9,6 +9,8 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { IAmostrasCollection, IAmostrasResponse, IAmostra } from '../../../shared/interfaces/IAmostra.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
 
 @Component({
   selector: 'app-aguardando-analise',
@@ -21,6 +23,7 @@ export class AguardandoAnaliseComponent implements OnInit {
 
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)
+  #dialog = inject(MatDialog)
 
   lista_amostras: IAmostrasCollection[] = [] ;
 
@@ -38,9 +41,18 @@ this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasR
     } else {
       this.#toastr.error(response.message);
     }
-  });
-
+  });  
 }
+
+
+openAnalysisDetail(data: IAmostra) : void {
+  this.#dialog.open(DetalheDeAnaliseComponent,{
+    minWidth:"90lvw",
+    minHeight:"90lvh",
+    data:data
+  })
+
+  }
 
 
 @ViewChild(MatPaginator) paginator!: MatPaginator;

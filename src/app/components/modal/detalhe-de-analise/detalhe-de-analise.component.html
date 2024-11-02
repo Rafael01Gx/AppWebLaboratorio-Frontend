@@ -1,0 +1,37 @@
+<mat-card>
+    <div class="close-bar"> <mat-icon (click)="closeDialog()">close</mat-icon></div>
+    <mat-card-header>
+        <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" >
+        <h2>Detalhes</h2>
+        <div class="os-number">Ordem de Serviço <span> {{data.numeroOs}} </span>   
+        </div>
+    </mat-card-header>
+
+<mat-card-content>
+    @if(data){
+        {{data.solicitante?.name}}
+        {{data.solicitante?.email}}
+        {{data.solicitante?.phone!.toString()| mask: "(00) 0 0000-0000"}}
+ 
+        {{data.nome_amostra}}
+        {{data.status}}
+        {{data.ensaios_solicitados}}
+        {{data.data_amostra}}
+        
+
+        <div>{{data.createdAt!}}</div>
+
+
+
+
+    }@else {
+
+        <p>Não existem dados para exibição</p>
+    }
+
+
+  
+
+</mat-card-content>
+
+</mat-card>

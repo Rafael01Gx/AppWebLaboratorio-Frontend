@@ -21,6 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(),
     provideHttpClient(withFetch()),
-    provideEnvironmentNgxMask()
+    provideEnvironmentNgxMask(),
   ],
+  
 };

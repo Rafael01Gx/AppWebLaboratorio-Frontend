@@ -7,7 +7,8 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../../../core/services/ordem-de-servico/ordem-de-servico.service';
-import {IOrdemDeServicoResponse, IOrdensDeServico } from '../../../../shared/interfaces/IOrdemDeservico.interface';
+import {IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../../shared/interfaces/IOrdemDeservico.interface';
+import { DetalharOrdemDeServicoComponent } from '../../../modal/detalhar-ordem-de-servico/detalhar-ordem-de-servico.component';
 
 @Component({
   selector: 'app-gerenciar-os-autorizadas',
@@ -22,7 +23,7 @@ import {IOrdemDeServicoResponse, IOrdensDeServico } from '../../../../shared/int
   styleUrl: './gerenciar-os-autorizadas.component.scss'
 })
 export class GerenciarOsAutorizadasComponent {
-
+  #dialog = inject(MatDialog)
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
@@ -57,5 +58,15 @@ export class GerenciarOsAutorizadasComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+
+  openOsDetails(data: IOrdemDeServico){
+    this.#dialog.open(DetalharOrdemDeServicoComponent,{
+      minWidth:'50lvw',
+      minHeight:'70lvh',
+      maxHeight:'90lvh',
+      data:data,
+    })
   }
 }

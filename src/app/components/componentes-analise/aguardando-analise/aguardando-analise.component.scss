@@ -5,6 +5,10 @@
     }
       table {
           width: 100%;
+
+          td:hover{
+            cursor: pointer;
+          }
         }
         
         tr.example-detail-row {

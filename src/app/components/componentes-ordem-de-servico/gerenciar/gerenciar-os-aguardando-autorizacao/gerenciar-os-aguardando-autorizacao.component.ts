@@ -14,6 +14,7 @@ import {} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AutorizarOsComponent } from '../../../modal/gerenciar-os/autorizar-os/autorizar-os.component';
+import { IAmostrasCollection } from '../../../../shared/interfaces/IAmostra.interface';
 
 
 
@@ -77,7 +78,7 @@ export class GerenciarOsAguardandoAutorizacaoComponent {
     }
   }
 
-  getAmostrasValues(amostras: { [key: string]: any }) {
+  getAmostrasValues(amostras:  IAmostrasCollection) {
     return Object.values(amostras);
   }
 

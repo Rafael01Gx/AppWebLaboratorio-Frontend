@@ -17,11 +17,15 @@
       td, th {
         width: 25%;      
       }
+
+      td:hover{
+        cursor: pointer;
+      }
       th  {
        background: var(--gray-100);
       }
       .t-center{
         text-align: center;
-      
+       
   }
 }}

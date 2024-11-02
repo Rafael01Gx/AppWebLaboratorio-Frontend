@@ -1,0 +1,9 @@
+:host{
+    table{
+        td{
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
