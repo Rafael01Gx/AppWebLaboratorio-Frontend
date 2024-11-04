@@ -4,16 +4,24 @@
     width: 100%;
     border-radius: 5px;
 
-
-
     .close-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
       width: 100%;
+      max-width: 100%;
+      width: 100%;
+      max-width: 100%;
       height: 25px;
+
       background: var(--red-to-pink-to-purple-horizontal-gradient);
       padding: 5px;
+
       display: flex;
       align-items: center;
       justify-content: end;
+
       mat-icon {
         margin-right: 5px;
         color: white;
@@ -25,12 +33,17 @@
       }
     }
     mat-card-header {
+      position: sticky;
+      top: 25px;
+      z-index: 9;
       width: 100%;
+
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
       text-align: center;
+
       color: var(--gray-700);
       background: var(--ligth-white-gradient);
 
@@ -57,19 +70,17 @@
     }
 
     mat-card-content {
-
-        p{
-            color: var(--red-10);
-             span{
-                 
-                 color: var(--blue-10);
-             }
-         }
-         h3 {
-            text-transform: uppercase;
-            font-size: 1rem;
-            color: var(--gray-400);
-          }
+      p {
+        color: var(--red-10);
+        span {
+          color: var(--blue-10);
+        }
+      }
+      h3 {
+        text-transform: uppercase;
+        font-size: 1rem;
+        color: var(--gray-400);
+      }
 
       color: var(--gray-700);
       font-weight: 500;
@@ -91,9 +102,8 @@
           opacity: 0.8;
           background: var(--red-10);
         }
-       
       }
-      .itens{
+      .itens {
         width: 100%;
         display: flex;
         text-align: center;
@@ -127,11 +137,21 @@
           align-items: center;
           gap: 20px;
         }
-
-        
-      }& .observacao{
+      }
+      & .observacao {
         background: var(--gray-100);
-    }
+      }
+
+      .btn-iniciar-analise {
+        display: flex;
+        justify-content: flex-end;
+
+        margin: 10px 0;
+
+        button {
+          border-radius: 5px;
+        }
+      }
     }
   }
 }

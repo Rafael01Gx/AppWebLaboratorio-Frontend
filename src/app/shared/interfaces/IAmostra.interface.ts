@@ -1,4 +1,4 @@
-import { ISolicitante } from "./IOrdemDeservico.interface";
+import { ISolicitante, TStatus } from "./IOrdemDeservico.interface";
 
 export interface IAmostra{   
 _id?:string,
@@ -7,7 +7,7 @@ nome_amostra?:string,
 data_amostra?:string,
 ensaios_solicitados?:string
 solicitante?: ISolicitante,
-status?: string,
+status?: TStatus,
 resultado?:object,
 createdAt?:string;
 updatedAt?: string,

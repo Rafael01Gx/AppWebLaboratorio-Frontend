@@ -1,64 +1,75 @@
 <mat-card>
-    <div class="close-bar"> <mat-icon (click)="closeDialog()">close</mat-icon></div>
-    <mat-card-header>
-        <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" >
-        <h2>Detalhes</h2>
-        <div class="os-number">Ordem de Serviço <span> {{data.numeroOs}} <br> {{data.data_solicitacao}}</span>   
-        </div>
-    </mat-card-header>
-    
-    <mat-card-content>
-   
+  <div class="close-bar">
+    <mat-icon (click)="closeDialog()">close</mat-icon>
+  </div>
+  <mat-card-header>
+    <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" />
+    <h2>{{ !exibir() ? "Detalhes" : "Programar Análise" }}</h2>
+    <div class="os-number">
+      Ordem de Serviço
+      <span>
+        {{ data.numeroOs }} <br />
+        {{ data.data_solicitacao }}</span
+      >
+    </div>
+  </mat-card-header>
 
-            <div class="divisor">
-                <div></div>
-                <h3>Dados do solicitante</h3>
-                <div></div>
-              </div>
-          
+  <mat-card-content>
+    <div class="divisor">
+      <div></div>
+      <h3>Dados do solicitante</h3>
+      <div></div>
+    </div>
 
-            <div class="dados-solicitante">
-                <p>Nome:  <span>{{data.solicitante?.name}}</span></p>
-                <p>E-mail: <span>{{data.solicitante?.email}}</span></p>
-                <p>Telefone: <span>{{data.solicitante?.phone!.toString()| mask: "(00) 0 0000-0000"}}</span></p>
+    <div class="dados-solicitante">
+      <p>
+        Nome: <span>{{ data.solicitante?.name }}</span>
+      </p>
+      <p>
+        E-mail: <span>{{ data.solicitante?.email }}</span>
+      </p>
+      <p>
+        Telefone:
+        <span>{{
+          data.solicitante?.phone!.toString() | mask : "(00) 0 0000-0000"
+        }}</span>
+      </p>
+    </div>
 
-            </div>
+    <div class="divisor">
+      <div></div>
+    </div>
+    <div class="itens">
+      <h3>Itens:</h3>
+    </div>
 
-            
-            <div class="divisor">
-                <div></div>               
-              </div>                
-            <div class="itens">
-                <h3>Itens:</h3>
-                
-           </div>
-              
+    @for(item of getAmostrasValues(data.amostras) ;track item){
 
-              @for(item of getAmostrasValues(data.amostras) ;track item){
+    <div class="dados-amostras">
+      <div>
+        <p>
+          Identificação: <span>{{ item.nome_amostra?.toUpperCase() }}</span>
+        </p>
+        <p>
+          Data: <span>{{ item.data_amostra }}</span>
+        </p>
+      </div>
+      <p>
+        Ensaios :
+        <span> {{ item.ensaios_solicitados?.replaceAll(",", " | ") }} </span>
+      </p>
+    </div>
 
-                <div class="dados-amostras">
-                    <div>
-                    <p>Identificação:  <span>{{item.nome_amostra?.toUpperCase()}}</span></p>
-                    <p>Data: <span>{{item.data_amostra}}</span></p> </div>
-                    <p>Ensaios : <span> {{item.ensaios_solicitados?.replaceAll(','," | ")}} </span></p>   
-                </div>
+    }
 
-                
-              }
-
-              <div class="dados-amostras observacao">
-                
-                <p>Observação: </p>
-                <div><span>{{data.observacao}}</span></div>
-                
-            </div>
-              
-
-
-    
-      
-    
-    </mat-card-content>
-    
-    </mat-card>
-    
+    <div class="dados-amostras observacao">
+      <p>Observação:</p>
+      <div>
+        <span>{{ data.observacao }}</span>
+      </div>
+    </div>
+    <div class="btn-iniciar-analise">
+      <button mat-raised-button (click)="expand()">Iniciar Análise</button>
+    </div>
+  </mat-card-content>
+</mat-card>

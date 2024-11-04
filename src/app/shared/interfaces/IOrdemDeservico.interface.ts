@@ -25,10 +25,12 @@ export interface IOrdensDeServico {
     solicitante?: ISolicitante;
     amostras: IAmostrasCollection
     data_solicitacao: string;
-    status: string;
+    status: TStatus;
     data_recepcao?:string;
     prazo_inicio_fim?:string;
     observacao?:string;
     createdAt: string;
     updatedAt: string;
   }
+
+  export type TStatus = "Aguardando Autorização" | "Autorizada" | "Em Execução" | "Finalizada" | "Cancelada";

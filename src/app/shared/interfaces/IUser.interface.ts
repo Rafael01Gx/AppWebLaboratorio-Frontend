@@ -4,7 +4,9 @@ export interface IUserData {
     email?: string;
     phone?: string;
     authorization?: boolean;
-    level?: string;
+    level?: UserLevel;
     createdAt?: string;
   }
 
+
+export type UserLevel =  'Usuário'| 'Operador'| 'Administrador' ;

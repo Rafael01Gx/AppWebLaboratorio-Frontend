@@ -41,7 +41,7 @@ export class OsPendentesComponent implements OnInit {
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status !== 'Concluída');
+        this.listOs = response.ordemsDeServico.filter(os => os.status !== 'Finalizada');
         this.dataSource.data = this.listOs; 
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');
