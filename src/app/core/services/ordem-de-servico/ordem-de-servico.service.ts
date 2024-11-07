@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { INovaOs, IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IAtualizarOrdemDeServico, INovaOs, IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { IAmostra } from '../../../shared/interfaces/IAmostra.interface';
 
 @Injectable({
@@ -63,9 +63,9 @@ export class OrdemDeServicoService {
   #setListarEditarOrdensDeServico = signal<IOrdemDeServicoResponse| null>(null);
   public getEditarOrdensDeServico = this.#setListarEditarOrdensDeServico.asReadonly();
 
-  public httpEditarOrdemDeServico(id:string,status:string): Observable<IOrdemDeServicoResponse> {
+  public httpEditarOrdemDeServico(ordemDeServico:IAtualizarOrdemDeServico): Observable<IOrdemDeServicoResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<IOrdemDeServicoResponse>(`${this.#editarOrdemDeServicoUrl()}/${id}`,{status},{ headers }).pipe(
+    return this.#http.patch<IOrdemDeServicoResponse>(`${this.#editarOrdemDeServicoUrl()}/${ordemDeServico._id}`,{ordemDeServico},{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setListarEditarOrdensDeServico.set(res);

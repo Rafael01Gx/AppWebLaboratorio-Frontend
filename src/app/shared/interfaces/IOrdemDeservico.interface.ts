@@ -29,8 +29,18 @@ export interface IOrdensDeServico {
     data_recepcao?:string;
     prazo_inicio_fim?:string;
     observacao?:string;
+    observacao_adm?:string;
     createdAt: string;
     updatedAt: string;
+  }
+
+  export interface IAtualizarOrdemDeServico{
+    _id: string;
+    amostras?: IAmostrasCollection
+    status?: TStatus | undefined;
+    data_recepcao?:string;
+    prazo_inicio_fim?:string;
+    observacao_adm?:string;
   }
 
   export type TStatus = "Aguardando Autorização" | "Autorizada" | "Em Execução" | "Finalizada" | "Cancelada";

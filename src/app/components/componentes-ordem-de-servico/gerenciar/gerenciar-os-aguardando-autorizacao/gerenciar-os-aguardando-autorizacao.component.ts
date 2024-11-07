@@ -10,7 +10,6 @@ import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../.
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
-import {} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AutorizarOsComponent } from '../../../modal/gerenciar-os/autorizar-os/autorizar-os.component';

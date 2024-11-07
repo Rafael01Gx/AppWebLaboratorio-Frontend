@@ -4,7 +4,7 @@
   </div>
   <mat-card-header>
     <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" />
-    <h2>{{ !exibir() ? "Detalhes" : "Programar Análise" }}</h2>
+    <h2>Detalhes</h2>
     <div class="os-number">
       Ordem de Serviço
       <span>
@@ -29,10 +29,12 @@
         E-mail: <span>{{ data.solicitante?.email }}</span>
       </p>
       <p>
-        Telefone:
+        @if(data.solicitante?.phone){
+          Telefone:
         <span>{{
           data.solicitante?.phone!.toString() | mask : "(00) 0 0000-0000"
         }}</span>
+        }
       </p>
     </div>
 
@@ -69,7 +71,7 @@
       </div>
     </div>
     <div class="btn-iniciar-analise">
-      <button mat-raised-button (click)="expand()">Iniciar Análise</button>
+      <button mat-raised-button (click)="openDialog()">Iniciar Análise</button>
     </div>
   </mat-card-content>
 </mat-card>

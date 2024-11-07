@@ -1,12 +1,13 @@
 import { IAmostrasCollection } from './../../../shared/interfaces/IAmostra.interface';
 import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { IOrdemDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { NgxMaskPipe } from 'ngx-mask';
 import { MatButton } from '@angular/material/button';
 import { PrintPdfService } from '../../../core/services/impressao/print-pdf.service';
+import { AutorizarOsComponent } from '../gerenciar-os/autorizar-os/autorizar-os.component';
 
 
 @Component({
@@ -41,6 +42,19 @@ getAmostrasValues(amostras:IAmostrasCollection) {
 closeDialog(): void {
  this.dialogRef.close();
 }
+
+dialog = inject(MatDialog);
+
+openDialog(): void {
+  this.data.data_recepcao = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  this.dialog.open(AutorizarOsComponent, {
+    width: '400px',
+    data:this.data,
+  });
+
+  
+}
+
 
 
 

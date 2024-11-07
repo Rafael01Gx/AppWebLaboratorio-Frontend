@@ -1,11 +1,11 @@
 <div class="modal">
-    <h1 mat-dialog-title>Editar Status - Ordem de Serviço</h1>
+    <h1 mat-dialog-title>{{!programar_analise? "Editar Status - Ordem de Serviço":'Programar Análise' }}</h1>
 
     <div class="form-container">
 
         <div mat-dialog-content style="width: 100%;">
 
-      
+      @if(!programar_analise){
 <form [formGroup]="osStatusForm">
 
             <mat-form-field  style="width: 100%;">
@@ -25,9 +25,46 @@
             
 
            
-        </form>
+</form>}@else {
 
-          
+<form [formGroup]="programarAnaliseForm">
+
+  <mat-form-field  style="width: 100%;">
+    <mat-label>Num. Ordem de Serviço</mat-label>
+    <input type="text" matInput formControlName="numeroOs" [value]="data._id" readonly>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>Data da recepção</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="data_recepcao" >
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>Prazo estimado</mat-label>
+    <mat-date-range-input [rangePicker]="rangePicker">
+      <input matStartDate placeholder="Data Inicio" formControlName="data_inicio"  />
+      <input matEndDate placeholder="Data Fim" formControlName="data_fim"  />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #rangePicker>
+      <mat-date-range-picker-actions>
+        <button mat-button matDateRangePickerCancel>Cancelar</button>
+        <button mat-raised-button matDateRangePickerApply>Aplicar</button>
+      </mat-date-range-picker-actions>
+    </mat-date-range-picker>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>Observação</mat-label>
+    <textarea matInput placeholder="Ex. Ordem de prioridade..."></textarea>
+  </mat-form-field>
+
+</form>
+
+}    
           
     </div>
 
