@@ -64,7 +64,6 @@ export class GerenciarOsAutorizadasComponent {
   openOsDetails(data: IOrdemDeServico){
     this.#dialog.open(DetalharOrdemDeServicoComponent,{
       minWidth:'60lvw',
-      minHeight:'70lvh',
       maxHeight:'90lvh',
       data:data,
     })

@@ -107,7 +107,6 @@ export class AutorizarOsComponent implements OnInit {
     const data_recepcao = this.formatDate(this.programarAnaliseForm.value.data_recepcao ? new Date(this.programarAnaliseForm.value.data_recepcao) : null )
     const data_inicio = this.formatDate(this.programarAnaliseForm.value.data_inicio ? new Date(this.programarAnaliseForm.value.data_inicio) : null )
     const data_fim = this.formatDate(this.programarAnaliseForm.value.data_fim ? new Date(this.programarAnaliseForm.value.data_fim) : null )
-
     try {
       const ordemDeServico: IAtualizarOrdemDeServico = { _id: this.data._id };
       if (this.osStatusForm.valid) {
@@ -120,7 +119,6 @@ export class AutorizarOsComponent implements OnInit {
         ordemDeServico.observacao_adm = this.programarAnaliseForm.value.observacao!;
         ordemDeServico.status = 'Em Execução';
       }
-      console.log(ordemDeServico);
       
       this.#ordemDeServicoService
         .httpEditarOrdemDeServico(ordemDeServico)
@@ -132,7 +130,7 @@ export class AutorizarOsComponent implements OnInit {
           },
           error: (err) => this.#toastr.error(err.error.message),
         });
-
+        this.dialogRef.close(true);
         
     } catch (err) {
       console.log(err);

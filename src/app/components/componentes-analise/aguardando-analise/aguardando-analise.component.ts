@@ -28,14 +28,14 @@ export class AguardandoAnaliseComponent implements OnInit {
   lista_amostras: IAmostrasCollection[] = [] ;
 
 
-  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados'];
+  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados', 'prazo_inicio_fim'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Autorizada');
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Autorizada' && amostra.prazo_inicio_fim != 'Aguardando');
       this.dataSource.data = this.lista_amostras
 
     } else {

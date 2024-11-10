@@ -9,6 +9,8 @@ ensaios_solicitados?:string
 solicitante?: ISolicitante,
 status?: TStatus,
 resultado?:object,
+data_recepcao?:string,
+prazo_inicio_fim?:string,
 createdAt?:string;
 updatedAt?: string,
 }

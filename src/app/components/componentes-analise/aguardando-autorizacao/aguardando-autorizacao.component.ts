@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
+import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-aguardando-autorizacao',
@@ -21,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
-  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
+  imports: [NgClass,MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
   templateUrl: './aguardando-autorizacao.component.html',
   styleUrl: './aguardando-autorizacao.component.scss'
 })
@@ -40,9 +42,9 @@ export class AguardandoAutorizacaoComponent implements OnInit {
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status == 'Aguardando Autorização');
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status == 'Aguardando Autorização' || amostra.prazo_inicio_fim == 'Aguardando');
       this.dataSource.data = this.lista_amostras
-
+      
     } else {
       this.#toastr.error(response.message);
     }

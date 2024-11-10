@@ -47,9 +47,14 @@ dialog = inject(MatDialog);
 
 openDialog(): void {
   this.data.data_recepcao = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  this.dialog.open(AutorizarOsComponent, {
+ const auth_os_dialog =  this.dialog.open(AutorizarOsComponent, {
     width: '400px',
     data:this.data,
+  });
+  auth_os_dialog.afterClosed().subscribe(result => {
+    if (result) {
+      this.closeDialog();
+    }
   });
 
   

@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -16,10 +17,14 @@ import { NgxMaskPipe } from 'ngx-mask';
 export class DetalheDeAnaliseComponent implements OnInit {
   dialogRef = inject(MatDialogRef<DetalheDeAnaliseComponent>)
  data: IAmostra  = inject(MAT_DIALOG_DATA)
+
+ public analises: string[] = this.data.ensaios_solicitados?.split(',') || []
+
+
  
 
 ngOnInit(): void {
-  console.log(this.data)
+  console.log(this.analises)
 }
 
 
