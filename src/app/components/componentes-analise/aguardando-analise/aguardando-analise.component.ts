@@ -47,8 +47,9 @@ this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasR
 
 openAnalysisDetail(data: IAmostra) : void {
   this.#dialog.open(DetalheDeAnaliseComponent,{
-    minWidth:"90lvw",
-    minHeight:"90lvh",
+    width:"50lvw",
+    maxWidth:"90lvw",
+    maxHeight:"90lvh",
     data:data
   })
 
