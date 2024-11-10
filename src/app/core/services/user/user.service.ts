@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { IUserData } from '../../../shared/interfaces/IUser.interface';
+import { IUserData, IUserRecoveryPassword, IUserResponse } from '../../../shared/interfaces/IUser.interface';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { UsersResponse } from '../../../shared/models/response.type';
 import { UserResponse } from '../../../shared/models/userResponse.type';
@@ -16,7 +16,9 @@ export class UserService {
   #updateUserByIdUrl = signal(`${environment.api_url}/users/edit`);
   #updateUserAdmdUrl = signal(`${environment.api_url}/users/adm/edit`);
   #deletUserByIdUrl = signal(`${environment.api_url}/users/adm/delete`);
-  #CheckUserUrl = signal(`${environment.api_url}/users/`);
+  #checkUserUrl = signal(`${environment.api_url}/users/`);
+  #forgotPasswordUrl = signal(`${environment.api_url}/users/forgot-password`);
+  #resetPasswordUrl = signal(`${environment.api_url}/users/reset-Password`);
   
 
   //Buscar Todos os usuarios
@@ -53,7 +55,7 @@ export class UserService {
   
     public httpCheckUser(): Observable<IUserData> {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-      return this.#http.get<IUserData>(`${this.#CheckUserUrl()}`, { headers }).pipe(
+      return this.#http.get<IUserData>(`${this.#checkUserUrl()}`, { headers }).pipe(
         shareReplay(),
         tap((res) => {
           this.#setCheckUser.set(res);
@@ -67,9 +69,9 @@ export class UserService {
   public getUpdateUserById = this.#setUpdateUserById.asReadonly();
   
 
-  public httpUpdateUserById(id: string,name: string, email: string, phone: string, password: string, confirmpassword: string ): Observable<IUserData> {
+  public httpUpdateUserById(id: string,name: string, email: string, phone: string): Observable<IUserData> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<IUserData>(`${this.#updateUserByIdUrl()}/${id}`,{name,email,phone,password,confirmpassword},{ headers}).pipe(
+    return this.#http.patch<IUserData>(`${this.#updateUserByIdUrl()}/${id}`,{name,email,phone},{ headers}).pipe(
       shareReplay(),
       tap((res) => {
         this.#setUpdateUserById.set(res);
@@ -112,6 +114,33 @@ public httpDeletUserAdm(id: string): Observable<IUserData> {
     })
   );
 }
+
+#setUserForgotPassword = signal<IUserResponse | null>(null)
+public getUserForgotPassword = this.#setUserForgotPassword.asReadonly();
+
+public httpUserForgotPassword(email:string){
+  return this.#http.post<IUserResponse>(`${this.#forgotPasswordUrl()}`,{ email }).pipe(
+    shareReplay(),
+    tap((res) => {
+      this.#setUserForgotPassword.set(res);
+    })
+  );
+}
+
+#setUserRecoveryPassword = signal<IUserResponse | null>(null)
+public getUserRecoveryPassword = this.#setUserRecoveryPassword.asReadonly();
+
+public httpUserRecoveryPassword(user_recovery: IUserRecoveryPassword){
+  return this.#http.patch<IUserResponse>(`${this.#resetPasswordUrl()}`,{ user_recovery}).pipe(
+    shareReplay(),
+    tap((res) => {
+      this.#setUserRecoveryPassword.set(res);
+    })
+  );
+}
+
+
+
 
   constructor() {}
 }

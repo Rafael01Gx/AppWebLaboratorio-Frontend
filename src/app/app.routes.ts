@@ -18,6 +18,8 @@ import { GerenciarOsAguardandoAutorizacaoComponent } from './components/componen
 import { GerenciarOsAutorizadasComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-autorizadas/gerenciar-os-autorizadas.component';
 import { GerenciarOsEmExecucaoComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-em-execucao/gerenciar-os-em-execucao.component';
 import { GerenciarOsFinalizadasComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-finalizadas/gerenciar-os-finalizadas.component';
+import { ForgotPassowrdComponent } from './pages/forgot-passowrd/forgot-passowrd.component';
+import { RecoveryPasswordComponent } from './pages/recovery-password/recovery-password.component';
 
 export const routes: Routes = [
    {
@@ -32,8 +34,15 @@ export const routes: Routes = [
    {
       path: 'criarconta',
       component: SignupComponent
-     }
-     ,
+     },
+   {
+      path: 'forgot-password',
+      component: ForgotPassowrdComponent
+     },
+   {
+      path: 'recovery-password/reset_password',
+      component: RecoveryPasswordComponent
+     },
    {
       path: 'gerenciar-contas',
       component: DashboardComponent

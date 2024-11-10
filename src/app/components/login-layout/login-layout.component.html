@@ -20,6 +20,7 @@
       <button [hidden]="title== 'Sigin'" (click)="navigate()" mat-raised-button>
         {{ secondaryBtnText }}
       </button>
+      <span [hidden]="title != 'Login'"> Esqueceu a senha? <a [routerLink]="['/forgot-password']" >Recuperar</a></span>
       <span [hidden]="title != 'Sigin'"> Já tem uma conta? <a [routerLink]="['/login']" >Entrar</a></span>
     </div>
   </section>

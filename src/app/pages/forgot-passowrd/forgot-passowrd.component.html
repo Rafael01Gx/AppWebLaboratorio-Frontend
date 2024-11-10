@@ -1,0 +1,17 @@
+<app-login-layout title="Esqueci a Senha" primaryBtnText="Continuar" secondaryBtnText="Fazer login" (submit)="submit()" (navigate)="navigate()" [disablePrimaryBtn]="!forgotPasswordForm.valid">
+
+    
+    <form [formGroup]="forgotPasswordForm">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@exemplo.com">
+            @if (forgotPasswordForm.get('email')?.errors) {
+                <mat-error>{{matError()}}</mat-error>
+            }
+        </mat-form-field>  
+        
+
+
+    </form>
+
+</app-login-layout>

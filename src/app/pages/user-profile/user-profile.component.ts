@@ -24,7 +24,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule,NgxMaskDirective, NgxMaskPipe,RouterLink,MatButton,MatCheckbox],
+    MatInputModule,NgxMaskDirective, NgxMaskPipe,RouterLink,MatButton],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
@@ -45,15 +45,6 @@ export class UserProfileComponent implements OnInit {
     name: new FormControl("", [Validators.required, Validators.minLength(3)]),
     email: new FormControl("", [Validators.required, emailValidator()]),
     phone: new FormControl(""),
-    password: new FormControl("", [
-      Validators.minLength(6),
-      passwordValidator(),
-    ]),
-    confirmpassword: new FormControl('', [
-      Validators.minLength(6),
-      passwordValidator(),
-    ]),
-    alterarSenha: new FormControl(false),
   });
 
   ngOnInit(): void {
@@ -65,15 +56,13 @@ export class UserProfileComponent implements OnInit {
         name: response.name,
         email: response.email,
         phone: response.phone,
-        password: "",
-        confirmpassword: "",
       });
     });
   }
 
 
   public  atualizar() {
-    this.#userService.httpUpdateUserById(this.profileForm.value.id!,this.profileForm.value.name!,this.profileForm.value.email!,this.profileForm.value.phone!,this.profileForm.value.password!,this.profileForm.value.confirmpassword!).subscribe({
+    this.#userService.httpUpdateUserById(this.profileForm.value.id!,this.profileForm.value.name!,this.profileForm.value.email!,this.profileForm.value.phone!).subscribe({
       next: () => {
         this.#toastr.success("Usuário atualizado!");
       },

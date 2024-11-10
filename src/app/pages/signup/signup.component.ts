@@ -34,7 +34,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
-  // const { name, email, password, confirmpassword }
+
 
   #router = inject(Router);
   #loginService = inject(LoginService);

@@ -46,42 +46,6 @@
                 />
               </mat-form-field>
 
-            <div  class="divisor">
-                <div></div>
-                <span> Senha </span>
-                <div></div>
-              </div>
-
-              <div><mat-checkbox formControlName="alterarSenha" labelPosition ="before">Atualizar a senha ? </mat-checkbox>@if(profileForm.get('alterarSenha')?.value){ Sim }</div>
-              
-              @if(profileForm.get('alterarSenha')?.value){
-            <mat-form-field>
-              <mat-label>Senha</mat-label>
-              <input
-                type="password"
-                matInput
-                formControlName="password"
-                placeholder="********"
-              />
-              @if (!profileForm.get('password')?.value) {
-              <mat-error>A senha é obrigatória!</mat-error>
-  
-              }
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Confirme a senha</mat-label>
-              <input
-                type="password"
-                matInput
-                formControlName="confirmpassword"
-                placeholder="********"
-              />
-              @if (profileForm.get('confirmpassword')?.value !=
-              profileForm.get('password')?.value) {
-              <mat-error>As senhas não conferem!</mat-error>
-              }
-            </mat-form-field>
-        }
 
             <div class="form-actions">
                 <button mat-button [routerLink]="['/']" routerLinkActive="router-link-active" >Cancelar</button>
