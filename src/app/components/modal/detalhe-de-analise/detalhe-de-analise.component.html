@@ -1,37 +1,86 @@
 <mat-card>
-    <div class="close-bar"> <mat-icon (click)="closeDialog()">close</mat-icon></div>
-    <mat-card-header>
-        <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" >
-        <h2>Detalhes</h2>
-        <div class="os-number">Ordem de Serviço <span> {{data.numeroOs}} </span>   
-        </div>
-    </mat-card-header>
+  <div
+    class="close-bar"
+    [ngClass]="{
+      'bg-red-10': prazo_atual.includes('atraso'),
+      'bg-blue-10': prazo_atual.includes('restantes')
+    }"
+  >
+    <span> {{ prazo_atual }}</span>
+    <mat-icon (click)="closeDialog()">close</mat-icon>
+  </div>
+  <mat-card-header>
+    <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" />
+    <h2>Detalhes</h2>
+    <div class="os-number">
+      Ordem de Serviço <span> {{ data.numeroOs }} </span>
+    </div>
+  </mat-card-header>
 
-<mat-card-content>
+  <mat-card-content>
     @if(data){
-        {{data.solicitante?.name}}
-        {{data.solicitante?.email}}
-        {{data.solicitante?.phone!.toString()| mask: "(00) 0 0000-0000"}}
- 
-        {{data.nome_amostra}}
-        {{data.status}}
-        {{data.ensaios_solicitados}}
-        {{data.data_amostra}}
-        
 
-        <div>{{data.createdAt!}}</div>
+    <form [formGroup]="analiseForm">
+      <fieldset class="solicitante">
+        <legend>Solicitante</legend>
+        <mat-form-field style="width: 150px">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome_solicitante" readonly />
+        </mat-form-field>
+        <mat-form-field style="width: 300px">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email_solicitante" readonly />
+        </mat-form-field>
+        <mat-form-field style="width: 200px">
+          <mat-label>Contato</mat-label>
+          <input
+            matInput
+            formControlName="contato_solicitante"
+            mask="(00) 0 0000-0000"
+            readonly
+          />
+        </mat-form-field>
+      </fieldset>
+      <fieldset class="item">
+        <legend>Item</legend>
 
+        <mat-form-field>
+          <mat-label>Identificação</mat-label>
+          <input matInput formControlName="nome_amostra" readonly />
+        </mat-form-field>
 
+        <mat-form-field>
+          <mat-label>Data</mat-label>
+          <input matInput formControlName="data_amostra" readonly />
+        </mat-form-field>
 
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <input matInput formControlName="status_amostra" readonly />
+        </mat-form-field>
+
+        <fieldset class="item">
+          <legend>Análises</legend>
+            @if(data.resultado){
+                @for(item of analises ; track item){
+                    <fieldset class="analises">
+                      <legend>{{ item }}</legend>
+                    </fieldset>
+                    }
+            }
+<span style="width: 100%; text-align: center;"> "Ainda não foram lançados dados para este item!" </span>
+        </fieldset>
+      </fieldset>
+      <div class="footer">
+        <button mat-raised-button (click)="closeDialog()">
+          Iniciar análise
+        </button>
+      </div>
+    </form>
 
     }@else {
 
-        <p>Não existem dados para exibição</p>
+    <p>Não existem dados para exibição</p>
     }
-
-
-  
-
-</mat-card-content>
-
+  </mat-card-content>
 </mat-card>
