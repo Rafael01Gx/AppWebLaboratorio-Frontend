@@ -31,10 +31,8 @@ import { IResponseData } from '../../../shared/models/IResponseData';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatSelect,
-    MatOption,
     MatPaginator,
-    MatTableModule,],
+    MatTableModule],
   templateUrl: './configuracao-analise-lista.component.html',
   styleUrl: './configuracao-analise-lista.component.scss'
 })

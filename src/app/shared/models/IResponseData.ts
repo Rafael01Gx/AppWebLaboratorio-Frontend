@@ -24,6 +24,7 @@ export interface IConfiguracaoAnaliseData {
     [key: string]: IParametroItem;
   }
   
+  
   export interface IParametroItem {
     item: string;
     unidade_resultado: string;

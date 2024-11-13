@@ -61,21 +61,19 @@
 
         <fieldset class="item">
           <legend>Análises</legend>
-            @if(data.resultado){
                 @for(item of analises ; track item){
                     <fieldset class="analises">
                       <legend>{{ item }}</legend>
+                      <button (click)="openDialog(item)" mat-fab extended>
+                        {{ item }}
+                        <mat-icon>add</mat-icon>
+                      </button>
                     </fieldset>
                     }
-            }
-<span style="width: 100%; text-align: center;"> "Ainda não foram lançados dados para este item!" </span>
+         
+
         </fieldset>
       </fieldset>
-      <div class="footer">
-        <button mat-raised-button (click)="closeDialog()">
-          Iniciar análise
-        </button>
-      </div>
     </form>
 
     }@else {

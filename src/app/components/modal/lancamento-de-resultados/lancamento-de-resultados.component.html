@@ -1,1 +1,41 @@
-<p>lancamento-de-resultados works!</p>
+<mat-card>
+    <div
+      class="close-bar"
+      [ngClass]="{
+        'bg-red-10': prazo_atual.includes('atraso'),
+        'bg-blue-10': prazo_atual.includes('restantes')
+      }"
+    >
+      <span> {{ prazo_atual }}</span>
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+    <mat-card-header>
+      <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" />
+      <h2>{{ensaio}}</h2>
+      <div class="os-number">
+        Ordem de Serviço <span> {{ amostra.numeroOs }} </span>
+      </div>
+    </mat-card-header>
+  
+    <mat-card-content>
+        <mat-form-field>
+            <mat-label>Item</mat-label>
+            <mat-select (selectionChange)="selecionarConfiguracao($event.value)" >
+              @for (item of listConfigAnalises; track item) {
+              <mat-option [value]="item._id"
+                >{{ item.materia_prima.nome_descricao }}</mat-option             >
+              }
+
+            </mat-select>
+          </mat-form-field>
+
+@for (config of configuracaoSelecionada()?.item; track config) {
+  {{config}}
+}
+         
+         
+          
+
+    </mat-card-content>
+  </mat-card>
+  

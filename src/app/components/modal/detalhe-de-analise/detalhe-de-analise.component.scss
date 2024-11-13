@@ -83,27 +83,22 @@
           border-radius: 4px;
           .analises{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             width: 100%;
+            justify-content: flex-end;
+            align-content: center;
+            button{
+              height: 30px;
+              border-radius: 4px;
+              background:var(--blue-10);
+              color: white;
+              box-shadow:none;
+              
+            }
           }
         }
       }
-      .footer{
-        position: sticky;
-        bottom: 0;
-        z-index: 10;
-        width: 100%;
-        height: 50px;
-        background-color: whitesmoke;
 
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        
-        button{
-          border-radius: 5px;
-        }
-      }
     }
   }
 }

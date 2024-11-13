@@ -15,6 +15,9 @@ createdAt?:string;
 updatedAt?: string,
 }
 
+export interface IResultado { 
+  [key: string]: {};
+}
 export interface IAmostrasCollection {
     [key: string]: IAmostra;
   }
