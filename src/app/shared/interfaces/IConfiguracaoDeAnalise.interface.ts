@@ -36,15 +36,15 @@ export interface IConfigAnalise {
 }
 
 export interface IConfiguracaoDeAnaliseResponse {
-  configuracaoDeAnalise?: IConfiguracaoDeAnalise['configuracaoDeAnalise'];
+  configuracaoDeAnalise?: IConfigAnalise[];
   message?: string;
 }
 export interface IParametrosDeAnaliseCollection{
-    [key: string]: IParametrosDeAnalise
+    [key:number]: IParametrosDeAnalise
 }
 export interface IParametrosDeAnalise{
   item: string,
   unidade_resultado: string,
-  casas_decimais: number | string,
+  casas_decimais: number ,
  
 }

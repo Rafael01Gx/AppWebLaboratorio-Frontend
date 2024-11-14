@@ -1,85 +1,107 @@
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IAmostra, IResultado } from '../../../shared/interfaces/IAmostra.interface';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import {
+  IAmostra,
+  IResultado,
+} from '../../../shared/interfaces/IAmostra.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskDirective } from 'ngx-mask';
-import { NgClass } from '@angular/common';
-import { MatButton } from '@angular/material/button';
+import { CommonModule, JsonPipe, NgClass } from '@angular/common';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 import { ConfiguracaoDeAnaliseService } from '../../../core/services/configuracao-de-analise/configuracao-de-analise.service';
-import { IConfigAnalise, IConfiguracaoDeAnalise, IConfiguracaoDeAnaliseResponse } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
+import {
+  IConfigAnalise,
+  IConfiguracaoDeAnaliseResponse,
+  IParametrosDeAnaliseCollection,
+} from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MatSelectModule } from '@angular/material/select';
+import { ConfiguracaoAnaliseComponent } from '../../componentes-configuracao/configuracao-analise/configuracao-analise.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-lancamento-de-resultados',
   standalone: true,
-  imports: [ MatCardModule,
+  imports: [
+    MatCardModule,
     MatIcon,
     MatInputModule,
-    NgxMaskDirective,
     ReactiveFormsModule,
     NgClass,
-    MatButton,MatSelectModule],
+    MatSelectModule,
+    MatButtonModule,
+    CommonModule,
+    MatTableModule,
+  ],
   templateUrl: './lancamento-de-resultados.component.html',
-  styleUrl: './lancamento-de-resultados.component.scss'
+  styleUrl: './lancamento-de-resultados.component.scss',
 })
 export class LancamentoDeResultadosComponent implements OnInit {
   dialogRef = inject(MatDialogRef<LancamentoDeResultadosComponent>);
-  #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService)
-  #toastr = inject(ToastrService)
+  #dialog = inject(MatDialog);
+  #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService);
+  #toastr = inject(ToastrService);
   data = inject(MAT_DIALOG_DATA);
-  amostra : IAmostra = this.data[0]
-  ensaio : string = this.data[1]
+  helpersService = inject(HelpersService);
+  amostra: IAmostra = this.data[0];
+  ensaio: string = this.data[1];
   listConfigAnalises: IConfigAnalise[] = [];
 
+  configuracaoSelecionada = signal<IParametrosDeAnaliseCollection>({});
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.amostra.prazo_inicio_fim!.split('-')[1]);
-  resultados : IResultado = {}
-  configuracaoSelecionada = signal<IConfigAnalise['parametros_de_analise'] | undefined>(undefined);
+  resultados: IResultado = {};
 
-  constructor(
-    private cdRef: ChangeDetectorRef
-
-  ) { }
-  
+  constructor() {}
 
   ngOnInit(): void {
-    this.#configuracaoDeAnaliseService.httpListarConfiguracaoDeAnalise().subscribe((response: IConfiguracaoDeAnaliseResponse) => {
-      if (response && response.configuracaoDeAnalise) {
-        this.listConfigAnalises = response.configuracaoDeAnalise.map(
-          (item, index) => ({
-            ...item,
-            item: index + 1,
-          })
-        ).filter(os => os.tipo_de_analise.tipo == this.ensaio )
-        console.log(this.listConfigAnalises)
-      } else {
-        this.#toastr.error(response.message);
-      }
-    });
+    this.#configuracaoDeAnaliseService
+      .httpListarConfiguracaoDeAnalise()
+      .subscribe((response: IConfiguracaoDeAnaliseResponse) => {
+        if (response && response.configuracaoDeAnalise) {
+          this.listConfigAnalises = response.configuracaoDeAnalise;
+        } else {
+          this.#toastr.error(response.message);
+        }
+      });
   }
-  closeDialog(){
-    this.dialogRef.close()
-  }
-  getParamsValues(select:  any ) {
-    return Object.values(select);
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  getParamsValues(select: IParametrosDeAnaliseCollection) {
+    return Object.values(select);
   }
 
   selecionarConfiguracao(id: string): void {
-    const configuracao = this.listConfigAnalises.find(config => config._id === id);
+    const configuracao = this.listConfigAnalises.find(
+      (config) => config._id === id
+    );
     if (configuracao) {
-      this.configuracaoSelecionada.set(configuracao.parametros_de_analise); 
-      console.log('Configuração selecionada:', this.configuracaoSelecionada());
+      let teste = Object.values(configuracao.parametros_de_analise);
+      this.configuracaoSelecionada.set(teste);
     } else {
       this.#toastr.error('Configuração não encontrada');
     }
   }
-  
 
-
+  openDialogConfigAnalise(): void {
+    this.#dialog.open(ConfiguracaoAnaliseComponent, {
+      minHeight: '85vh',
+      maxHeight: '85vh',
+      minWidth: '65vw',
+      maxWidth: '65vw',
+    });
+  }
+  limitarCasasDecimais(event: any, casasDecimais: number): void {
+    this.helpersService.limitarCasasDecimais(event.target, casasDecimais);
+  }
 }

@@ -40,7 +40,7 @@ import { IResponseData } from '../../../shared/models/IResponseData';
 export class ConfiguracaoAnaliseListaComponent implements OnInit {
   #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService)
   #toastr = inject(ToastrService)
-
+ #dialog= inject(MatDialog) 
   listConfigAnalises: IConfiguracaoDeAnalise['configuracaoDeAnalise'] = [];
   dataSource = new MatTableDataSource(this.listConfigAnalises);
   displayedColumns: string[] = [
@@ -88,7 +88,7 @@ export class ConfiguracaoAnaliseListaComponent implements OnInit {
     exitAnimationDuration: string,
     tipo_de_analise:IConfiguracaoDeAnalise
   ): void {
-    const dialogDelete = this.dialog.open(DeletModalComponent, {
+    const dialogDelete = this.#dialog.open(DeletModalComponent, {
       width: '250px',
       data: { ...tipo_de_analise },
       enterAnimationDuration,
@@ -131,13 +131,12 @@ export class ConfiguracaoAnaliseListaComponent implements OnInit {
       });
   }
 
-  constructor(private dialog: MatDialog) {}
 
   openDialogConfigAnalise(
     enterAnimationDuration: string,
     exitAnimationDuration: string,
   ): void {
-    const dialogEdit = this.dialog.open(ConfiguracaoAnaliseComponent, {
+    const dialogEdit = this.#dialog.open(ConfiguracaoAnaliseComponent, {
       minHeight: '85vh',
       maxHeight: '85vh',
       minWidth: '65vw',
@@ -154,7 +153,7 @@ export class ConfiguracaoAnaliseListaComponent implements OnInit {
   }
 
   openDialogEditAnalise(enterAnimationDuration: string, exitAnimationDuration: string,row:IResponseData): void {
-    const dialogEdit = this.dialog.open(EditConfigAnaliseComponent, {
+    const dialogEdit = this.#dialog.open(EditConfigAnaliseComponent, {
       minHeight: '85vh',
       maxHeight: '85vh',
       minWidth: '65vw',

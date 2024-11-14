@@ -2,7 +2,7 @@ import { Component, Inject, inject, OnInit, signal, ViewChild } from '@angular/c
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators,FormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
-import { MatOptgroup, MatOption } from '@angular/material/core';
+import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -19,9 +19,9 @@ import { IParametros, IParametrosResponse } from '../../../shared/interfaces/IPa
 import { ParametrosService } from '../../../core/services/parametros/parametros.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { map, Observable, startWith } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 import { ConfiguracaoDeAnaliseService } from '../../../core/services/configuracao-de-analise/configuracao-de-analise.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AsyncPipe } from '@angular/common';
 
 
 @Component({
@@ -39,7 +39,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     MatSelect,
     MatOption,
     MatPaginator,
-    MatTableModule,MatAutocompleteModule,MatOptgroup,AsyncPipe],
+    MatTableModule,MatAutocompleteModule,AsyncPipe],
   templateUrl: './configuracao-analise.component.html',
   styleUrl: './configuracao-analise.component.scss'
 })
@@ -106,7 +106,7 @@ dataSource = new MatTableDataSource<IParametrosDeAnalise>(
         const newParametros_de_analise: IParametrosDeAnalise = {
           item: item, 
           unidade_resultado: this.parametrosForm.value.unidade_resultado!,
-          casas_decimais: this.parametrosForm.value.casas_decimais!
+          casas_decimais: parseInt(this.parametrosForm.value.casas_decimais!)
         };
 
           const newId = Object.keys(this.parametros_de_analise).length + 1;

@@ -62,8 +62,8 @@ export class DetalheDeAnaliseComponent implements OnInit {
 
   openDialog(ensaio:string): void {
     const dialogRef = this.dialog.open(LancamentoDeResultadosComponent, {
-      width: '600px',
-      height:'600px',
+      minWidth: '50vw',
+      minHeight:'50vh',
       data: [this.data,ensaio] ,
     });
     this.dialogRef.close()

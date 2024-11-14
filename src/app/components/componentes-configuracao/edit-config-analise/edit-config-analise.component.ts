@@ -133,7 +133,7 @@ export class EditConfigAnaliseComponent implements OnInit {
         const newParametros_de_analise: IParametrosDeAnalise = {
           item: item,
           unidade_resultado: this.parametrosForm.value.unidade_resultado!,
-          casas_decimais: this.parametrosForm.value.casas_decimais!,
+          casas_decimais: parseInt(this.parametrosForm.value.casas_decimais!),
         };
         const newId = Object.keys(this.parametros_de_analise).length + 1;
         this.parametros_de_analise[newId] = newParametros_de_analise;
