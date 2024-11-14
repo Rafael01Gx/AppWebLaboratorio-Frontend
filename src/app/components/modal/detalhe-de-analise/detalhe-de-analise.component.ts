@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -62,8 +63,9 @@ export class DetalheDeAnaliseComponent implements OnInit {
 
   openDialog(ensaio:string): void {
     const dialogRef = this.dialog.open(LancamentoDeResultadosComponent, {
-      minWidth: '50vw',
+      minWidth: '40vw',
       minHeight:'50vh',
+      maxHeight:'90vh',
       data: [this.data,ensaio] ,
     });
     this.dialogRef.close()

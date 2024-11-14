@@ -37,7 +37,7 @@ export class UserModalComponent {
     this.#userService.httpUpdateUserAdm(id, authorization, level).subscribe({
       next: () => {
         this.#toastr.success("Usuário atualizado!");
-        this.dialogRef.close(true); // Fecha o modal e sinaliza atualização bem-sucedida
+        this.dialogRef.close(true);
       },
       error: (err) => this.#toastr.error(err.error.message),
     });

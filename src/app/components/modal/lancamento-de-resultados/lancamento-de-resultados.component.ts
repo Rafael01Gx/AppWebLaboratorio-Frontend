@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfiguracaoAnaliseComponent } from '../../componentes-configuracao/configuracao-analise/configuracao-analise.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-lancamento-de-resultados',
@@ -40,10 +41,17 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     MatTableModule,
   ],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { subscriptSizing: 'dynamic' },
+    },
+   ],
   templateUrl: './lancamento-de-resultados.component.html',
   styleUrl: './lancamento-de-resultados.component.scss',
 })
 export class LancamentoDeResultadosComponent implements OnInit {
+  @Input() title: string ="";
   dialogRef = inject(MatDialogRef<LancamentoDeResultadosComponent>);
   #dialog = inject(MatDialog);
   #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService);
@@ -66,7 +74,9 @@ export class LancamentoDeResultadosComponent implements OnInit {
       .httpListarConfiguracaoDeAnalise()
       .subscribe((response: IConfiguracaoDeAnaliseResponse) => {
         if (response && response.configuracaoDeAnalise) {
-          this.listConfigAnalises = response.configuracaoDeAnalise;
+          this.listConfigAnalises = response.configuracaoDeAnalise.filter(configuracaoDeAnalise => configuracaoDeAnalise.tipo_de_analise.tipo.trim().toLowerCase() === this.ensaio.trim().toLowerCase());
+          console.log(response.configuracaoDeAnalise)
+          console.log(this.ensaio)
         } else {
           this.#toastr.error(response.message);
         }

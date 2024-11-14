@@ -10,17 +10,13 @@
       <mat-icon (click)="closeDialog()">close</mat-icon>
     </div>
     <mat-card-header>
-      <img src="/img/logo_SFND - 200px.png" alt="Logotipo Laboratório Físico" />
       <h2>{{ensaio}}</h2>
-      <div class="os-number">
-        Ordem de Serviço <span> {{ amostra.numeroOs }} </span>
-      </div>
     </mat-card-header>
   
     <mat-card-content>
          <div class="form-controls">
             <mat-form-field>
-              <mat-label>Item</mat-label>
+              <mat-label>Configuração</mat-label>
               <mat-select (selectionChange)="selecionarConfiguracao($event.value)" >
                 @for (item of listConfigAnalises; track item) {
                 <mat-option [value]="item._id"
@@ -29,22 +25,20 @@
   
               </mat-select>
             </mat-form-field>
-            <button mat-flat-button (click)="openDialogConfigAnalise()"><mat-icon>add</mat-icon> Nova configuração</button>
           </div>
 
         </mat-card-content>
-        
-        <mat-card appearance="outlined">
-          <mat-card-content>
+        <mat-card appearance="raised">
+          <mat-card-content class="table-content">
             <table>
 
                 @for(config of getParamsValues(configuracaoSelecionada()); track config) {
-                <tr>
-                  <td>{{config.item}}</td>
+                <tr >
                   <td> 
                     <mat-form-field >
+                      <span matTextPrefix>{{config.item}} &nbsp; - </span>
                       <span matTextSuffix>&nbsp; {{config.unidade_resultado}}</span>
-                      <input type="number" matInput (blur)="limitarCasasDecimais($event, config.casas_decimais)">
+                      <input #data type="number" autocomplete="off"  matInput (blur)="limitarCasasDecimais($event, config.casas_decimais)">
                     </mat-form-field>
                 </tr>
               }
