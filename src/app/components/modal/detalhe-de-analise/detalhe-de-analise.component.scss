@@ -1,9 +1,26 @@
+
+::ng-deep .mat-mdc-dialog-surface {
+  border-radius: 5px !important;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .mat-mdc-dialog-surface::-webkit-scrollbar {
+  display: none;
+}
+
+::ng-deep .mat-mdc-dialog-surface { 
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
+
 :host {
   mat-card {
     display: flex;
     width: 100%;
     border-radius: 5px;
-    padding-bottom: 0;
+
     .close-bar {
       position: sticky;
       top: 0;
@@ -35,6 +52,11 @@
       }
     }
     mat-card-header {
+      position: sticky;
+      top:25px;
+      z-index: 10;
+
+
       width: 100%;
       display: flex;
       flex-direction: row;
@@ -100,5 +122,15 @@
       }
 
     }
+
   }
+  .fter{
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    margin-top: 5px;
+    width: 100%;
+    height: 10px;
+  }
+
 }

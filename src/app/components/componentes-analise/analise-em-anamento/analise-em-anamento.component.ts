@@ -19,33 +19,22 @@ import { EStatus } from '../../../shared/Enum/status.enum';
   styleUrl: './analise-em-anamento.component.scss'
 })
 export class AnaliseEmAnamentoComponent implements OnInit {
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)
 
   lista_amostras: IAmostrasCollection[] = [] ;
 
-
   displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
 ngOnInit(): void {
-this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
-    if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === EStatus.EmExecucao);
-      this.dataSource.data = this.lista_amostras
-
-    } else {
-      this.#toastr.error(response.message);
-    }
-  });
-
+  this.listarDados()
 }
-
-
-@ViewChild(MatPaginator) paginator!: MatPaginator;
-@ViewChild(MatSort) sort!: MatSort;
 
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
@@ -59,6 +48,25 @@ applyFilter(event: Event) {
   if (this.dataSource.paginator) {
     this.dataSource.paginator.firstPage();
   }
+}
+
+teste(amostra:IAmostra){
+const num_ensaios = amostra.ensaios_solicitados?.split(',')
+const num_resultados = amostra.resultados
+return console.log(num_resultados)
+}
+
+listarDados(){
+  this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
+    if (response && response.amostras) {
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === EStatus.EmExecucao);
+      this.dataSource.data = this.lista_amostras
+
+    } else {
+      this.#toastr.error(response.message);
+    }
+  });
+  
 }
 
 }

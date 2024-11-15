@@ -9,6 +9,8 @@ import { MatCard } from '@angular/material/card';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
 import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { EStatus } from '../../../shared/Enum/status.enum';
+import { ToastrService } from 'ngx-toastr';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-os-pendentes',
@@ -19,7 +21,8 @@ import { EStatus } from '../../../shared/Enum/status.enum';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatCard
+    MatCard,
+    MatIcon
   ],
   templateUrl: './os-pendentes.component.html',
   styleUrl: './os-pendentes.component.scss'
@@ -28,11 +31,12 @@ export class OsPendentesComponent implements OnInit {
   pageIco = 'manage_accounts';
   pageTitle = 'Gerenciar contas';
   #ordemDeServicoService = inject(OrdemDeServicoService);
+  #toast = inject(ToastrService)
   
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
-  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status'];
+  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status','excluir'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,17 +44,9 @@ export class OsPendentesComponent implements OnInit {
   constructor(private MatDialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
-      if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status !== EStatus.Finalizada);
-        this.dataSource.data = this.listOs; 
-      } else {
-        console.error('Nenhuma ordem de serviço encontrada na resposta');
-      }
-    });
+  this.listarDados()
   }
   ngAfterViewInit() {
-
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -62,4 +58,28 @@ export class OsPendentesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  excluirOs(id: IOrdemDeServico['_id']){
+    this.#ordemDeServicoService.httpExcluirOrdemDeServico(id).subscribe( (response) => {
+      if(response.message === 'Ordem de Serviço excluída com sucesso.'){
+        this.#toast.success(response.message);
+        this.listarDados()
+        
+      } else {
+        this.#toast.error(response.message);
+      }
+    }, (error) => { this.#toast.error(error.error.message);
+  })
+    
+  }
+
+listarDados(){
+  this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
+    if (response && response.ordemsDeServico) {
+      this.listOs = response.ordemsDeServico.filter(os => os.status !== EStatus.Finalizada);
+      this.dataSource.data = this.listOs; 
+    } else {
+      console.error('Nenhuma ordem de serviço encontrada na resposta');
+    }
+  });
+}
 }

@@ -134,7 +134,7 @@ export class LancamentoDeResultadosComponent implements OnInit {
     });
     this.resultados[this.ensaio]=resultadoObj
 
-    this.amostra.resultado=this.resultados
+    this.amostra.resultados=this.resultados
     this.amostra.status= EStatus.EmExecucao
     console.log(this.amostra )
 

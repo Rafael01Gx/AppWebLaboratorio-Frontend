@@ -70,8 +70,8 @@
 
 </div>
     <div mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Cancelar</button>
-      <button mat-button [mat-dialog-close]="data" (click)="httpEditarOrdemDeServico()">Salvar</button>
+      <button mat-button (click)="onNoClick()" >Cancelar</button>
+      <button mat-button [mat-dialog-close]="data" (click)="httpEditarOrdemDeServico()" [disabled]="programarAnaliseForm.valid || osStatusForm.valid ? false : true ">Salvar</button>
     </div>
     
 

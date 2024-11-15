@@ -37,6 +37,9 @@ export class GerenciarOsAutorizadasComponent {
   constructor(private MatDialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.listarOS()
+  }
+  listarOS(){
     this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
         this.listOs = response.ordemsDeServico.filter(os => os.status == "Autorizada");
@@ -62,10 +65,16 @@ export class GerenciarOsAutorizadasComponent {
 
 
   openOsDetails(data: IOrdemDeServico){
-    this.#dialog.open(DetalharOrdemDeServicoComponent,{
+   const dialogDetais = this.#dialog.open(DetalharOrdemDeServicoComponent,{
       minWidth:'60lvw',
       maxHeight:'90lvh',
       data:data,
-    })
+    }) 
+    dialogDetais.afterClosed().subscribe(result => {
+      if (result) {
+        this.listarOS()
+      }
+    });
   }
+
 }

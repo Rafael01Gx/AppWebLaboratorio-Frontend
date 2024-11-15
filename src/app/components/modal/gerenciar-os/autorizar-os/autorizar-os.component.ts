@@ -47,6 +47,7 @@ import { EStatus } from '../../../../shared/Enum/status.enum';
     MatCheckbox,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatDialogModule
   ],
   providers: [provideNativeDateAdapter(),DatePipe],
 
@@ -105,6 +106,7 @@ export class AutorizarOsComponent implements OnInit {
   }
 
   public httpEditarOrdemDeServico() {
+
     const data_recepcao = this.formatDate(this.programarAnaliseForm.value.data_recepcao ? new Date(this.programarAnaliseForm.value.data_recepcao) : null )
     const data_inicio = this.formatDate(this.programarAnaliseForm.value.data_inicio ? new Date(this.programarAnaliseForm.value.data_inicio) : null )
     const data_fim = this.formatDate(this.programarAnaliseForm.value.data_fim ? new Date(this.programarAnaliseForm.value.data_fim) : null )
@@ -137,6 +139,7 @@ export class AutorizarOsComponent implements OnInit {
       console.log(err);
       this.#toastr.error("Ocorreu um erro ao atualizar a 'Ordem de Serviço'");
     }
+  
   }
 
   opcoes_status: string[] = Object.values(EStatus);

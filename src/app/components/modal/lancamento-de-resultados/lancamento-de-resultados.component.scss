@@ -1,3 +1,13 @@
+::ng-deep .mat-mdc-dialog-surface{
+  border-radius: 5px !important;
+  padding: 0 !important;
+   }
+   ::ng-deep .cdk-overlay-dark-backdrop {
+  background: black !important;
+  opacity: 0.6 !important;
+
+   }
+
 :host {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -7,8 +17,8 @@
   mat-card {
     display: flex;
     width: 100%;
-    height: 100%; /* Garantir que ocupe 100% da altura disponível */
-    flex-direction: column; /* Para garantir que os filhos do mat-card fiquem empilhados verticalmente */
+    height: 100%; 
+    flex-direction: column;
     border-radius: 5px;
     padding-bottom: 0;
 
@@ -43,6 +53,11 @@
     }
 
     mat-card-header {
+      position: sticky;
+      top:25px;
+      z-index: 10;
+
+
       width: 100%;
       display: flex;
       flex-direction: row;
@@ -109,7 +124,11 @@
   }
 
   button {
+    
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
     border-radius: 5px;
-    margin-top: auto;
+
   }
 }

@@ -38,7 +38,7 @@
                     <mat-form-field >
                       <span matTextPrefix>{{config.item}} &nbsp; - </span>
                       <span matTextSuffix>&nbsp; {{config.unidade_resultado}}</span>
-                      <input #data type="number" [(ngModel)]="config.valor_resultado"  autocomplete="off"  matInput (blur)="limitarCasasDecimais($event, config.casas_decimais)">
+                      <input required #data type="number" [(ngModel)]="config.valor_resultado"  autocomplete="off"  matInput (blur)="limitarCasasDecimais($event, config.casas_decimais)">
                     </mat-form-field>
                 </tr>
               }
@@ -48,6 +48,6 @@
           </mat-card>
           
           
-          <button mat-raised-button (click)="criarObjeto()">Criar Objeto</button>
+          <button mat-raised-button (click)="criarObjeto()" [disabled]="data.length">Salvar</button>
         </mat-card>
   

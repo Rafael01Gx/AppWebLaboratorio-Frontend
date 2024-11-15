@@ -33,7 +33,10 @@ export class AguardandoAnaliseComponent implements OnInit {
 
 
 ngOnInit(): void {
-this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
+ this.listarAmostras()
+}
+listarAmostras(){
+  this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
       this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Autorizada' && amostra.prazo_inicio_fim != 'Aguardando');
       this.dataSource.data = this.lista_amostras
@@ -41,19 +44,23 @@ this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasR
     } else {
       this.#toastr.error(response.message);
     }
-  });  
+  }); 
 }
 
 
 openAnalysisDetail(data: IAmostra) : void {
-  this.#dialog.open(DetalheDeAnaliseComponent,{
+ const detalhesAnalise= this.#dialog.open(DetalheDeAnaliseComponent,{
     width:"50lvw",
     maxWidth:"90lvw",
     maxHeight:"90lvh",
     data:data
   })
-
-  }
+  detalhesAnalise.afterClosed().subscribe((res)=>{
+    if(res){
+      this.listarAmostras()
+    }
+  })
+}
 
 
 @ViewChild(MatPaginator) paginator!: MatPaginator;

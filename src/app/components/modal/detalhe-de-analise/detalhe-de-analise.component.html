@@ -81,4 +81,8 @@
     <p>Não existem dados para exibição</p>
     }
   </mat-card-content>
+  <div class="fter" [ngClass]="{
+    'bg-red-10': prazo_atual.includes('atraso'),
+    'bg-blue-10': prazo_atual.includes('restantes')
+  }"></div>
 </mat-card>

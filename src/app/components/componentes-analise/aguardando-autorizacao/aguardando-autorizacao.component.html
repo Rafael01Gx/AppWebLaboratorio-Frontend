@@ -3,7 +3,7 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
   </mat-form-field>
   
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8 min-heigth-100">
     <table mat-table [dataSource]="dataSource" matSort>
     
       <ng-container matColumnDef="numeroOs">
@@ -39,7 +39,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        <td class="mat-cell" colspan="4">{{input.value}}</td>
       </tr>
     </table>
   

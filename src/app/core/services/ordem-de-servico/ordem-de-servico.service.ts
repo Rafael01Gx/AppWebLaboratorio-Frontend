@@ -14,6 +14,7 @@ export class OrdemDeServicoService {
   #listarOsByUserIdUrl = signal(`${environment.api_url}/ordemdeservico/listar`);
   #listarTodasOrdensDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/listar/todas`);
   #editarOrdemDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/editar`);
+  #removerOrdemDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/deletar`);
 
   
 
@@ -66,6 +67,19 @@ export class OrdemDeServicoService {
   public httpEditarOrdemDeServico(ordemDeServico:IAtualizarOrdemDeServico): Observable<IOrdemDeServicoResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
     return this.#http.patch<IOrdemDeServicoResponse>(`${this.#editarOrdemDeServicoUrl()}/${ordemDeServico._id}`,{ordemDeServico},{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setListarEditarOrdensDeServico.set(res);
+      })
+    );   
+  }
+
+  #setExcluirEditarOrdensDeServico = signal<IOrdemDeServicoResponse| null>(null);
+  public getExcluirEditarOrdensDeServico = this.#setExcluirEditarOrdensDeServico.asReadonly();
+
+  public httpExcluirOrdemDeServico(id:IOrdemDeServico['_id']): Observable<IOrdemDeServicoResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.delete<IOrdemDeServicoResponse>(`${this.#removerOrdemDeServicoUrl()}/${id}`,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setListarEditarOrdensDeServico.set(res);

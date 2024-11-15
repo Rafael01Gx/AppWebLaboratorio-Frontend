@@ -8,7 +8,7 @@ data_amostra?:string,
 ensaios_solicitados?:string
 solicitante?: ISolicitante,
 status?: TStatus,
-resultado?:IResultadoCollection,
+resultados?:IResultadoCollection,
 data_recepcao?:string,
 prazo_inicio_fim?:string,
 createdAt?:string;

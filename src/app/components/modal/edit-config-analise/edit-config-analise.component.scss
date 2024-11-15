@@ -1,4 +1,21 @@
+
+::ng-deep .mat-mdc-dialog-surface {
+  border-radius: 5px !important;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .mat-mdc-dialog-surface::-webkit-scrollbar {
+  display: none;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
 :host {
+
     mat-card{
 
        margin: 20px;

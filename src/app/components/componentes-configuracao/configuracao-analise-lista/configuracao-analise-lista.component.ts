@@ -7,7 +7,6 @@ import { MatFormField, MatLabel, MatFormFieldModule } from '@angular/material/fo
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSelect } from '@angular/material/select';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IConfiguracaoDeAnalise, IConfiguracaoDeAnaliseResponse } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { MatSort } from '@angular/material/sort';
@@ -16,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfiguracaoAnaliseComponent } from '../configuracao-analise/configuracao-analise.component';
-import { EditConfigAnaliseComponent } from '../edit-config-analise/edit-config-analise.component';
+import { EditConfigAnaliseComponent } from '../../modal/edit-config-analise/edit-config-analise.component';
 import { IResponseData } from '../../../shared/models/IResponseData';
 
 @Component({

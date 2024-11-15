@@ -1,7 +1,7 @@
 import { style } from '@angular/animations';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { IAmostra } from '../../../shared/interfaces/IAmostra.interface';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -21,7 +21,7 @@ import { LancamentoDeResultadosComponent } from '../lancamento-de-resultados/lan
     NgxMaskDirective,
     ReactiveFormsModule,
     NgClass,
-    MatButtonModule,MatIconModule
+    MatButtonModule,MatIconModule,MatDialogModule
   ],
   templateUrl: './detalhe-de-analise.component.html',
   styleUrl: './detalhe-de-analise.component.scss',
@@ -67,7 +67,12 @@ export class DetalheDeAnaliseComponent implements OnInit {
       maxHeight:'90vh',
       data: [this.data,ensaio] ,
     });
-    this.dialogRef.close()
+    dialogRef.afterClosed().subscribe((res)=>{
+      if(res){
+        this.dialogRef.close(true)
+      }
+    })
+    
   }
 
 

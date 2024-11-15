@@ -53,7 +53,7 @@ openDialog(): void {
   });
   auth_os_dialog.afterClosed().subscribe(result => {
     if (result) {
-      this.closeDialog();
+     this.dialogRef.close(true)
     }
   });
 
