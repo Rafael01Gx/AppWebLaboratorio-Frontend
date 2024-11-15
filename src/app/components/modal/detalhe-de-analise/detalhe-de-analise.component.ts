@@ -3,11 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { IAmostra } from '../../../shared/interfaces/IAmostra.interface';
+import { IAmostra, IResultado, IResultadoCollection } from '../../../shared/interfaces/IAmostra.interface';
 import { NgxMaskDirective } from 'ngx-mask';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 import { MatButtonModule } from '@angular/material/button';
 import { LancamentoDeResultadosComponent } from '../lancamento-de-resultados/lancamento-de-resultados.component';
@@ -21,7 +21,7 @@ import { LancamentoDeResultadosComponent } from '../lancamento-de-resultados/lan
     NgxMaskDirective,
     ReactiveFormsModule,
     NgClass,
-    MatButtonModule,MatIconModule,MatDialogModule
+    MatButtonModule,MatIconModule,MatDialogModule,JsonPipe
   ],
   templateUrl: './detalhe-de-analise.component.html',
   styleUrl: './detalhe-de-analise.component.scss',
@@ -32,7 +32,7 @@ export class DetalheDeAnaliseComponent implements OnInit {
   data: IAmostra = inject(MAT_DIALOG_DATA);
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.data.prazo_inicio_fim!.split('-')[1]);
-
+ resultados :IResultadoCollection ={}
   public analises: string[] = this.data.ensaios_solicitados?.split(',') || [];
 
 
@@ -54,7 +54,7 @@ export class DetalheDeAnaliseComponent implements OnInit {
       data_amostra: this.data.data_amostra,
       status_amostra: this.data.status,
     });
-
+    this.resultados= this.data.resultados || {};
   }
 
   closeDialog(): void {
@@ -69,11 +69,11 @@ export class DetalheDeAnaliseComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res)=>{
       if(res){
-        this.dialogRef.close(true)
+       this.data = res
+       console.log(res)
       }
     })
     
   }
-
 
 }

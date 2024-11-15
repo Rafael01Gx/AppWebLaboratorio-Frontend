@@ -43,35 +43,34 @@ import { EStatus } from '../../../shared/Enum/status.enum';
     MatButtonModule,
     CommonModule,
     MatTableModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { subscriptSizing: 'dynamic' },
     },
-   ],
+  ],
   templateUrl: './lancamento-de-resultados.component.html',
   styleUrl: './lancamento-de-resultados.component.scss',
 })
 export class LancamentoDeResultadosComponent implements OnInit {
-  @Input() title: string ="";
+  @Input() title: string = '';
   dialogRef = inject(MatDialogRef<LancamentoDeResultadosComponent>);
   #dialog = inject(MatDialog);
   #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService);
   #toastr = inject(ToastrService);
-  #amostraService= inject(AmostraService);
+  #amostraService = inject(AmostraService);
   data = inject(MAT_DIALOG_DATA);
   helpersService = inject(HelpersService);
   amostra: IAmostra = this.data[0];
   ensaio: string = this.data[1];
   listConfigAnalises: IConfigAnalise[] = [];
-  
 
   configuracaoSelecionada = signal<IParametrosDeAnaliseCollection>({});
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.amostra.prazo_inicio_fim!.split('-')[1]);
-  resultados: IResultadoCollection = {}
+
 
   constructor() {}
 
@@ -80,8 +79,12 @@ export class LancamentoDeResultadosComponent implements OnInit {
       .httpListarConfiguracaoDeAnalise()
       .subscribe((response: IConfiguracaoDeAnaliseResponse) => {
         if (response && response.configuracaoDeAnalise) {
-          this.listConfigAnalises = response.configuracaoDeAnalise.filter(configuracaoDeAnalise => configuracaoDeAnalise.tipo_de_analise.tipo.trim().toLowerCase() === this.ensaio.trim().toLowerCase());
-
+          this.listConfigAnalises = response.configuracaoDeAnalise.filter(
+            (configuracaoDeAnalise) =>
+              configuracaoDeAnalise.tipo_de_analise.tipo
+                .trim()
+                .toLowerCase() === this.ensaio.trim().toLowerCase()
+          );
         } else {
           this.#toastr.error(response.message);
         }
@@ -121,32 +124,50 @@ export class LancamentoDeResultadosComponent implements OnInit {
   }
 
   criarObjeto(): void {
+    const valoresFaltantes = Object.values(this.configuracaoSelecionada()).some(
+      (config) =>
+        config.valor_resultado === undefined || config.valor_resultado === ''
+    );
+    if (valoresFaltantes) {
+      this.#toastr.error(
+        'Por favor, preencha todos os campos!.'
+      );
+      return;
+    }
+
     const resultadoObj: IResultado = {};
     Object.values(this.configuracaoSelecionada()).forEach((config, index) => {
-      if (config.valor_resultado !== undefined && config.valor_resultado !== '') {
+      if (
+        config.valor_resultado !== undefined &&
+        config.valor_resultado !== ''
+      ) {
         resultadoObj[(index + 1).toString()] = {
           item: config.item,
-          valor_resultado: config.valor_resultado,     // Captura o valor preenchido pelo usuário
+          valor_resultado: config.valor_resultado, // Captura o valor preenchido pelo usuário
           unidade_resultado: config.unidade_resultado,
           casas_decimais: config.casas_decimais,
         };
       }
     });
-    this.resultados[this.ensaio]=resultadoObj
+    if(!this.amostra.resultados) this.amostra.resultados = {[this.ensaio]:resultadoObj}
+    if(!this.amostra.resultados![this.ensaio]) this.amostra.resultados[this.ensaio] ={}
 
-    this.amostra.resultados=this.resultados
-    this.amostra.status= EStatus.EmExecucao
-    console.log(this.amostra )
+    this.amostra.resultados![this.ensaio]= resultadoObj
+    this.amostra.status = EStatus.EmExecucao;
 
-   this.#amostraService.httpEditarAmostra(this.data[0]._id,this.amostra).subscribe({
-      next: () => {
-        this.#toastr.success('Resultados lançados com sucesso!');
-        this.closeDialog();
-      },
-      error: (error) => {
-        this.#toastr.error('Erro ao lançar resultados: ', error.error.message);
-      },
-    }) 
+    this.#amostraService
+      .httpEditarAmostra(this.data[0]._id, this.amostra)
+      .subscribe({
+        next: () => {
+          this.#toastr.success('Resultados lançados com sucesso!');
+          this.dialogRef.close(this.amostra);
+        },
+        error: (error) => {
+          this.#toastr.error(
+            'Erro ao lançar resultados: ',
+            error.error.message
+          );
+        },
+      });
   }
-
 }

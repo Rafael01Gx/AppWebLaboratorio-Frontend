@@ -35,6 +35,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ensaios_requeridos </th>
         <td mat-cell *matCellDef="let row" > {{row.ensaios_solicitados}} </td>
       </ng-container>
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Editar </th>
+        <td mat-cell *matCellDef="let row" > <mat-icon (click)="openAnalysisDetail(row)">edit</mat-icon> </td>
+      </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -64,6 +64,7 @@
                 @for(item of analises ; track item){
                     <fieldset class="analises">
                       <legend>{{ item }}</legend>
+                      {{resultados[item] | json}}                    
                       <button (click)="openDialog(item)" mat-fab extended>
                         {{ item }}
                         <mat-icon>add</mat-icon>

@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { EStatus } from '../../../shared/Enum/status.enum';
+import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-analise-em-anamento',
@@ -23,12 +25,13 @@ export class AnaliseEmAnamentoComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  #dialog = inject(MatDialog)
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)
 
   lista_amostras: IAmostrasCollection[] = [] ;
 
-  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados'];
+  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados', 'editar'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
@@ -68,6 +71,16 @@ listarDados(){
   });
   
 }
+openAnalysisDetail(data: IAmostra) : void {
+  const detalhesAnalise= this.#dialog.open(DetalheDeAnaliseComponent,{
+     width:"50lvw",
+     maxWidth:"90lvw",
+     maxHeight:"90lvh",
+     data:data
+   })
+
+ }
+ 
 
 }
 
