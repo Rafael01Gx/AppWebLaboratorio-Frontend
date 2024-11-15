@@ -32,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
+import { EStatus } from '../../../../shared/Enum/status.enum';
 
 @Component({
   selector: 'app-autorizar-os',
@@ -117,7 +118,7 @@ export class AutorizarOsComponent implements OnInit {
         ordemDeServico.prazo_inicio_fim = `${data_inicio} - ${data_fim}`;
         ordemDeServico.data_recepcao = data_recepcao;
         ordemDeServico.observacao_adm = this.programarAnaliseForm.value.observacao!;
-        ordemDeServico.status = 'Em Execução';
+        ordemDeServico.status = EStatus.EmExecucao;
       }
       
       this.#ordemDeServicoService
@@ -138,11 +139,5 @@ export class AutorizarOsComponent implements OnInit {
     }
   }
 
-  opcoes_status = [
-    'Aguardando Autorização',
-    'Autorizada',
-    'Em Execução',
-    'Finalizada',
-    'Cancelada',
-  ];
+  opcoes_status: string[] = Object.values(EStatus);
 }

@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
   selector: 'app-analise-em-anamento',
@@ -32,7 +33,7 @@ export class AnaliseEmAnamentoComponent implements OnInit {
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Em Execução');
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === EStatus.EmExecucao);
       this.dataSource.data = this.lista_amostras
 
     } else {

@@ -3,20 +3,21 @@
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
   }
+
   mat-card {
     display: flex;
     width: 100%;
-
+    height: 100%; /* Garantir que ocupe 100% da altura disponível */
+    flex-direction: column; /* Para garantir que os filhos do mat-card fiquem empilhados verticalmente */
     border-radius: 5px;
     padding-bottom: 0;
+
     .close-bar {
       position: sticky;
       top: 0;
       z-index: 10;
-
       width: 100%;
       height: 25px;
-
       padding: 5px;
       display: flex;
       align-items: center;
@@ -29,6 +30,7 @@
         transform: translateX(-50%);
         align-self: center;
       }
+
       mat-icon {
         margin-right: 5px;
         color: white;
@@ -39,6 +41,7 @@
         }
       }
     }
+
     mat-card-header {
       width: 100%;
       display: flex;
@@ -47,8 +50,8 @@
       justify-content: center;
       color: var(--gray-700);
       background: var(--ligth-white-gradient);
-
       border-radius: 5px;
+
       h2 {
         font-size: 1.5rem;
       }
@@ -58,6 +61,7 @@
       display: flex;
       flex-direction: column;
       padding-bottom: 0;
+      flex-grow: 1; /* Permite que o conteúdo ocupe o restante do espaço disponível */
 
       .form-controls {
         margin-top: 20px;
@@ -66,34 +70,46 @@
         flex-flow: row nowrap;
         align-items: baseline;
         gap: 10px;
+
         mat-form-field {
           flex-grow: 1;
         }
       }
+
       &.table-content {
         table {
           width: 100%;
           margin: auto;
           padding: 20px;
+
           mat-form-field {
             width: 100%;
             margin: 5px;
             height: 50px;
-            span{
+
+            span {
               color: var(--blue-10);
             }
-            input{
+
+            input {
               text-align: center;
             }
           }
+
           td {
             align-items: baseline;
           }
         }
       }
     }
-    .border-gray{
+
+    .border-gray {
       border: 1px solid var(--gray-700);
     }
+  }
+
+  button {
+    border-radius: 5px;
+    margin-top: auto;
   }
 }

@@ -7,11 +7,12 @@ import {
 import {
   IAmostra,
   IResultado,
+  IResultadoCollection,
 } from '../../../shared/interfaces/IAmostra.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, JsonPipe, NgClass } from '@angular/common';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 import { ConfiguracaoDeAnaliseService } from '../../../core/services/configuracao-de-analise/configuracao-de-analise.service';
@@ -26,6 +27,8 @@ import { ConfiguracaoAnaliseComponent } from '../../componentes-configuracao/con
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { AmostraService } from '../../../core/services/amostra/amostra.service';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
   selector: 'app-lancamento-de-resultados',
@@ -40,6 +43,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     MatButtonModule,
     CommonModule,
     MatTableModule,
+    FormsModule
   ],
   providers: [
     {
@@ -56,16 +60,18 @@ export class LancamentoDeResultadosComponent implements OnInit {
   #dialog = inject(MatDialog);
   #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService);
   #toastr = inject(ToastrService);
+  #amostraService= inject(AmostraService);
   data = inject(MAT_DIALOG_DATA);
   helpersService = inject(HelpersService);
   amostra: IAmostra = this.data[0];
   ensaio: string = this.data[1];
   listConfigAnalises: IConfigAnalise[] = [];
+  
 
   configuracaoSelecionada = signal<IParametrosDeAnaliseCollection>({});
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.amostra.prazo_inicio_fim!.split('-')[1]);
-  resultados: IResultado = {};
+  resultados: IResultadoCollection = {}
 
   constructor() {}
 
@@ -75,8 +81,7 @@ export class LancamentoDeResultadosComponent implements OnInit {
       .subscribe((response: IConfiguracaoDeAnaliseResponse) => {
         if (response && response.configuracaoDeAnalise) {
           this.listConfigAnalises = response.configuracaoDeAnalise.filter(configuracaoDeAnalise => configuracaoDeAnalise.tipo_de_analise.tipo.trim().toLowerCase() === this.ensaio.trim().toLowerCase());
-          console.log(response.configuracaoDeAnalise)
-          console.log(this.ensaio)
+
         } else {
           this.#toastr.error(response.message);
         }
@@ -114,4 +119,34 @@ export class LancamentoDeResultadosComponent implements OnInit {
   limitarCasasDecimais(event: any, casasDecimais: number): void {
     this.helpersService.limitarCasasDecimais(event.target, casasDecimais);
   }
+
+  criarObjeto(): void {
+    const resultadoObj: IResultado = {};
+    Object.values(this.configuracaoSelecionada()).forEach((config, index) => {
+      if (config.valor_resultado !== undefined && config.valor_resultado !== '') {
+        resultadoObj[(index + 1).toString()] = {
+          item: config.item,
+          valor_resultado: config.valor_resultado,     // Captura o valor preenchido pelo usuário
+          unidade_resultado: config.unidade_resultado,
+          casas_decimais: config.casas_decimais,
+        };
+      }
+    });
+    this.resultados[this.ensaio]=resultadoObj
+
+    this.amostra.resultado=this.resultados
+    this.amostra.status= EStatus.EmExecucao
+    console.log(this.amostra )
+
+   this.#amostraService.httpEditarAmostra(this.data[0]._id,this.amostra).subscribe({
+      next: () => {
+        this.#toastr.success('Resultados lançados com sucesso!');
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.#toastr.error('Erro ao lançar resultados: ', error.error.message);
+      },
+    }) 
+  }
+
 }

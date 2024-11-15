@@ -11,6 +11,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { NgClass } from '@angular/common';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class AguardandoAutorizacaoComponent implements OnInit {
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status == 'Aguardando Autorização' || amostra.prazo_inicio_fim == 'Aguardando');
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status == EStatus.AguardandoAutorizacao || amostra.prazo_inicio_fim == 'Aguardando');
       this.dataSource.data = this.lista_amostras
       
     } else {

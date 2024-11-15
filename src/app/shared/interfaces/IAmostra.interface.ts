@@ -8,16 +8,25 @@ data_amostra?:string,
 ensaios_solicitados?:string
 solicitante?: ISolicitante,
 status?: TStatus,
-resultado?:object,
+resultado?:IResultadoCollection,
 data_recepcao?:string,
 prazo_inicio_fim?:string,
 createdAt?:string;
 updatedAt?: string,
 }
 
-export interface IResultado { 
-  [key: string]: {};
+export interface IResultadoCollection{ 
+  [key: string]: IResultado
 }
+export interface IResultado{ 
+    [key: string | number]:{
+      item: string,
+    valor_resultado:string | number,
+    unidade_resultado: string,
+    casas_decimais: number ,
+    }
+}
+
 export interface IAmostrasCollection {
     [key: string]: IAmostra;
   }

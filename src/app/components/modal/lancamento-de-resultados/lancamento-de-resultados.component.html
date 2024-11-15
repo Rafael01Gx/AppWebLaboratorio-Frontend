@@ -17,7 +17,7 @@
          <div class="form-controls">
             <mat-form-field>
               <mat-label>Configuração</mat-label>
-              <mat-select (selectionChange)="selecionarConfiguracao($event.value)" >
+              <mat-select #select (selectionChange)="selecionarConfiguracao($event.value)" >
                 @for (item of listConfigAnalises; track item) {
                 <mat-option [value]="item._id"
                   >{{ item.materia_prima.nome_descricao }}</mat-option             >
@@ -38,7 +38,7 @@
                     <mat-form-field >
                       <span matTextPrefix>{{config.item}} &nbsp; - </span>
                       <span matTextSuffix>&nbsp; {{config.unidade_resultado}}</span>
-                      <input #data type="number" autocomplete="off"  matInput (blur)="limitarCasasDecimais($event, config.casas_decimais)">
+                      <input #data type="number" [(ngModel)]="config.valor_resultado"  autocomplete="off"  matInput (blur)="limitarCasasDecimais($event, config.casas_decimais)">
                     </mat-form-field>
                 </tr>
               }
@@ -46,7 +46,8 @@
               </table>
             </mat-card-content>
           </mat-card>
-
-
-  </mat-card>
+          
+          
+          <button mat-raised-button (click)="criarObjeto()">Criar Objeto</button>
+        </mat-card>
   

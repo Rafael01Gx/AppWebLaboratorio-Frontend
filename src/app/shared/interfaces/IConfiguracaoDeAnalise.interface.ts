@@ -1,5 +1,3 @@
-import { IMateriaPrima } from "./IMateriasPrimas.interface";
-
 export interface IConfiguracaoDeAnalise {
   configuracaoDeAnalise: {
     _id: string;

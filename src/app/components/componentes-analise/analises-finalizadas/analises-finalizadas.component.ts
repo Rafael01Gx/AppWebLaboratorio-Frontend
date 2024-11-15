@@ -9,6 +9,7 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { IAmostrasCollection, IAmostrasResponse, IAmostra } from '../../../shared/interfaces/IAmostra.interface';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
   selector: 'app-analises-finalizadas',
@@ -32,7 +33,7 @@ export class AnalisesFinalizadasComponent  implements OnInit {
 ngOnInit(): void {
 this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
     if (response && response.amostras) {
-      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === 'Finalizada');
+      this.lista_amostras = Object.values(response.amostras).filter((amostra: IAmostra) => amostra.status === EStatus.Finalizada);
       this.dataSource.data = this.lista_amostras
 
     } else {

@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AutorizarOsComponent } from '../../../modal/gerenciar-os/autorizar-os/autorizar-os.component';
 import { IAmostrasCollection } from '../../../../shared/interfaces/IAmostra.interface';
+import { EStatus } from '../../../../shared/Enum/status.enum';
 
 
 
@@ -56,7 +57,7 @@ export class GerenciarOsAguardandoAutorizacaoComponent {
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status == "Aguardando Autorização");
+        this.listOs = response.ordemsDeServico.filter(os => os.status == EStatus.AguardandoAutorizacao);
         this.dataSource.data = this.listOs; 
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');
@@ -94,7 +95,7 @@ export class GerenciarOsAguardandoAutorizacaoComponent {
       if (result) {
         this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
           if (response && response.ordemsDeServico) {
-            this.listOs = response.ordemsDeServico.filter(os => os.status == "Aguardando Autorização");
+            this.listOs = response.ordemsDeServico.filter(os => os.status == EStatus.AguardandoAutorizacao);
             this.dataSource.data = this.listOs; 
           } else {
             console.error('Nenhuma ordem de serviço encontrada na resposta');

@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCard } from '@angular/material/card';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
 import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
   selector: 'app-os-pendentes',
@@ -41,7 +42,7 @@ export class OsPendentesComponent implements OnInit {
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status !== 'Finalizada');
+        this.listOs = response.ordemsDeServico.filter(os => os.status !== EStatus.Finalizada);
         this.dataSource.data = this.listOs; 
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');

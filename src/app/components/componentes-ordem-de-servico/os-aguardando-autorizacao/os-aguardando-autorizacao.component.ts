@@ -8,6 +8,7 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
 import { IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { MatDialog } from '@angular/material/dialog';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
   selector: 'app-os-aguardando-autorizacao',
@@ -39,7 +40,7 @@ export class OsAguardandoAutorizacaoComponent {
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status == "Aguardando Autorização");
+        this.listOs = response.ordemsDeServico.filter(os => os.status == EStatus.AguardandoAutorizacao);
         this.dataSource.data = this.listOs; 
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');

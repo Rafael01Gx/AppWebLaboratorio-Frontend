@@ -14,6 +14,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { IAmostrasCollection } from '../../../../shared/interfaces/IAmostra.interface';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { EStatus } from '../../../../shared/Enum/status.enum';
 
 
 @Component({
@@ -57,7 +58,7 @@ export class GerenciarOsEmExecucaoComponent {
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
-        this.listOs = response.ordemsDeServico.filter(os => os.status == "Em Execução");
+        this.listOs = response.ordemsDeServico.filter(os => os.status == EStatus.EmExecucao);
         this.dataSource.data = this.listOs; 
         console.log(this.listOs)
       } else {

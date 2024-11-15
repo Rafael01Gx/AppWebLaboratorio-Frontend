@@ -64,12 +64,11 @@ export class DetalheDeAnaliseComponent implements OnInit {
   openDialog(ensaio:string): void {
     const dialogRef = this.dialog.open(LancamentoDeResultadosComponent, {
       minWidth: '40vw',
-      minHeight:'50vh',
       maxHeight:'90vh',
       data: [this.data,ensaio] ,
     });
     this.dialogRef.close()
   }
 
-  
+
 }
