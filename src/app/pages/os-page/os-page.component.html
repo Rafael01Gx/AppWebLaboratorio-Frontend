@@ -1,3 +1,4 @@
+
 <app-header [pageIco]="pageIco" [pageTitle]="pageTitle"></app-header>
 <main>
     <div class="sidenav-container">
@@ -5,26 +6,27 @@
     </div>
     <div class="main-container">
         <app-main>
-        <!-- ngContent-->
+            <mat-card>
+                <mat-card-header>
+    
+                @for(link of linkOS ; track link ) {
+                    <div [routerLink]="[link.link]" routerLinkActive="active" class="navegacao" >
+                          {{link.name}} <mat-icon>{{link.ico}}</mat-icon>
+                    </div >
+                } 
+               </mat-card-header>               
+          
+            <mat-card-content >
 
-        <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z3 w-100 h-100">
-            <mat-tab label="Nova" > 
-                <app-nova-os />
-            </mat-tab>
-            <!--Tab 2-->
-            <mat-tab label="Pendentes">            
-                <app-os-pendentes/>          
-            </mat-tab>
-            <!--Tab 3-->
-            <mat-tab label="Finalizadas">
-
-                <app-os-finalizadas/>
                 
-            </mat-tab>
-          </mat-tab-group>
+                <router-outlet></router-outlet>
 
-        <!-- ngContent-->
+            
+            </mat-card-content>
+        </mat-card>
+      
         </app-main> 
     </div>
   
 </main>
+

@@ -61,14 +61,15 @@ export class OsPendentesComponent implements OnInit {
   }
   excluirOs(id: IOrdemDeServico['_id']){
     this.#ordemDeServicoService.httpExcluirOrdemDeServico(id).subscribe( (response) => {
-      if(response.message === 'Ordem de Serviço excluída com sucesso.'){
+      if(response.message){
         this.#toast.success(response.message);
-        this.listarDados()
-        
+        this.listarDados()      
       } else {
-        this.#toast.error(response.message);
+        
       }
-    }, (error) => { this.#toast.error(error.error.message);
+    }, (error) => {
+
+       this.#toast.error(error.error.message);
   })
     
   }

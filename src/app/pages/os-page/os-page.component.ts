@@ -1,20 +1,38 @@
-import { OsFinalizadasComponent } from '../../components/componentes-ordem-de-servico/os-finalizadas/os-finalizadas.component';
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 import { MainComponent } from '../../layouts/main/main.component';
-import { MatTabsModule } from '@angular/material/tabs';
-import { NovaOsComponent } from '../../components/componentes-ordem-de-servico/nova-os/nova-os.component';
-import { OsPendentesComponent } from '../../components/componentes-ordem-de-servico/os-pendentes/os-pendentes.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-os-page',
   standalone: true,
-  imports: [HeaderComponent,SidenavComponent,MainComponent,MatTabsModule,NovaOsComponent,OsFinalizadasComponent,OsPendentesComponent],
+  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,RouterLinkActive,RouterOutlet],
   templateUrl: './os-page.component.html',
   styleUrl: './os-page.component.scss'
 })
 export class OsPageComponent {
   pageIco = 'description'; //Materials icons name
   pageTitle = 'Ordens de Serviço';
+
+  linkOS= [
+    {
+      ico: 'edit_square',
+      name: 'Nova',
+      link: 'nova-ordem-de-servico',
+    },
+    {
+      ico: 'pending',
+      name: 'Pendentes',
+      link: 'aguardando-analise',
+    },
+    {
+      ico: 'done_all',
+      name: 'Finalizadas',
+      link: 'ordem-de-servico-concluidas',
+    }
+  ]
+
 }

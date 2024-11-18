@@ -10,7 +10,7 @@ import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 @Component({
   selector: 'app-manage-os',
   standalone: true,
-  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,NgClass,RouterLinkActive,RouterOutlet],
+  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,RouterLinkActive,RouterOutlet],
   templateUrl: './manage-os.component.html',
   styleUrl: './manage-os.component.scss'
 })

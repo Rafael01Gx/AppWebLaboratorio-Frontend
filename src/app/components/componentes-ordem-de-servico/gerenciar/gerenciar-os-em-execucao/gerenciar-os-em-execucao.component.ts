@@ -11,10 +11,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { NgxMaskPipe } from 'ngx-mask';
-import { IAmostrasCollection } from '../../../../shared/interfaces/IAmostra.interface';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EStatus } from '../../../../shared/Enum/status.enum';
+import { NavigationExtras, Router, RouterLink } from '@angular/router';
+
 
 
 @Component({
@@ -36,7 +37,8 @@ import { EStatus } from '../../../../shared/Enum/status.enum';
     MatIconModule,
     MatButtonModule,
     NgxMaskPipe,
-    MatProgressBarModule],
+    MatProgressBarModule,
+  RouterLink],
   templateUrl: './gerenciar-os-em-execucao.component.html',
   styleUrl: './gerenciar-os-em-execucao.component.scss'
 })
@@ -57,7 +59,7 @@ export class GerenciarOsEmExecucaoComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private MatDialog: MatDialog) { }
+  constructor(private MatDialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
@@ -109,6 +111,14 @@ export class GerenciarOsEmExecucaoComponent {
  const contagem_amostras = Object.keys(amostras).length;
     return contagem_amostras
   }
+
+
+  navegarParaRelatorio(element: IOrdemDeServico) {
+    sessionStorage.setItem('ordemDeServico', JSON.stringify(element));
+    window.open('/relatorio-de-analises', '_blank');
+  }
   
 
 }
+
+

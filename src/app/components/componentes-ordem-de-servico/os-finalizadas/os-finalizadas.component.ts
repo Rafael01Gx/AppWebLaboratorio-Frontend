@@ -23,8 +23,6 @@ import { EStatus } from '../../../shared/Enum/status.enum';
   styleUrl: './os-finalizadas.component.scss'
 })
 export class OsFinalizadasComponent {
-  pageIco = 'manage_accounts';
-  pageTitle = 'Gerenciar contas';
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 

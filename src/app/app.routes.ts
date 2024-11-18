@@ -20,6 +20,10 @@ import { GerenciarOsEmExecucaoComponent } from './components/componentes-ordem-d
 import { GerenciarOsFinalizadasComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-finalizadas/gerenciar-os-finalizadas.component';
 import { ForgotPassowrdComponent } from './pages/forgot-passowrd/forgot-passowrd.component';
 import { RecoveryPasswordComponent } from './pages/recovery-password/recovery-password.component';
+import { NovaOsComponent } from './components/componentes-ordem-de-servico/nova-os/nova-os.component';
+import { OsPendentesComponent } from './components/componentes-ordem-de-servico/os-pendentes/os-pendentes.component';
+import { OsFinalizadasComponent } from './components/componentes-ordem-de-servico/os-finalizadas/os-finalizadas.component';
+import { RelatorioDeAnaliseComponent } from './components/relatorio-de-analise/relatorio-de-analise.component';
 
 export const routes: Routes = [
    {
@@ -48,12 +52,15 @@ export const routes: Routes = [
       component: DashboardComponent
      },
      {
-      path: 'ordens-de-servico',
-      component: OsPageComponent
-     },
-     {
       path: 'perfil',
       component: UserProfileComponent
+     },{
+      path:'ordem-de-servico',component:OsPageComponent,children:[
+      { path: '', redirectTo: 'nova-ordem-de-servico', pathMatch: 'full' },
+      { path: 'nova-ordem-de-servico', component: NovaOsComponent },
+      { path: 'aguardando-analise', component: OsPendentesComponent },
+      { path: 'ordem-de-servico-concluidas', component: OsFinalizadasComponent }
+      ]
      },
      { path: 'gerenciar-os', component: ManageOsComponent, children: [
       { path: '', redirectTo: 'aguardando-autorizacao', pathMatch: 'full' },
@@ -63,10 +70,14 @@ export const routes: Routes = [
       { path: 'finalizadas', component: GerenciarOsFinalizadasComponent },
     ]
   },
-     {
+  {
       path: 'configuracoes',
       component: ConfiguracoesComponent
-     },
+  },
+  {
+    path: 'relatorio-de-analises',
+    component: RelatorioDeAnaliseComponent
+},
      { path: 'analises', component: AnalisesComponent, children: [
       { path: '', redirectTo: 'aguardando-autorizacao', pathMatch: 'full' },
       { path: 'aguardando-autorizacao', component: AguardandoAutorizacaoComponent },

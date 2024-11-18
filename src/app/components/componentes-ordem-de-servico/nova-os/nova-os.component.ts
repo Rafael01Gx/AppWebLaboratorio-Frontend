@@ -147,9 +147,6 @@ public profileForm = new FormGroup({
     this.#ordemDeServicoService.httpCriarOrdemDeServico(this.amostras,this.obsForm.value.observacao!).subscribe({
       next: () => {
         this.#toastr.success("Ordem de serviço criada com sucesso!");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2500);
       },
       error: (err) => this.#toastr.error(err.error.message),
     });

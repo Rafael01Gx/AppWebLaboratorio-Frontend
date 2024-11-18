@@ -53,7 +53,7 @@
 
                 <mat-progress-bar mode="determinate" [value]="element.progresso_calculado"></mat-progress-bar>
               </mat-card-content>
-             @if(element.progresso_calculado==100){ <button  mat-fab extended> Revisar
+             @if(element.progresso_calculado==100){ <button (click)="navegarParaRelatorio(element)" mat-fab extended> Revisar
                 <mat-icon> check</mat-icon>
               </button>}
 
