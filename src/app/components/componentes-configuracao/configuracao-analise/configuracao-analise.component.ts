@@ -21,7 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { map, Observable, startWith } from 'rxjs';
 import { ConfiguracaoDeAnaliseService } from '../../../core/services/configuracao-de-analise/configuracao-de-analise.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 
 
 @Component({
@@ -39,7 +39,7 @@ import { AsyncPipe } from '@angular/common';
     MatSelect,
     MatOption,
     MatPaginator,
-    MatTableModule,MatAutocompleteModule,AsyncPipe],
+    MatTableModule,MatAutocompleteModule,AsyncPipe,NgClass],
   templateUrl: './configuracao-analise.component.html',
   styleUrl: './configuracao-analise.component.scss'
 })
@@ -279,25 +279,43 @@ ngAfterViewInit() {
 
     return this.unidadesGroup;
   }
+  animatedRows: { [key: number]: string } = {};
 
   moveParametro(index: number, direction: 'up' | 'down') {
-
     const data = this.dataSource.data;
-
+    
     if (direction === 'up' && index > 0) {
-
+      this.animatedRows[index] = 'move-down';
+      this.animatedRows[index - 1] = 'move-up';
+      
       [data[index - 1], data[index]] = [data[index], data[index - 1]];
     } else if (direction === 'down' && index < data.length - 1) {
 
+      this.animatedRows[index] = 'move-down';
+      this.animatedRows[index + 1] = 'move-up';
+      
       [data[index], data[index + 1]] = [data[index + 1], data[index]];
     }
-  
-    this.dataSource.data = data.map((item, i) => ({
-      ...item,
-      num: i + 1 
-    }));
-  }
 
+    this.parametros_de_analise = {};
+    data.forEach((item, i) => {
+      const newIndex = i + 1;
+      this.parametros_de_analise[newIndex] = {
+        item: item.item,
+        unidade_resultado: item.unidade_resultado,
+        casas_decimais: item.casas_decimais
+      };
+    });
+
+    this.dataSource.data = Object.entries(this.parametros_de_analise).map(([num, parametros]) => ({
+      num: num,
+      ...parametros
+    }));
+
+    setTimeout(() => {
+      this.animatedRows = {};
+    }, 500);
+  }
   
 
 }

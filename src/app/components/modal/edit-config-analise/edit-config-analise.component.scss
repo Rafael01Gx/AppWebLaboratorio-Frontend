@@ -1,4 +1,3 @@
-
 ::ng-deep .mat-mdc-dialog-surface {
   border-radius: 5px !important;
   overflow: hidden;
@@ -11,82 +10,111 @@
 
 ::ng-deep .mat-mdc-dialog-surface {
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
 }
 
 :host {
-
-    mat-card{
-
-       margin: 20px;
-       padding: 20px;
-  
-       form{
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        gap: 20px;
-  
-        button{
-         margin-bottom: 15px;
-        }
-       }
-       .divisor {
-         margin-top: 10px;
-         display: flex;
-         align-items: center;
-         justify-content: baseline;
-  
-         font-size: 12px;
-         text-transform: uppercase;
-         color: var(--gray-400);
-         gap: 20px;
-         width: 100%;
-  
-         div {
-           flex-grow: 1;
-           height: 2px;
-           opacity: 0.8;
-           background: var(--red-10)
-         }
-  
-     }
-
-      .tabela {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-
+  .mat-mdc-row {
+    transition: all 0.3s ease;
     
-        table {
-            width: 100%;
-          }
-          
-          .mat-mdc-form-field {
-            font-size: 14px;
-            width: 100%;
-            
-          }
-          
-          td, th {
-            width: 25%;      
-          }
-          th  {
-           background: var(--gray-100);
-          }
-          .t-center{
-            text-align: center;
-          
+    &.move-up {
+      background-color:var(--gray-400) !important;
+      td {
+        background-color: inherit; 
       }
-     }
-
-    }
-    .form-buttons{
-     margin: auto 20px 20px auto;
-     .btn-cancel{background: var(--red-10);color: var(--gray-400); margin-right: 10px;}
     }
     
+    &.move-down {
+      background-color: var(--gray-100) !important;
+      td {
+        background-color: inherit;  
+      }
+    }
+
+    .m-hover {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .red-10 {
+      color: #f44336;
+    }
+
+    td {
+      transition: background-color 0.2s ease;
+    }
   }
-   
-   
-       
+
+  mat-card {
+    margin: 20px;
+    padding: 20px;
+
+    form {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 20px;
+
+      button {
+        margin-bottom: 15px;
+      }
+    }
+    .divisor {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: baseline;
+
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      gap: 20px;
+      width: 100%;
+
+      div {
+        flex-grow: 1;
+        height: 2px;
+        opacity: 0.8;
+        background: var(--red-10);
+      }
+    }
+
+    .tabela {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      table {
+        width: 100%;
+      }
+
+      .mat-mdc-form-field {
+        font-size: 14px;
+        width: 100%;
+      }
+
+      td,
+      th {
+        width: 25%;
+      }
+      th {
+        background: var(--gray-100);
+      }
+      .t-center {
+        text-align: center;
+      }
+    }
+  }
+  .form-buttons {
+    margin: auto 20px 20px auto;
+    .btn-cancel {
+      background: var(--red-10);
+      color: var(--gray-400);
+      margin-right: 10px;
+    }
+  }
+}

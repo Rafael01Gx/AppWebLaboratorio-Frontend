@@ -11,6 +11,8 @@ import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { IAmostrasCollection, IAmostrasResponse, IAmostra } from '../../../shared/interfaces/IAmostra.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
+import { HelpersService } from '../../../core/services/helpers/helpers.service';
+
 
 @Component({
   selector: 'app-aguardando-analise',
@@ -30,6 +32,7 @@ export class AguardandoAnaliseComponent implements OnInit {
 
   displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados', 'prazo_inicio_fim'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
+  #prazo = inject(HelpersService).calcularPrazoEmDias;
 
 
 ngOnInit(): void {
@@ -79,7 +82,10 @@ applyFilter(event: Event) {
     this.dataSource.paginator.firstPage();
   }
 }
-
+calcularPrazo(prazo:string):string{
+ const prazo_atual = this.#prazo(prazo.split('-')[1]);
+ return prazo_atual
+}
 }
 
 

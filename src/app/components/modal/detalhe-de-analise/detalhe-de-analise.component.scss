@@ -1,4 +1,3 @@
-
 ::ng-deep .mat-mdc-dialog-surface {
   border-radius: 5px !important;
   overflow: hidden;
@@ -9,17 +8,14 @@
   display: none;
 }
 
-::ng-deep .mat-mdc-dialog-surface { 
+::ng-deep .mat-mdc-dialog-surface {
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
 }
-
 
 :host {
   mat-card {
-    display: flex;
-    width: 100%;
-    border-radius: 5px;
+
 
     .close-bar {
       position: sticky;
@@ -34,7 +30,7 @@
       align-items: center;
       justify-content: flex-end;
 
-      span{
+      span {
         color: white;
         position: absolute;
         left: 50%;
@@ -53,9 +49,8 @@
     }
     mat-card-header {
       position: sticky;
-      top:25px;
+      top: 25px;
       z-index: 10;
-
 
       width: 100%;
       display: flex;
@@ -92,39 +87,70 @@
       display: flex;
       flex-direction: column;
       padding-bottom: 0;
-      form{
-        fieldset{
+      form {
+        fieldset {
+          position: relative;
           width: 100%;
           display: flex;
           flex-flow: row wrap;
           justify-content: flex-start;
           align-items: center;
           gap: 10px;
-
+          border: 1px solid blue;
           padding: 10px;
           border-radius: 4px;
-          .analises{
+          legend{
+            font-weight: 500;
+            color: var(--blue-10);
+          }
+          .analises {
             display: flex;
             flex-direction: row;
             width: 100%;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-content: center;
-            button{
+            img{
+              mix-blend-mode: multiply;
+              width: 50px;
+              position: absolute; left: 50%; transform: translateX(-50%);
+            }
+            .table-results {
+              flex-grow: 1;
+              text-align: center;
+              background: var(--gray-100);
+              .table-h{
+                background-color: var(--gray-400);
+                color: white;
+              }
+              span{
+                margin: 5px;
+              }
+              div{
+                border: solid 1px var(--gray-400);
+                border-collapse: collapse;
+              }
+            }
+            .btn-container{
+              margin-left: auto;
+              display: flex;
+              flex-direction: column;
+              gap: 5px;
+            button {
+              width: 100%;            
               height: 30px;
               border-radius: 4px;
-              background:var(--blue-10);
+              background: var(--blue-10);
               color: white;
-              box-shadow:none;
-              
+              box-shadow: none;
             }
+          }
           }
         }
       }
-
     }
-
   }
-  .fter{
+
+  .fter {
     position: sticky;
     bottom: 0;
     z-index: 10;
@@ -132,5 +158,4 @@
     width: 100%;
     height: 10px;
   }
-
 }

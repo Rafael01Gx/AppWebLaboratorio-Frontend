@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -12,15 +12,17 @@ import { MatInputModule } from '@angular/material/input';
 import { EStatus } from '../../../shared/Enum/status.enum';
 import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxMaskPipe } from 'ngx-mask';
+import { HelpersService } from '../../../core/services/helpers/helpers.service';
 
 @Component({
   selector: 'app-analise-em-anamento',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule,NgxMaskPipe],
   templateUrl: './analise-em-anamento.component.html',
   styleUrl: './analise-em-anamento.component.scss'
 })
-export class AnaliseEmAnamentoComponent implements OnInit {
+export class AnaliseEmAnamentoComponent implements OnInit,AfterViewInit {
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -28,10 +30,11 @@ export class AnaliseEmAnamentoComponent implements OnInit {
   #dialog = inject(MatDialog)
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)
+  #prazo = inject(HelpersService).calcularPrazoEmDias;
 
   lista_amostras: IAmostrasCollection[] = [] ;
 
-  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados', 'editar'];
+  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados','prazo_inicio_fim', 'editar'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
@@ -39,9 +42,11 @@ ngOnInit(): void {
   this.listarDados()
 }
 
+
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
+
 }
 
 applyFilter(event: Event) {
@@ -53,11 +58,6 @@ applyFilter(event: Event) {
   }
 }
 
-teste(amostra:IAmostra){
-const num_ensaios = amostra.ensaios_solicitados?.split(',')
-const num_resultados = amostra.resultados
-return console.log(num_resultados)
-}
 
 listarDados(){
   this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasResponse) => {
@@ -73,13 +73,14 @@ listarDados(){
 }
 openAnalysisDetail(data: IAmostra) : void {
   const detalhesAnalise= this.#dialog.open(DetalheDeAnaliseComponent,{
-     width:"50lvw",
+     width:"auto",
+     minWidth:"50lvw",
      maxWidth:"90lvw",
      maxHeight:"90lvh",
      data:data
    })
-
  }
+
  
 
 }

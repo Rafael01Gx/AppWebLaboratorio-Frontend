@@ -139,7 +139,7 @@ public profileForm = new FormGroup({
 
     this.amostraForm.reset();
   }
-  
+
   
 
    public  enviarOs() {

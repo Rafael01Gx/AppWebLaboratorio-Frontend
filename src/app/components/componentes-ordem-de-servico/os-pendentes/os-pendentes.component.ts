@@ -11,6 +11,7 @@ import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../.
 import { EStatus } from '../../../shared/Enum/status.enum';
 import { ToastrService } from 'ngx-toastr';
 import { MatIcon } from '@angular/material/icon';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-os-pendentes',
@@ -22,7 +23,7 @@ import { MatIcon } from '@angular/material/icon';
     MatSortModule,
     MatPaginatorModule,
     MatCard,
-    MatIcon
+    MatIcon,NgxMaskPipe
   ],
   templateUrl: './os-pendentes.component.html',
   styleUrl: './os-pendentes.component.scss'
@@ -36,7 +37,7 @@ export class OsPendentesComponent implements OnInit {
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
-  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status','excluir'];
+  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status','prazo_inicio_fim','excluir'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -76,10 +77,27 @@ listarDados(){
   this.#ordemDeServicoService.httpListarOrdemDeServicoByUserId().subscribe((response: IOrdemDeServicoResponse) => {
     if (response && response.ordemsDeServico) {
       this.listOs = response.ordemsDeServico.filter(os => os.status !== EStatus.Finalizada);
-      this.dataSource.data = this.listOs; 
+      this.dataSource.data = this.listOs.map(os => {
+        const progressoCalculado = this.getOsProgresso(os);
+        return { ...os, progresso_calculado: progressoCalculado };
+      });
     } else {
       console.error('Nenhuma ordem de serviço encontrada na resposta');
     }
   });
+}
+
+getOsProgresso(os: IOrdemDeServico): number {
+  if (!os.progresso) {
+    return 0 ;
+  }
+  const keys = Object.keys(os.progresso);
+  const qnt_keys = keys.length;
+  const somaPercentuais = keys.reduce((soma, key) => {
+    const valor = os.progresso![key];
+    return soma + (typeof valor === 'number' ? valor : 0);
+  }, 0);
+  const progresso = somaPercentuais / qnt_keys;
+  return progresso ;
 }
 }

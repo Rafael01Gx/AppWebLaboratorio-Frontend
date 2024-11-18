@@ -6,6 +6,9 @@
    
            width: 100%;
          }
+         td{
+          background: var(--gray-100);
+         }
        
          tr.example-detail-row {
            height: 0;
@@ -42,6 +45,13 @@
              flex-grow: 1;
              color: var(--blue-10);
              line-height: 24px;
+             gap: 20px;
+             button{
+              background-color: var(--gray-100);
+               color: green;
+
+              
+             }
        h2{
         font-size: 1rem
        }

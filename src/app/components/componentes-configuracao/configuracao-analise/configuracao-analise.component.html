@@ -106,11 +106,11 @@
       
   
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns" [ngClass]="animatedRows[i]"></tr>
         </table>
   
         <mat-paginator
-          [pageSizeOptions]="[6]"
+          [pageSizeOptions]="[20]"
           showFirstLastButtons
           aria-label="Selecione as amostras"
         >

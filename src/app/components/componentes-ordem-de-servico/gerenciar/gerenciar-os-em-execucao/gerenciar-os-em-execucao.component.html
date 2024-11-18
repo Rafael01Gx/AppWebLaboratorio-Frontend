@@ -39,21 +39,23 @@
      <ng-container matColumnDef="expandedDetail">
        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
          <div class="detalhes"
-              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-
-       
+              [@detailExpand]="element == expandedElement ? 'collapsed'  :'expanded' ">
+     
              <div class="container">
               
               <mat-card-content>
                 <h2 class="example-h2">Progresso</h2>
                 <div class="progress">
                   <h3>0%</h3>
-                  <h3>{{ getObjectKeysLength(element.amostras) }}</h3>
+                  <h3 >{{element.progresso_calculado| mask: 'percent.2'}}%</h3>
                   <h3>100%</h3>
                 </div>
-                <mat-progress-bar mode="determinate" [value]="progresso"></mat-progress-bar>
+
+                <mat-progress-bar mode="determinate" [value]="element.progresso_calculado"></mat-progress-bar>
               </mat-card-content>
-            
+             @if(element.progresso_calculado==100){ <button  mat-fab extended> Revisar
+                <mat-icon> check</mat-icon>
+              </button>}
 
 
              </div>

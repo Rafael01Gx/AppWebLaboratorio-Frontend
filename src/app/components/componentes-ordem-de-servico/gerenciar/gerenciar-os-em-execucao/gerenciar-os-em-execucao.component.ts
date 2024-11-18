@@ -6,7 +6,7 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServicoResponse, IOrdensDeServico } from '../../../../shared/interfaces/IOrdemDeservico.interface';
+import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../../shared/interfaces/IOrdemDeservico.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -32,7 +32,11 @@ import { EStatus } from '../../../../shared/Enum/status.enum';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatCardModule,MatIconModule,MatButtonModule,NgxMaskPipe,MatProgressBarModule],
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    NgxMaskPipe,
+    MatProgressBarModule],
   templateUrl: './gerenciar-os-em-execucao.component.html',
   styleUrl: './gerenciar-os-em-execucao.component.scss'
 })
@@ -59,13 +63,17 @@ export class GerenciarOsEmExecucaoComponent {
     this.#ordemDeServicoService.httpListarTodasOrdensDeServico().subscribe((response: IOrdemDeServicoResponse) => {
       if (response && response.ordemsDeServico) {
         this.listOs = response.ordemsDeServico.filter(os => os.status == EStatus.EmExecucao);
-        this.dataSource.data = this.listOs; 
-        console.log(this.listOs)
+        this.listOs = this.listOs.map(os => {
+          const progressoCalculado = this.getOsProgresso(os);
+          return { ...os, progresso_calculado: progressoCalculado };
+        });
+        this.dataSource.data = this.listOs;
       } else {
         console.error('Nenhuma ordem de serviço encontrada na resposta');
       }
     });
   }
+  
   ngAfterViewInit() {
 
     this.dataSource.paginator = this.paginator;
@@ -80,9 +88,22 @@ export class GerenciarOsEmExecucaoComponent {
     }
   }
 
-  getAmostrasValues(amostras:  IAmostrasCollection) {
-    return Object.values(amostras);
+  getOsProgresso(os: IOrdemDeServico): number {
+    if (!os.progresso) {
+      return 0 ;
+    }
+    const keys = Object.keys(os.progresso);
+    const qnt_keys = keys.length;
+    const somaPercentuais = keys.reduce((soma, key) => {
+      const valor = os.progresso![key];
+      return soma + (typeof valor === 'number' ? valor : 0);
+    }, 0);
+    const progresso = somaPercentuais / qnt_keys;
+    return progresso ;
   }
+  
+  
+  
 
   getObjectKeysLength(amostras: object): number {
  const contagem_amostras = Object.keys(amostras).length;

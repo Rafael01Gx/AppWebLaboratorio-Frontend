@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, inject, Inject, OnInit, ViewChild } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -65,8 +65,7 @@ import { IResponseData } from '../../../shared/models/IResponseData';
     MatPaginator,
     MatTableModule,
     MatAutocompleteModule,
-    MatOptgroup,
-    AsyncPipe,
+    AsyncPipe,NgClass
   ],
   templateUrl: './edit-config-analise.component.html',
   styleUrl: './edit-config-analise.component.scss',
@@ -105,7 +104,7 @@ export class EditConfigAnaliseComponent implements OnInit {
 
   parametros_filtrados : IParametro[]= []
 
-  displayedColumns: string[] = ['num', 'item', 'unidade_resultado','ordenar', 'remover'];
+  displayedColumns: string[] = ['num', 'item', 'unidade_resultado', 'casas_decimais','ordenar', 'remover'];
 
   dataSource = new MatTableDataSource<IParametrosDeAnalise>(
     Object.entries(this.parametros_de_analise).map(
@@ -245,7 +244,7 @@ filtrar() {
   });
 
   public salvarConfiguracaoDeAnalise() {
-    console.log(this.parametros_de_analise)
+
     if (Object.keys(this.parametros_de_analise).length > 0) {
       this.#configuracaoDeAnaliseService.httpEditarConfiguracaoDeAnalise( this.id, this.parametros_de_analise)
         .subscribe({
@@ -258,24 +257,43 @@ filtrar() {
     }
   }
 
+  animatedRows: { [key: number]: string } = {};
+
   moveParametro(index: number, direction: 'up' | 'down') {
-
     const data = this.dataSource.data;
-
+    
     if (direction === 'up' && index > 0) {
-
+      this.animatedRows[index] = 'move-down';
+      this.animatedRows[index - 1] = 'move-up';
+      
       [data[index - 1], data[index]] = [data[index], data[index - 1]];
     } else if (direction === 'down' && index < data.length - 1) {
 
+      this.animatedRows[index] = 'move-down';
+      this.animatedRows[index + 1] = 'move-up';
+      
       [data[index], data[index + 1]] = [data[index + 1], data[index]];
     }
-  
-    this.dataSource.data = data.map((item, i) => ({
-      ...item,
-      num: i + 1 
-    }));
-  }
 
+    this.parametros_de_analise = {};
+    data.forEach((item, i) => {
+      const newIndex = i + 1;
+      this.parametros_de_analise[newIndex] = {
+        item: item.item,
+        unidade_resultado: item.unidade_resultado,
+        casas_decimais: item.casas_decimais
+      };
+    });
+
+    this.dataSource.data = Object.entries(this.parametros_de_analise).map(([num, parametros]) => ({
+      num: num,
+      ...parametros
+    }));
+
+    setTimeout(() => {
+      this.animatedRows = {};
+    }, 500);
+  }
   
   unidadesGroupOptions!: Observable<UnidadesGroup[]>;
 

@@ -1,4 +1,39 @@
 :host {
+  .mat-mdc-row {
+    transition: all 0.3s ease;
+    
+    &.move-up {
+      background-color:var(--gray-400) !important;
+      td {
+        background-color: inherit; 
+      }
+    }
+    
+    &.move-down {
+      background-color: var(--gray-100) !important;
+      td {
+        background-color: inherit;  
+      }
+    }
+
+    .m-hover {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .red-10 {
+      color: #f44336;
+    }
+
+    td {
+      transition: background-color 0.2s ease;
+    }
+  }
+
     mat-card{
        margin: 20px;
        padding: 20px;

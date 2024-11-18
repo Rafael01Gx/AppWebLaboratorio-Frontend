@@ -28,6 +28,7 @@ export interface IOrdensDeServico {
     status: TStatus;
     data_recepcao?:string;
     prazo_inicio_fim?:string;
+    progresso?:Record<string, number>;
     observacao?:string;
     observacao_adm?:string;
     createdAt: string;

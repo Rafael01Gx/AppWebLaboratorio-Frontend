@@ -61,18 +61,52 @@
 
         <fieldset class="item">
           <legend>Análises</legend>
-                @for(item of analises ; track item){
-                    <fieldset class="analises">
-                      <legend>{{ item }}</legend>
-                      {{resultados[item] | json}}                    
-                      <button (click)="openDialog(item)" mat-fab extended>
-                        {{ item }}
-                        <mat-icon>add</mat-icon>
-                      </button>
-                    </fieldset>
-                    }
-         
+          @for(item of analises ; track item){
+          <fieldset class="analises">
+            <legend>{{ item }}</legend>
+            @defer (on idle) { @if(resultados[item]){
+            <div style="flex-grow: 1; display: flex; gap: 2px">
+              @for (resultados of objectToArray(resultados[item]); track
+              resultados) {
+              <div class="table-results">
+                <div class="table-h">
+                 <span> {{ resultados.item }}</span>
+                </div>
+                <div>
+                  <span>{{ resultados.unidade_resultado }}</span>
+                </div>
+                <div>
+                  <span>{{
+                    resultados.valor_resultado
+                      | decimalFormat : resultados.casas_decimais
+                  }}</span>
+                </div>
+              </div>
 
+              }
+            </div>
+            } } @loading (minimum 2s) {
+            <img style="" alt="loading..." src="loading.gif" />
+            }
+
+            <div class="btn-container">
+              <button (click)="openDialog(item)" mat-fab extended>
+                {{ item }}
+                <mat-icon>{{ resultados[item] ? "edit" : "add" }}</mat-icon>
+              </button>
+              <button
+                class="cancelar"
+                (click)="removerResultado(item)"
+                mat-fab
+                extended
+                [hidden]="!resultados[item]"
+              >
+                Remover
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          </fieldset>
+          }
         </fieldset>
       </fieldset>
     </form>
@@ -82,8 +116,11 @@
     <p>Não existem dados para exibição</p>
     }
   </mat-card-content>
-  <div class="fter" [ngClass]="{
-    'bg-red-10': prazo_atual.includes('atraso'),
-    'bg-blue-10': prazo_atual.includes('restantes')
-  }"></div>
+  <div
+    class="fter"
+    [ngClass]="{
+      'bg-red-10': prazo_atual.includes('atraso'),
+      'bg-blue-10': prazo_atual.includes('restantes')
+    }"
+  ></div>
 </mat-card>

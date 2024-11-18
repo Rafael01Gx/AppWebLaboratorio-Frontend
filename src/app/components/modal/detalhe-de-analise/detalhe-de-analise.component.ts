@@ -1,16 +1,26 @@
-import { style } from '@angular/animations';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { IAmostra, IResultado, IResultadoCollection } from '../../../shared/interfaces/IAmostra.interface';
-import { NgxMaskDirective } from 'ngx-mask';
+import {
+  IAmostra,
+  IResultado,
+  IResultadoCollection,
+} from '../../../shared/interfaces/IAmostra.interface';
+import { NgxMaskDirective} from 'ngx-mask';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { JsonPipe, NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 import { MatButtonModule } from '@angular/material/button';
 import { LancamentoDeResultadosComponent } from '../lancamento-de-resultados/lancamento-de-resultados.component';
+import { DecimalFormatPipe } from '../../../shared/pipes/decimal-format.pipe';
 
 @Component({
   selector: 'app-detalhe-de-analise',
@@ -21,7 +31,9 @@ import { LancamentoDeResultadosComponent } from '../lancamento-de-resultados/lan
     NgxMaskDirective,
     ReactiveFormsModule,
     NgClass,
-    MatButtonModule,MatIconModule,MatDialogModule,JsonPipe
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,CommonModule, DecimalFormatPipe
   ],
   templateUrl: './detalhe-de-analise.component.html',
   styleUrl: './detalhe-de-analise.component.scss',
@@ -32,9 +44,8 @@ export class DetalheDeAnaliseComponent implements OnInit {
   data: IAmostra = inject(MAT_DIALOG_DATA);
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.data.prazo_inicio_fim!.split('-')[1]);
- resultados :IResultadoCollection ={}
+  resultados: IResultadoCollection = {};
   public analises: string[] = this.data.ensaios_solicitados?.split(',') || [];
-
 
   analiseForm = new FormGroup({
     nome_solicitante: new FormControl(''),
@@ -54,26 +65,32 @@ export class DetalheDeAnaliseComponent implements OnInit {
       data_amostra: this.data.data_amostra,
       status_amostra: this.data.status,
     });
-    this.resultados= this.data.resultados || {};
+    this.resultados = this.data.resultados || {};
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 
-  openDialog(ensaio:string): void {
+  openDialog(ensaio: string): void {
     const dialogRef = this.dialog.open(LancamentoDeResultadosComponent, {
       minWidth: '40vw',
-      maxHeight:'90vh',
-      data: [this.data,ensaio] ,
+      maxHeight: '90vh',
+      data: [this.data, ensaio],
     });
-    dialogRef.afterClosed().subscribe((res)=>{
-      if(res){
-       this.data = res
-       console.log(res)
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.data = res;
       }
-    })
-    
+    });
+  }
+  objectToArray(item: Object) {
+    return Object.values(item);
   }
 
+  removerResultado(item:string){
+ delete this.data.resultados![item]
+ console.log(this.data.resultados)
+  }
+ 
 }

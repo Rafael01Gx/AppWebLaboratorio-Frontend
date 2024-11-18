@@ -11,6 +11,7 @@ status?: TStatus,
 resultados?:IResultadoCollection,
 data_recepcao?:string,
 prazo_inicio_fim?:string,
+progresso?: number;
 createdAt?:string;
 updatedAt?: string,
 }
@@ -34,3 +35,4 @@ export interface IAmostrasResponse {
   amostras:IAmostrasCollection[],
   message:string,
   }
+  
