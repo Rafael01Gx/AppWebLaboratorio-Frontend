@@ -3,6 +3,7 @@ import { IAmostra, IAmostrasResponse, IResultadoCollection } from '../../../shar
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
+import { IOrdemDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AmostraService {
   #editarAmostraUrl = signal(`${environment.api_url}/amostras/editar/`);
   #listarTodasAsAmostrasUrl = signal(`${environment.api_url}/amostras/listar-all`);
   #listarAmostraByUserUrl = signal(`${environment.api_url}/amostras/listar`);
+  #listarAmostraByOrdemDeServicoUrl = signal(`${environment.api_url}/amostras/listar/listar-by-os`);
   #excluirAmostraUrl = signal(`${environment.api_url}/amostras/deletar`);
 
 
@@ -39,6 +41,19 @@ export class AmostraService {
       shareReplay(),
       tap((res) => {
         this.#setListarTodasAsAmostras.set(res);
+      })
+    );   
+  }
+
+  #setListarAmostraByOrdemDeServico = signal<IAmostrasResponse| null>(null);
+  public getListarAmostraByOrdemDeServico = this.#setListarAmostraByOrdemDeServico.asReadonly();
+
+  public httpListarAmostraByOrdemDeServico(id:IOrdemDeServico['numeroOs']): Observable<IAmostrasResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.get<IAmostrasResponse>(`${this.#listarAmostraByOrdemDeServicoUrl()}/${id}`,{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setListarAmostraByOrdemDeServico.set(res);
       })
     );   
   }

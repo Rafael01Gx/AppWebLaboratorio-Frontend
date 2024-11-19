@@ -1,4 +1,5 @@
 <div class="book">
+  @for( amostra of amostras ; track amostra){
   <div class="page">
     <div class="subpage">
       <div class="header">
@@ -15,43 +16,118 @@
       <div class="body">
         <fieldset class="solicitante">
           <div>
-            <div><span>Área Solicitante:</span> <fieldset><p>GAPSI</p></fieldset></div>
-            <div><span>Data de Início:</span> <fieldset><p>dd/mm/aaaa</p></fieldset></div>
-            <div><span>Prazo em dias:</span> <fieldset><p>15</p></fieldset></div>
+            <div>
+              <span>Área Solicitante:</span>
+              <fieldset><p>GAPSI</p></fieldset>
+            </div>
+            <div>
+              <span>Data de Início:</span>
+              <fieldset>
+                <p>
+                  {{ ordemDeServico.prazo_inicio_fim!.trim().split("-")[0] }}
+                </p>
+              </fieldset>
+            </div>
+            <div>
+              <span>Data Final:</span>
+              <fieldset>
+                <p>
+                  {{ ordemDeServico.prazo_inicio_fim!.trim().split("-")[1] }}
+                </p>
+              </fieldset>
+            </div>
           </div>
           <div>
-            <div><span>Requerente:</span> <fieldset><p>xxxxx</p></fieldset></div>
-            <div><span>E-mail:</span> <fieldset><p>xxxxxemail.com</p></fieldset></div>
-            <div><span>Data Final:</span> <fieldset><p>dd/mm/aaaa</p></fieldset></div>
+            <div>
+              <span>Requerente:</span>
+              <fieldset>
+                <p>{{ ordemDeServico.solicitante?.name }}</p>
+              </fieldset>
+            </div>
+            <div>
+              <span>E-mail:</span>
+              <fieldset>
+                <p>{{ ordemDeServico.solicitante?.email }}</p>
+              </fieldset>
+            </div>
+            <div>
+              <span>Contato:</span>
+              <fieldset>
+                <p>
+                  {{
+                    ordemDeServico.solicitante?.phone!
+                      | mask : "(00) 0 0000-0000"
+                  }}
+                </p>
+              </fieldset>
+            </div>
           </div>
         </fieldset>
         <fieldset class="analise">
           <div>
-            <div><span>Identificação da amostra:</span> <fieldset><p>Sínter</p></fieldset></div>
-            <div><span>Tipo de amostras:</span> <fieldset><p>Outro</p></fieldset></div>
+            <div>
+              <span>Identificação da amostra:</span>
+              <fieldset>
+                <p>{{ amostra["nome_amostra"] }}</p>
+              </fieldset>
+            </div>
+            <div>
+              <span>Tipo de amostras:</span>
+              <fieldset>
+                <p>{{ amostra["amostra_tipo"] }}</p>
+              </fieldset>
+            </div>
           </div>
           <div>
-            <div><span>Data da Amostra:</span> <fieldset><p>xxxxx</p></fieldset></div>
-            <div><span>Data da Recepção:</span> <fieldset><p>xxxxxemail.com</p></fieldset></div>
+            <div>
+              <span>Data da Amostra:</span>
+              <fieldset>
+                <p>{{ amostra["data_amostra"] }}</p>
+              </fieldset>
+            </div>
+            <div>
+              <span>Data da Recepção:</span>
+              <fieldset>
+                <p>{{ amostra["data_recepcao"] }}</p>
+              </fieldset>
+            </div>
           </div>
         </fieldset>
         <fieldset class="ensaios">
           <div class="title">
-<h2>Ensaios Solicitados</h2>
+            <h2>Ensaios Solicitados</h2>
           </div>
-          <div>
-            <div><span>Identificação da amostra:</span> <fieldset><p>Sínter</p></fieldset></div>
-            <div><span>Tipo de amostras:</span> <fieldset><p>Outro</p></fieldset></div>
+          <span style="text-transform: uppercase">
+            {{ amostra["ensaios_solicitados"] }}</span
+          >
+        </fieldset>
+
+        <fieldset
+          *ngFor="let entry of objectEntries(amostra['resultados'])"
+          class="ensaios"
+        >
+          <div class="title">
+            <h2>{{ entry[0] }}</h2>
           </div>
-          <div>
-            <div><span>Data da Amostra:</span> <fieldset><p>xxxxx</p></fieldset></div>
-            <div><span>Data da Recepção:</span> <fieldset><p>xxxxxemail.com</p></fieldset></div>
+          <div class="tabela-resultado">
+            <div class="borda" *ngFor="let resultado of objectEntries2(entry[1])">
+              <div class="result-item">
+                <span>{{ resultado.item }}</span>
+              </div>
+              <div class="result-unidade-resultado">
+                <span>{{ resultado.unidade_resultado }}</span>
+              </div>
+              <div class="result-valor-resultado">
+                <span>{{
+                  resultado.valor_resultado
+                    | decimalFormat : resultado.casas_decimais
+                }}</span>
+              </div>
+            </div>
           </div>
         </fieldset>
       </div>
     </div>
   </div>
-  <div class="page">
-    <div class="subpage">Page 2/2dddddddddd</div>
-  </div>
+  }
 </div>

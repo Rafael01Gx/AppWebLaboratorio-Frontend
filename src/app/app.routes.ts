@@ -49,18 +49,21 @@ export const routes: Routes = [
      },
    {
       path: 'gerenciar-contas',
-      component: DashboardComponent
+      component: DashboardComponent,
+      canActivate:[AuthGuard]
      },
      {
       path: 'perfil',
-      component: UserProfileComponent
+      component: UserProfileComponent,
+      canActivate:[AuthGuard]
      },{
       path:'ordem-de-servico',component:OsPageComponent,children:[
       { path: '', redirectTo: 'nova-ordem-de-servico', pathMatch: 'full' },
       { path: 'nova-ordem-de-servico', component: NovaOsComponent },
       { path: 'aguardando-analise', component: OsPendentesComponent },
       { path: 'ordem-de-servico-concluidas', component: OsFinalizadasComponent }
-      ]
+      ],
+      canActivate:[AuthGuard]
      },
      { path: 'gerenciar-os', component: ManageOsComponent, children: [
       { path: '', redirectTo: 'aguardando-autorizacao', pathMatch: 'full' },
@@ -68,15 +71,18 @@ export const routes: Routes = [
       { path: 'aguardando-analise', component: GerenciarOsAutorizadasComponent },
       { path: 'os-em-andamento', component: GerenciarOsEmExecucaoComponent },
       { path: 'finalizadas', component: GerenciarOsFinalizadasComponent },
-    ]
+    ],
+    canActivate:[AuthGuard]
   },
   {
       path: 'configuracoes',
-      component: ConfiguracoesComponent
+      component: ConfiguracoesComponent,
+      canActivate:[AuthGuard]
   },
   {
     path: 'relatorio-de-analises',
-    component: RelatorioDeAnaliseComponent
+    component: RelatorioDeAnaliseComponent,
+    canActivate:[AuthGuard]
 },
      { path: 'analises', component: AnalisesComponent, children: [
       { path: '', redirectTo: 'aguardando-autorizacao', pathMatch: 'full' },
@@ -84,6 +90,7 @@ export const routes: Routes = [
       { path: 'aguardando-analise', component: AguardandoAnaliseComponent },
       { path: 'analise-em-andamento', component: AnaliseEmAnamentoComponent },
       { path: 'finalizadas', component: AnalisesFinalizadasComponent },
-    ]
+    ],
+    canActivate:[AuthGuard]
   }
 ];
