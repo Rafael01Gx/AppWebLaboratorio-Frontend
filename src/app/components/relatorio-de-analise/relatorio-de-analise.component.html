@@ -109,7 +109,7 @@
           <div class="title">
             <h2>{{ entry[0] }}</h2>
           </div>
-          <div class="tabela-resultado">
+          @if(!["RDI", "GRANULOMETRIA"].includes(entry[0].trim().toUpperCase())){<div class="tabela-resultado">
             <div class="borda" *ngFor="let resultado of objectEntries2(entry[1])">
               <div class="result-item">
                 <span>{{ resultado.item }}</span>
@@ -124,7 +124,24 @@
                 }}</span>
               </div>
             </div>
-          </div>
+          </div>}@else {
+            <div class="tabela-resultado"  style="display: flex;flex-direction: column-reverse; flex-wrap: wrap;">
+              <div class="borda"  style="display: flex;flex-direction: row; flex-wrap: nowrap;" *ngFor="let resultado of objectEntries2(entry[1])">
+                <div class="result-item">
+                  <span>{{ resultado.item }}</span>
+                </div>
+                <div class="result-valor-resultado">
+                  <span>{{
+                    resultado.valor_resultado
+                      | decimalFormat : resultado.casas_decimais
+                  }}</span>
+                </div>
+                <div class="result-unidade-resultado">
+                  <span>{{ resultado.unidade_resultado }}</span>
+                </div>
+              </div>
+            </div>
+          }
         </fieldset>
       </div>
     </div>
