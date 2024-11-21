@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './core/services/auth-guard/auth-guard.service';
+import { PublicGuard } from './core/services/public-guard/public-guard.service';
 import { DashboardComponent } from './pages/manage-accounts/manage-accounts.component';
 import { OsPageComponent } from './pages/os-page/os-page.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
@@ -13,7 +14,6 @@ import { AguardandoAnaliseComponent } from './components/componentes-analise/agu
 import { AnaliseEmAnamentoComponent } from './components/componentes-analise/analise-em-anamento/analise-em-anamento.component';
 import { AnalisesFinalizadasComponent } from './components/componentes-analise/analises-finalizadas/analises-finalizadas.component';
 import { ManageOsComponent } from './pages/manage-os/manage-os.component';
-import { OsAguardandoAutorizacaoComponent } from './components/componentes-ordem-de-servico/os-aguardando-autorizacao/os-aguardando-autorizacao.component';
 import { GerenciarOsAguardandoAutorizacaoComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-aguardando-autorizacao/gerenciar-os-aguardando-autorizacao.component';
 import { GerenciarOsAutorizadasComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-autorizadas/gerenciar-os-autorizadas.component';
 import { GerenciarOsEmExecucaoComponent } from './components/componentes-ordem-de-servico/gerenciar/gerenciar-os-em-execucao/gerenciar-os-em-execucao.component';
@@ -26,71 +26,89 @@ import { OsFinalizadasComponent } from './components/componentes-ordem-de-servic
 import { RelatorioDeAnaliseComponent } from './components/relatorio-de-analise/relatorio-de-analise.component';
 
 export const routes: Routes = [
-   {
-      path: '',
-      component: HomeComponent,
-      canActivate:[AuthGuard]
-     },
-   {
+  {
     path: 'login',
-    component: LoginComponent
-   },
-   {
-      path: 'criarconta',
-      component: SignupComponent
-     },
-   {
-      path: 'forgot-password',
-      component: ForgotPassowrdComponent
-     },
-   {
-      path: 'recovery-password/reset_password',
-      component: RecoveryPasswordComponent
-     },
-   {
-      path: 'gerenciar-contas',
-      component: DashboardComponent,
-      canActivate:[AuthGuard]
-     },
-     {
-      path: 'perfil',
-      component: UserProfileComponent,
-      canActivate:[AuthGuard]
-     },{
-      path:'ordem-de-servico',component:OsPageComponent,children:[
+    component: LoginComponent,
+    canActivate: [PublicGuard]
+  },
+  {
+    path: 'criarconta',
+    component: SignupComponent,
+    canActivate: [PublicGuard]
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPassowrdComponent,
+    canActivate: [PublicGuard]
+  },
+  {
+    path: 'recovery-password/reset_password',
+    component: RecoveryPasswordComponent,
+    canActivate: [PublicGuard]
+  },
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'gerenciar-contas',
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'perfil',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'ordem-de-servico',
+    component: OsPageComponent,
+    children: [
       { path: '', redirectTo: 'nova-ordem-de-servico', pathMatch: 'full' },
       { path: 'nova-ordem-de-servico', component: NovaOsComponent },
       { path: 'aguardando-analise', component: OsPendentesComponent },
       { path: 'ordem-de-servico-concluidas', component: OsFinalizadasComponent }
-      ],
-      canActivate:[AuthGuard]
-     },
-     { path: 'gerenciar-os', component: ManageOsComponent, children: [
+    ],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'gerenciar-os',
+    component: ManageOsComponent,
+    children: [
       { path: '', redirectTo: 'aguardando-autorizacao', pathMatch: 'full' },
       { path: 'aguardando-autorizacao', component: GerenciarOsAguardandoAutorizacaoComponent },
       { path: 'aguardando-analise', component: GerenciarOsAutorizadasComponent },
       { path: 'os-em-andamento', component: GerenciarOsEmExecucaoComponent },
-      { path: 'finalizadas', component: GerenciarOsFinalizadasComponent },
+      { path: 'finalizadas', component: GerenciarOsFinalizadasComponent }
     ],
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
-      path: 'configuracoes',
-      component: ConfiguracoesComponent,
-      canActivate:[AuthGuard]
+    path: 'configuracoes',
+    component: ConfiguracoesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'relatorio-de-analises',
     component: RelatorioDeAnaliseComponent,
-    canActivate:[AuthGuard]
-},
-     { path: 'analises', component: AnalisesComponent, children: [
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'analises',
+    component: AnalisesComponent,
+    children: [
       { path: '', redirectTo: 'aguardando-autorizacao', pathMatch: 'full' },
       { path: 'aguardando-autorizacao', component: AguardandoAutorizacaoComponent },
       { path: 'aguardando-analise', component: AguardandoAnaliseComponent },
       { path: 'analise-em-andamento', component: AnaliseEmAnamentoComponent },
-      { path: 'finalizadas', component: AnalisesFinalizadasComponent },
+      { path: 'finalizadas', component: AnalisesFinalizadasComponent }
     ],
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];

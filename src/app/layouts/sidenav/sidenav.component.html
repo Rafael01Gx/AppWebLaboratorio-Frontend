@@ -4,7 +4,7 @@
    <div class="container" >
       
       <ul>
-    @for (item of menu; track item) {
+    @for (item of filteredMenu; track item) {
       <li>
          <a [routerLink]="[item.link]" routerLinkActive="router-link-active" >
             <i class="material-icons">{{item.ico}}</i>

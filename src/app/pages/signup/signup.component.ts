@@ -66,7 +66,7 @@ export class SignupComponent {
         .subscribe({
           next: () => {
             this.#toastr.success('Conta criada com sucesso!');
-            this.#router.navigate(['']);
+            this.#router.navigate(['login']);
           },
           error: (err) => this.#toastr.error(err.error.message),
         });

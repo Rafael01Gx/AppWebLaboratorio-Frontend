@@ -7,7 +7,6 @@ import {
 import {
   IAmostra,
   IResultado,
-  IResultadoCollection,
 } from '../../../shared/interfaces/IAmostra.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -23,7 +22,6 @@ import {
 } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MatSelectModule } from '@angular/material/select';
-import { ConfiguracaoAnaliseComponent } from '../../componentes-configuracao/configuracao-analise/configuracao-analise.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -111,14 +109,6 @@ export class LancamentoDeResultadosComponent implements OnInit {
     }
   }
 
-  openDialogConfigAnalise(): void {
-    this.#dialog.open(ConfiguracaoAnaliseComponent, {
-      minHeight: '85vh',
-      maxHeight: '85vh',
-      minWidth: '65vw',
-      maxWidth: '65vw',
-    });
-  }
   limitarCasasDecimais(event: any, casasDecimais: number): void {
     this.helpersService.limitarCasasDecimais(event.target, casasDecimais);
   }

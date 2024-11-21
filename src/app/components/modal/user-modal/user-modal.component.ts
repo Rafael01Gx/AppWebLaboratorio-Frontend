@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { UserService } from '../../../core/services/user/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { EUserLevels } from '../../../shared/Enum/userLevels.enum';
 
 @Component({
   selector: 'app-user-modal',
@@ -43,5 +44,5 @@ export class UserModalComponent {
     });
   }
 
-  options = ['Usuário', 'Operador', 'Administrador'];
+  options : string[] = Object.values(EUserLevels)
 }
