@@ -19,12 +19,12 @@ export class OsPageComponent {
 
   linkOS= [
     {
-      ico: 'edit_square',
+      ico: 'edit_note',
       name: 'Nova',
       link: 'nova-ordem-de-servico',
     },
     {
-      ico: 'pending',
+      ico: 'pending_actions',
       name: 'Pendentes',
       link: 'aguardando-analise',
     },

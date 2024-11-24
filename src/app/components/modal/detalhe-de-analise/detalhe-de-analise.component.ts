@@ -21,6 +21,9 @@ import { HelpersService } from '../../../core/services/helpers/helpers.service';
 import { MatButtonModule } from '@angular/material/button';
 import { LancamentoDeResultadosComponent } from '../lancamento-de-resultados/lancamento-de-resultados.component';
 import { DecimalFormatPipe } from '../../../shared/pipes/decimal-format.pipe';
+import { DeletarResultadoAmostraComponent } from '../deletar-resultado-amostra/deletar-resultado-amostra.component';
+import { AmostraService } from '../../../core/services/amostra/amostra.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-detalhe-de-analise',
@@ -41,11 +44,14 @@ import { DecimalFormatPipe } from '../../../shared/pipes/decimal-format.pipe';
 export class DetalheDeAnaliseComponent implements OnInit {
   dialogRef = inject(MatDialogRef<DetalheDeAnaliseComponent>);
   dialog = inject(MatDialog);
+  #amostraService = inject(AmostraService);
   data: IAmostra = inject(MAT_DIALOG_DATA);
+  #toast = inject(ToastrService)
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.data.prazo_inicio_fim!.split('-')[1]);
   resultados: IResultadoCollection = {};
   public analises: string[] = this.data.ensaios_solicitados?.split(',') || [];
+  exibirBtt = false;
 
   analiseForm = new FormGroup({
     nome_solicitante: new FormControl(''),
@@ -80,7 +86,7 @@ export class DetalheDeAnaliseComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        this.data = res;
+        this.resultados = res.resultados || {}     
       }
     });
   }
@@ -88,9 +94,30 @@ export class DetalheDeAnaliseComponent implements OnInit {
     return Object.values(item);
   }
 
-  removerResultado(item:string){
- delete this.data.resultados![item]
- console.log(this.data.resultados)
+removerResultado(item:string){
+const remove =this.dialog.open(DeletarResultadoAmostraComponent,{
+})
+remove.afterClosed().subscribe((res) => {
+  if(res){
+    delete this.resultados[item]
+    this.exibirBtt = true
   }
+})}
+
+salvarAlteracoes():void{
+  const id= this.data._id;
+  const amostra = this.data
+  amostra.progresso = this.#amostraService.calcularProgresso(amostra);
+  if(id){
+try {
+  this.#amostraService.httpEditarAmostra(id,amostra).subscribe(res => {
+    this.#toast.success(res.message)
+    this.dialogRef.close(true)
+  })
+} catch (error) {
+  this.#toast.error("Não foi possível atualizar, tente novamente mais tarde...")
+}
+}}
+ 
  
 }

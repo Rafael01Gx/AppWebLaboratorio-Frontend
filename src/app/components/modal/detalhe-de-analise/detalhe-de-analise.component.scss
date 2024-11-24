@@ -149,6 +149,19 @@
       }
     }
   }
+  .atualizar{
+    width: 100%;
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: flex-end;
+    button{
+      margin: 10px 20px;
+      border-radius: 5px;
+      background-color: rgb(83, 150, 83);
+      color: white;
+    }
+  }
 
   .fter {
     position: sticky;

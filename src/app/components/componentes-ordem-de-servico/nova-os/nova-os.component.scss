@@ -1,108 +1,104 @@
-:host{
-    .form-container{
-        width: 100%;
-        padding: 15px;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content:center;
-        align-items: center;
-
-        .user-info{
-            width: 100%;           
-            form{
-                margin: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: start;
-                gap: 20px;
-
-                mat-form-field{
-                    width: 100%;
-                }
-            }
-        }
-        .divisor {
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: baseline;
-  
-            font-size: 12px;
-            text-transform: uppercase;
-            color: var(--gray-400);
-            gap: 20px;
-            width: 100%;
-  
-            div {
-              flex-grow: 1;
-              height: 2px;
-              opacity: 0.3;
-              background: var(--orange-red)
-            }
-        }
-        .formulario{
-            width: 100%;
-            display: flex;
-            flex-flow: column wrap;
-            .tabela-header{
-                margin: 20px;
-                display: flex;
-                flex-flow: column wrap;
-                gap: 20px;
-                .tabela-header-row1{
-                    display: flex;
-                    gap: 20px;
-                    align-items: center;
-                }
-                .tabela-header-row2{
-                    display: flex;
-                    gap: 20px;
-                    button{
-                        width:50px ;
-                        height:50px ;
-                        opacity: 0.8;
-                        background: var(--salmao);
-                        mat-icon{
-                            color: var(--red-10);
-                        }
-                    }
-                }
-                mat-form-field{
-                    width: 100%;
-                }
-            }
-            .tabela{
-                margin: 20px;
-
-                table{
-                    height: 50%;
-                }
-                
-            }
-        }
-        .formulario-footer{
-            margin-top: 10px;
-            width: 100%;
-  form{
+:host {
+  .form-container {
     width: 100%;
+    padding: 15px;
     display: flex;
-    flex-direction: column;
-    mat-form-field{
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+
+    .user-info {
+      width: 100%;
+      form {
         margin: 20px;
-    }
-
-    .form-action{
-        margin: 10px 20px 20px auto;
         display: flex;
-        justify-content: end;
+        align-items: center;
+        justify-content: start;
+        gap: 20px;
 
+        mat-form-field {
+          width: 100%;
+        }
+      }
+    }
+    .divisor {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: baseline;
 
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      gap: 20px;
+      width: 100%;
+
+      div {
+        flex-grow: 1;
+        height: 2px;
+        opacity: 0.3;
+        background: var(--orange-red);
+      }
+    }
+    .formulario {
+      width: 100%;
+      display: flex;
+      flex-flow: column wrap;
+      .tabela-header {
+        margin: 20px;
+        display: flex;
+        flex-flow: column wrap;
+        gap: 20px;
+        .tabela-header-row1 {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+        }
+        .tabela-header-row2 {
+          display: flex;
+          gap: 20px;
+          button {
+            width: 50px;
+            height: 50px;
+            opacity: 0.8;
+
+            mat-icon {
+              color: var(--blue-10);
+            }
+          }
+        }
+        mat-form-field {
+          width: 100%;
+        }
+      }
+      .tabela {
+        margin: 20px;
+
+        table {
+          height: 50%;
+        }
+      }
+    }
+    .formulario-footer {
+      margin-top: 10px;
+      width: 100%;
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        mat-form-field {
+          margin: 20px;
+        }
+
+      }
     }
   }
-
-        }
-        
-
+  .form-action {
+    margin: 10px 20px 20px auto;
+    display: flex;
+    justify-content: end;
+    button{
+      border-radius: 5px;
     }
-    
+  }
 }

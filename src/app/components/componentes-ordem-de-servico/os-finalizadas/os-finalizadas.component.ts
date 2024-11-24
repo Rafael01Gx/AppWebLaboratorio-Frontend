@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
@@ -7,7 +8,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
@@ -18,7 +19,7 @@ import { EStatus } from '../../../shared/Enum/status.enum';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatCard],
+    MatCard,MatIconModule],
   templateUrl: './os-finalizadas.component.html',
   styleUrl: './os-finalizadas.component.scss'
 })
@@ -28,7 +29,7 @@ export class OsFinalizadasComponent {
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
-  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status'];
+  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status','visualizar'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -58,4 +59,8 @@ export class OsFinalizadasComponent {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  visualizarOS(os: IOrdemDeServico): void {
+    sessionStorage.setItem('ordemDeServico', JSON.stringify(os));
+    window.open('/relatorio-de-analises', '_blank');}
 }

@@ -65,7 +65,7 @@
             }
           </mat-select>
         </mat-form-field>
-        <button mat-fab (click)="addAmostra()" [disabled]="!amostraForm.valid">
+        <button mat-fab (click)="addAmostra()" *ngIf="amostraForm.valid" [disabled]="!amostraForm.valid">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -125,9 +125,9 @@
         placeholder="Ex. Informações sobre envio ou coleta..."
       ></textarea>
     </mat-form-field>
-    <div class="form-action">
-      <button (click)="enviarOs()" mat-raised-button>Enviar OS</button>
-    </div>
   </form>
+  <div class="form-action">
+    <button (click)="enviarOs()" mat-raised-button>Enviar OS</button>
+  </div>
   </mat-card>
 </div>

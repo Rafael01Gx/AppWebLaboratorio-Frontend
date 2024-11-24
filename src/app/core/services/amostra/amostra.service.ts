@@ -86,7 +86,15 @@ export class AmostraService {
   }
   
  
-
+  calcularProgresso(amostra: IAmostra): number {
+    const num_ensaios = amostra.ensaios_solicitados?.split(',').length || 0;
+    const num_resultados = amostra.resultados
+      ? Object.keys(amostra.resultados).length
+      : 0;
+    const progresso =
+      num_ensaios > 0 ? (num_resultados / num_ensaios) * 100 : 0;
+    return progresso;
+  }
 
   constructor() {}
 }

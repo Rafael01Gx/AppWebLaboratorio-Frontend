@@ -69,7 +69,6 @@ export class LancamentoDeResultadosComponent implements OnInit {
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.amostra.prazo_inicio_fim!.split('-')[1]);
 
-
   constructor() {}
 
   ngOnInit(): void {
@@ -113,15 +112,13 @@ export class LancamentoDeResultadosComponent implements OnInit {
     this.helpersService.limitarCasasDecimais(event.target, casasDecimais);
   }
 
-  criarObjeto(): void {
+  saveData(): void {
     const valoresFaltantes = Object.values(this.configuracaoSelecionada()).some(
       (config) =>
         config.valor_resultado === undefined || config.valor_resultado === ''
     );
     if (valoresFaltantes) {
-      this.#toastr.error(
-        'Por favor, preencha todos os campos!.'
-      );
+      this.#toastr.error('Por favor, preencha todos os campos!.');
       return;
     }
 
@@ -139,13 +136,17 @@ export class LancamentoDeResultadosComponent implements OnInit {
         };
       }
     });
-    if(!this.amostra.resultados) this.amostra.resultados = {[this.ensaio]:resultadoObj}
-    if(!this.amostra.resultados![this.ensaio]) this.amostra.resultados[this.ensaio] ={}
+    if (!this.amostra.resultados)
+      this.amostra.resultados = { [this.ensaio]: resultadoObj };
+    if (!this.amostra.resultados![this.ensaio])
+      this.amostra.resultados[this.ensaio] = {};
 
-    this.amostra.resultados![this.ensaio]= resultadoObj
-    this.amostra.progresso = this.calcularProgresso(this.amostra)
-    this.amostra.progresso == 100 ? this.amostra.status = EStatus.Finalizada : this.amostra.status = EStatus.EmExecucao;
-    
+    this.amostra.resultados![this.ensaio] = resultadoObj;
+    this.amostra.progresso = this.#amostraService.calcularProgresso(this.amostra);
+    this.amostra.progresso == 100
+      ? (this.amostra.status = EStatus.Finalizada)
+      : (this.amostra.status = EStatus.EmExecucao);
+
     this.#amostraService
       .httpEditarAmostra(this.data[0]._id, this.amostra)
       .subscribe({
@@ -161,12 +162,4 @@ export class LancamentoDeResultadosComponent implements OnInit {
         },
       });
   }
-calcularProgresso(amostra: IAmostra): number {
-    const num_ensaios = amostra.ensaios_solicitados?.split(',').length || 0;
-    const num_resultados = amostra.resultados ? Object.keys(amostra.resultados).length : 0;
-    const progresso = num_ensaios > 0 ? (num_resultados / num_ensaios) * 100 : 0;
-    return progresso;
-  }
-  
-  
 }

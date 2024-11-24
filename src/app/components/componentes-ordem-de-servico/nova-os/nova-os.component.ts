@@ -29,6 +29,7 @@ import { MatIcon } from '@angular/material/icon';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
 import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
 import { ITipoAnalise, ITipoDeAnaliseResponse } from '../../../shared/interfaces/ITipoDeAnalise.interface';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-nova-os',
@@ -45,10 +46,10 @@ import { ITipoAnalise, ITipoDeAnaliseResponse } from '../../../shared/interfaces
     MatButtonModule,
     MatPaginatorModule,
     MatSelectModule,
-    NgxMaskDirective,
-    NgxMaskPipe,MatIcon,
+    NgxMaskDirective
+  ,MatIcon,
     MatSortModule,
-    MatDatepickerModule
+    MatDatepickerModule,NgIf
   ],
   templateUrl: './nova-os.component.html',
   styleUrl: './nova-os.component.scss',

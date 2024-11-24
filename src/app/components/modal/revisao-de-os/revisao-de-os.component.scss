@@ -1,0 +1,76 @@
+::ng-deep .mat-mdc-dialog-surface {
+    border-radius: 5px !important;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-surface::-webkit-scrollbar {
+    display: none;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-surface {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  :host {
+
+      .close-bar {
+        background-color: var(--blue-10);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+  
+        width: 100%;
+        height: 25px;
+  
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+  
+        span {
+          color: white;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          align-self: center;
+        }
+        mat-icon {
+          margin-right: 5px;
+          color: white;
+          transition: color 0.1s ease-in-out;
+          &:hover {
+            cursor: pointer;
+            color: rgb(212, 212, 212);
+          }
+        }
+      }
+
+ 
+    
+    img{
+        mix-blend-mode: multiply;
+        width: 50px;
+        position: absolute;
+         left: 50%;
+          transform: translateX(-50%);
+      }
+      .revisar{padding: 5px;
+        display: flex;
+        justify-content: flex-end;
+        button{
+            margin-right:15px  ;
+            border-radius: 5px;
+        }
+      }
+    .fter {
+        background-color: var(--blue-10);
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      margin-top: 5px;
+      width: 100%;
+      height: 10px;
+    }
+  }
+  

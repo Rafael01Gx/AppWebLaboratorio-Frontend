@@ -1,4 +1,4 @@
-import { Component, inject, Output, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { LoginService } from '../../core/services/login/login.service';
 import { ToastrService } from 'ngx-toastr';
+import {  NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -27,7 +28,7 @@ import { ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatInputModule,NgClass,NgIf
   ],
   providers: [LoginService, ToastrService],
   templateUrl: './signup.component.html',
@@ -75,4 +76,8 @@ export class SignupComponent {
   navigate() {
     this.#router.navigate(['criarconta']);
   }
+
+ hasUpperCase(value: string): boolean { return /[A-Z]/.test(value); }
+ hasLower(value: string): boolean { return /[a-z]/.test(value); }
+ hasNumber(value: string): boolean { return /[0-9]/.test(value); }
 }

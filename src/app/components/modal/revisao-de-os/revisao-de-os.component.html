@@ -1,0 +1,19 @@
+@defer (on timer(2s) ; on idle) {
+    <div
+      class="close-bar"     
+    >
+      <span> Revisão</span>
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+
+            <app-relatorio-de-analise/>
+   
+           @defer(on hover(ok); on timer(10s)) {
+            <div class="revisar"><button mat-raised-button (click)="revisar()"> <mat-icon>check</mat-icon> Concluir revisão </button></div>
+           }
+    <div #ok
+      class="fter">
+    </div>
+}@loading{
+        <img alt="loading..." src="loading.gif" />
+}

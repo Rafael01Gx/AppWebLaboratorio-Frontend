@@ -116,6 +116,7 @@
     <p>Não existem dados para exibição</p>
     }
   </mat-card-content>
+  <div class="atualizar" *ngIf="exibirBtt"><button mat-raised-button (click)="salvarAlteracoes()"> Salvar alterações</button></div>
   <div
     class="fter"
     [ngClass]="{

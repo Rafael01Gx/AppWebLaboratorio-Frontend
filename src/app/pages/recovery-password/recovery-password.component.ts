@@ -8,6 +8,7 @@ import { passwordValidator } from '../../shared/validators/password.validator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { IUserRecoveryPassword } from '../../shared/interfaces/IUser.interface';
+import { NgClass, NgIf } from '@angular/common';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { IUserRecoveryPassword } from '../../shared/interfaces/IUser.interface';
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule,NgClass,NgIf],
   templateUrl: './recovery-password.component.html',
   styleUrl: './recovery-password.component.scss'
 })
@@ -78,4 +79,7 @@ export class RecoveryPasswordComponent implements OnInit {
   navigate() {
     this.#router.navigate(['login']);
   }
+  hasUpperCase(value: string): boolean { return /[A-Z]/.test(value); }
+  hasLower(value: string): boolean { return /[a-z]/.test(value); }
+  hasNumber(value: string): boolean { return /[0-9]/.test(value); }
 }

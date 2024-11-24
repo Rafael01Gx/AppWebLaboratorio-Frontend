@@ -14,7 +14,9 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EStatus } from '../../../../shared/Enum/status.enum';
-import { NavigationExtras, Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { Dialog } from '@angular/cdk/dialog';
+import { RevisaoDeOsComponent } from '../../../modal/revisao-de-os/revisao-de-os.component';
 
 
 
@@ -37,14 +39,14 @@ import { NavigationExtras, Router, RouterLink } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     NgxMaskPipe,
-    MatProgressBarModule,
-  RouterLink],
+    MatProgressBarModule],
   templateUrl: './gerenciar-os-em-execucao.component.html',
   styleUrl: './gerenciar-os-em-execucao.component.scss'
 })
 export class GerenciarOsEmExecucaoComponent {
 
   #ordemDeServicoService = inject(OrdemDeServicoService);
+  #dialog= inject(MatDialog)
   
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
@@ -115,7 +117,14 @@ export class GerenciarOsEmExecucaoComponent {
 
   navegarParaRelatorio(element: IOrdemDeServico) {
     sessionStorage.setItem('ordemDeServico', JSON.stringify(element));
-    window.open('/relatorio-de-analises', '_blank');
+   const revisao = this.#dialog.open(RevisaoDeOsComponent,{
+    minWidth:'25cm',
+    minHeight:'95lvh',
+    maxHeight:'95lvh',
+    data: element
+   }
+  )
+
   }
   
 
