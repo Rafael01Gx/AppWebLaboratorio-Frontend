@@ -28,6 +28,12 @@ export interface IResultado {
     casas_decimais: number;
   };
 }
+export interface IResultadoValues {
+  item: string;
+  valor_resultado: string | number;
+  unidade_resultado: string;
+  casas_decimais: number;
+}
 
 export interface IAmostrasCollection {
   [key: string]: IAmostra;

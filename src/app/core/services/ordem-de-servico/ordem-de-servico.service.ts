@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { IAtualizarOrdemDeServico, INovaOs, IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IAtualizarOrdemDeServico, INovaOs, IOrdemDeServico, IOrdemDeServicoByOsResponse, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { IAmostra } from '../../../shared/interfaces/IAmostra.interface';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class OrdemDeServicoService {
   #criarOsUrl = signal(`${environment.api_url}/ordemdeservico/criar`);
   #listarOsByUserIdUrl = signal(`${environment.api_url}/ordemdeservico/listar`);
   #listarTodasOrdensDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/listar/todas`);
+  #ListarOrdensDeServicoByOsNumberUrl = signal(`${environment.api_url}/ordemdeservico/os-number`);
   #editarOrdemDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/editar`);
   #removerOrdemDeServicoUrl = signal(`${environment.api_url}/ordemdeservico/deletar`);
 
@@ -83,6 +84,19 @@ export class OrdemDeServicoService {
       shareReplay(),
       tap((res) => {
         this.#setListarEditarOrdensDeServico.set(res);
+      })
+    );   
+  }
+
+  #setOrdemDeServicoByOsNumber = signal<IOrdemDeServicoByOsResponse| null>(null);
+  public getOrdemDeServicoByOsNumber = this.#setOrdemDeServicoByOsNumber.asReadonly();
+
+  public httpOrdemDeServicoByOsNumber(os:IOrdemDeServico['numeroOs']): Observable<IOrdemDeServicoByOsResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.get<IOrdemDeServicoByOsResponse>(`${this.#ListarOrdensDeServicoByOsNumberUrl()}/${os}`,{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setOrdemDeServicoByOsNumber.set(res);
       })
     );   
   }

@@ -10,6 +10,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
 import { IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { EStatus } from '../../../shared/Enum/status.enum';
+import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-generator-service.service';
 
 @Component({
   selector: 'app-os-finalizadas',
@@ -25,7 +26,7 @@ import { EStatus } from '../../../shared/Enum/status.enum';
 })
 export class OsFinalizadasComponent {
   #ordemDeServicoService = inject(OrdemDeServicoService);
-  
+  #pdfService = inject(PdfGeneratorServiceService)
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
@@ -63,4 +64,8 @@ export class OsFinalizadasComponent {
   visualizarOS(os: IOrdemDeServico): void {
     sessionStorage.setItem('ordemDeServico', JSON.stringify(os));
     window.open('/relatorio-de-analises', '_blank');}
+
+  downloadPdf(os:IOrdemDeServico['numeroOs']):void{
+   this.#pdfService.generatePdfForOsNumer(os!)
+  }
 }

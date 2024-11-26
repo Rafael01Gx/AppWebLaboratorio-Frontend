@@ -5,7 +5,7 @@ import { IAmostrasCollection } from '../../shared/interfaces/IAmostra.interface'
 import { AmostraService } from '../../core/services/amostra/amostra.service';
 import { NgFor} from '@angular/common';
 import { DecimalFormatPipe } from '../../shared/pipes/decimal-format.pipe';
-import { MatDialogRef } from '@angular/material/dialog';
+import { PdfGeneratorServiceService } from '../../core/services/helpers/pdf-generator-service.service';
 
 @Component({
   selector: 'app-relatorio-de-analise',
@@ -16,6 +16,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class RelatorioDeAnaliseComponent implements OnInit {
 #amoastraService = inject(AmostraService)
+#pdfGenerator = inject(PdfGeneratorServiceService)
 ordemDeServico! : IOrdemDeServico ;
 amostras: IAmostrasCollection[]=[]
   ngOnInit() {
@@ -31,12 +32,26 @@ amostras: IAmostrasCollection[]=[]
     } catch (error) {
      console.log(error)
     }
+    setTimeout(()=>{
+      this.gerarPDF()
+    },1000)
   }
   objectEntries(obj: any): [string, any][] {
     return Object.entries(obj);
   }
   objectEntries2(obj: any): any[] {
     return Object.entries(obj).map(entry => entry[1]);
+  }
+
+  gerarPDF() {
+    if (this.ordemDeServico && this.amostras.length > 0) {
+      this.#pdfGenerator.generatePdfFromElement(
+        this.ordemDeServico, 
+        this.amostras
+      );
+    } else {
+      console.warn('Não há dados para gerar PDF');
+    }
   }
 
 }

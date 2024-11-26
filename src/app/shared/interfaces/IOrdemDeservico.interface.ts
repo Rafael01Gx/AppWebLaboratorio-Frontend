@@ -7,6 +7,11 @@ export interface INovaOs {
 export interface IOrdensDeServico {
     ordemsDeServico?: IOrdemDeServico[];
   }
+
+  export interface IOrdemDeServicoByOsResponse {
+    ordemDeServico: IOrdemDeServico;
+    message: string;
+  }
   export interface IOrdemDeServicoResponse {
     ordemsDeServico: IOrdensDeServico["ordemsDeServico"];
     message: string;
