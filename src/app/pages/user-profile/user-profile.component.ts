@@ -74,7 +74,7 @@ export class UserProfileComponent implements OnInit {
       funcao: this.profileForm.value.funcao!,
     }
 if(this.profileForm.valid){
-  this.#userService.httpUpdateUserById(id!,user!).subscribe({
+  this.#userService.httpUpdateUserById(id!,user).subscribe({
     next: () => {
       this.#toastr.success("Usuário atualizado!");
     },

@@ -69,9 +69,9 @@ export class UserService {
   public getUpdateUserById = this.#setUpdateUserById.asReadonly();
   
 
-  public httpUpdateUserById(id: string,name: string, email: string, phone: string): Observable<IUserData> {
+  public httpUpdateUserById(id: string, user:IUserData): Observable<IUserData> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.patch<IUserData>(`${this.#updateUserByIdUrl()}/${id}`,{name,email,phone},{ headers}).pipe(
+    return this.#http.patch<IUserData>(`${this.#updateUserByIdUrl()}/${id}`,{user},{ headers}).pipe(
       shareReplay(),
       tap((res) => {
         this.#setUpdateUserById.set(res);
