@@ -48,6 +48,8 @@
                  <ul>
                    <li><strong>Nome:</strong>&nbsp;{{element.solicitante.name}} </li>
                    <li><strong>E-mail:</strong>&nbsp;<a [href]="'mailto:' + element.solicitante.email">{{ element.solicitante.email }}</a></li>
+                   <li><strong>Área:</strong>&nbsp;{{element.solicitante.area}}</li>
+                   <li><strong>Função:</strong>&nbsp;{{element.solicitante.funcao}}</li>
                    <li><strong>Contato:</strong>&nbsp;{{element.solicitante.phone | mask:"(00) 0 0000-0000"}}</li>
                    @if(element.observacao){
                     <li><strong>Obs:</strong>&nbsp; {{element.observacao}}</li>

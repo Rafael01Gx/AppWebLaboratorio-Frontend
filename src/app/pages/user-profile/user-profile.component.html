@@ -44,15 +44,40 @@
                   placeholder="(xx) - x xxxx-xxxx" 
                   mask="(00) 0 0000-0000"
                 />
+                @if (!profileForm.get('phone')?.errors) {
+                  <mat-error>Contato inválido!</mat-error>
+                  }
               </mat-form-field>
 
-
-            <div class="form-actions">
+              <mat-form-field>
+                <mat-label>Área</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="area"
+                  placeholder="...GAPSI"
+                />
+                @if (profileForm.get('area')?.errors) {
+                <mat-error>A área é obrigatória!</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Cargo/Função</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="funcao"
+                  placeholder="Ex...Coordenador...Eng..."
+                />
+                @if (profileForm.get('funcao')?.errors) {
+                <mat-error>O Cargo/Função é obrigatório!</mat-error>
+                }
+              </mat-form-field>
+              <div class="form-actions">
                 <button mat-button [routerLink]="['/']" routerLinkActive="router-link-active" >Cancelar</button>
-                <button mat-button (click)="atualizar()">Salvar</button>         
-            </div>
-          </form>
-  
+                <button [disabled]="!profileForm.valid" mat-button (click)="atualizar()">Salvar</button>         
+              </div>
+            </form>
 
        </mat-card>
       <!-- ngContent-->

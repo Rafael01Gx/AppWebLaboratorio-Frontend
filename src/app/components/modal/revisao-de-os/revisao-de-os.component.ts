@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
@@ -8,6 +8,8 @@ import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/o
 import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { EStatus } from '../../../shared/Enum/status.enum';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../../core/services/user/user.service';
+import { IAnalista } from '../../../shared/interfaces/IAmostra.interface';
 
 @Component({
   selector: 'app-revisao-de-os',
@@ -16,11 +18,25 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './revisao-de-os.component.html',
   styleUrl: './revisao-de-os.component.scss'
 })
-export class RevisaoDeOsComponent {
+export class RevisaoDeOsComponent implements OnInit {
 dialogRef = inject(MatDialogRef<RevisaoDeOsComponent>);
 element: IOrdemDeServico = inject(MAT_DIALOG_DATA)
 #toast= inject(ToastrService)
+#userService = inject(UserService);
 #ordemDeServicoService = inject(OrdemDeServicoService)
+revisor!: IAnalista;
+
+ngOnInit(): void {
+  this.#userService.httpCheckUser().subscribe((response) => {
+    if (response)
+      this.revisor = {
+        _id: response._id!,
+        name: response.name!,
+        area: response.area!,
+        funcao: response.funcao,
+      };
+  });
+}
 closeDialog(){
  this.dialogRef.close(true);
 }
@@ -28,6 +44,7 @@ revisar(){
   const ordemDeServico = this.element
   if(ordemDeServico){
     ordemDeServico.status=EStatus.Finalizada
+    ordemDeServico.revisor_da_os= this.revisor
 try { 
   this.#ordemDeServicoService.httpEditarOrdemDeServico(ordemDeServico).subscribe(res=>{
       this.#toast.success("Ordem de servico 'Finalizada' ")

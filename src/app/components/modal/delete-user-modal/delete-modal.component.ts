@@ -15,7 +15,6 @@ export class DeletModalComponent {
 
   constructor(
     public MatDialogRef: MatDialogRef<DeletModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IModalDelete
   ) {}
 
   onNoClick(): void {
@@ -24,7 +23,7 @@ export class DeletModalComponent {
   
   
   public apagar(): void {
-    this.dialogRef.close(this.data._id);
+    this.dialogRef.close(true);
   }
 
 

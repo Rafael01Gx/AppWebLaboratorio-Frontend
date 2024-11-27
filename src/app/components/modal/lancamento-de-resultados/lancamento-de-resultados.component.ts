@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import {
   IAmostra,
+  IAnalista,
   IResultado,
 } from '../../../shared/interfaces/IAmostra.interface';
 import { MatCardModule } from '@angular/material/card';
@@ -27,6 +28,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { EStatus } from '../../../shared/Enum/status.enum';
+import { UserService } from '../../../core/services/user/user.service';
+import { IUserData } from '../../../shared/interfaces/IUser.interface';
 
 @Component({
   selector: 'app-lancamento-de-resultados',
@@ -55,7 +58,7 @@ import { EStatus } from '../../../shared/Enum/status.enum';
 export class LancamentoDeResultadosComponent implements OnInit {
   @Input() title: string = '';
   dialogRef = inject(MatDialogRef<LancamentoDeResultadosComponent>);
-  #dialog = inject(MatDialog);
+  #userService = inject(UserService);
   #configuracaoDeAnaliseService = inject(ConfiguracaoDeAnaliseService);
   #toastr = inject(ToastrService);
   #amostraService = inject(AmostraService);
@@ -64,7 +67,7 @@ export class LancamentoDeResultadosComponent implements OnInit {
   amostra: IAmostra = this.data[0];
   ensaio: string = this.data[1];
   listConfigAnalises: IConfigAnalise[] = [];
-
+  analista!: IAnalista;
   configuracaoSelecionada = signal<IParametrosDeAnaliseCollection>({});
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.amostra.prazo_inicio_fim!.split('-')[1]);
@@ -72,6 +75,16 @@ export class LancamentoDeResultadosComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.#userService.httpCheckUser().subscribe((response) => {
+      if (response)
+        this.analista = {
+          _id: response._id!,
+          name: response.name!,
+          area: response.area!,
+          funcao: response.funcao,
+        };
+    });
+
     this.#configuracaoDeAnaliseService
       .httpListarConfiguracaoDeAnalise()
       .subscribe((response: IConfiguracaoDeAnaliseResponse) => {
@@ -142,11 +155,18 @@ export class LancamentoDeResultadosComponent implements OnInit {
       this.amostra.resultados[this.ensaio] = {};
 
     this.amostra.resultados![this.ensaio] = resultadoObj;
-    this.amostra.progresso = this.#amostraService.calcularProgresso(this.amostra);
+    this.amostra.progresso = this.#amostraService.calcularProgresso(
+      this.amostra
+    );
     this.amostra.progresso == 100
       ? (this.amostra.status = EStatus.Finalizada)
       : (this.amostra.status = EStatus.EmExecucao);
-
+    if (!this.amostra.analistas)this.amostra.analistas = [];
+    
+    const analistaExistente = this.amostra.analistas.some(
+      (analista) => analista._id === this.analista._id
+    );
+    if (!analistaExistente) this.amostra.analistas.push(this.analista);
     this.#amostraService
       .httpEditarAmostra(this.data[0]._id, this.amostra)
       .subscribe({

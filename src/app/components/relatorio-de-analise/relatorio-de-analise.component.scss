@@ -114,7 +114,7 @@ body {
           margin: 0;
           border:none;
           border-bottom: 1px solid #ccc;
-          border-radius: 2px;
+          border-radius: none;
         }
       }
     }
@@ -182,6 +182,28 @@ body {
   display: flex;
   flex-direction: column;
   
+}
+.container-assinatura{
+  padding: 5px;
+width: 100%;
+display: flex;
+flex-direction: row-reverse;
+align-items:center ;
+justify-content: space-around;
+
+  .analista-aprovador{
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    border-radius: 4px;
+    text-align: center;
+div{
+  margin: 0 10px;}
+.analista-funcao{
+  background-color: rgb(221, 221, 221);
+}
+  }
 }
 
 @page {

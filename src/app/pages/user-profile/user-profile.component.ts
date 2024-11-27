@@ -1,4 +1,4 @@
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { NgxMaskDirective } from 'ngx-mask';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
@@ -8,13 +8,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { emailValidator } from '../../shared/validators/email.validator';
-import { passwordValidator } from '../../shared/validators/password.validator';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { UserService } from '../../core/services/user/user.service';
 import { IUserData } from '../../shared/interfaces/IUser.interface';
 import { ToastrService } from 'ngx-toastr';
-import { MatCheckbox } from '@angular/material/checkbox';
+
 
 
 @Component({
@@ -24,7 +23,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule,NgxMaskDirective, NgxMaskPipe,RouterLink,MatButton],
+    MatInputModule,NgxMaskDirective,RouterLink,MatButton ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
@@ -44,7 +43,9 @@ export class UserProfileComponent implements OnInit {
     id: new FormControl("", [Validators.required]),
     name: new FormControl("", [Validators.required, Validators.minLength(3)]),
     email: new FormControl("", [Validators.required, emailValidator()]),
-    phone: new FormControl(""),
+    phone: new FormControl("",[Validators.required,Validators.minLength(11)]), 
+    area: new FormControl("",[ Validators.required,Validators.minLength(3)]),
+    funcao: new FormControl("",[Validators.required,Validators.minLength(3)]),
   });
 
   ngOnInit(): void {
@@ -56,17 +57,29 @@ export class UserProfileComponent implements OnInit {
         name: response.name,
         email: response.email,
         phone: response.phone,
+        area: response.area,
+        funcao: response.funcao,
       });
     });
   }
 
 
   public  atualizar() {
-    this.#userService.httpUpdateUserById(this.profileForm.value.id!,this.profileForm.value.name!,this.profileForm.value.email!,this.profileForm.value.phone!).subscribe({
-      next: () => {
-        this.#toastr.success("Usuário atualizado!");
-      },
-      error: (err) => this.#toastr.error(err.error.message),
-    });
-  }
+   const  id = this.profileForm.value.id ;
+    const user : IUserData = {
+      name: this.profileForm.value.name!,
+      email: this.profileForm.value.email!,
+      phone: this.profileForm.value.phone!,
+      area: this.profileForm.value.area?.toUpperCase(),
+      funcao: this.profileForm.value.funcao!,
+    }
+if(this.profileForm.valid){
+  this.#userService.httpUpdateUserById(id!,user!).subscribe({
+    next: () => {
+      this.#toastr.success("Usuário atualizado!");
+    },
+    error: (err) => this.#toastr.error(err.error.message),
+  });
+}
+}
 }

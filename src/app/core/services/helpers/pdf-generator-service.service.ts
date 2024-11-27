@@ -5,6 +5,7 @@ import {
   IAmostra,
   IAmostrasCollection,
   IAmostrasResponse,
+  IAnalista,
   IResultado,
   IResultadoValues,
 } from '../../../shared/interfaces/IAmostra.interface';
@@ -34,66 +35,92 @@ async generatePdfForOsNumer(osNumber: string) {
   }
 }
 
-  async generatePdfFromElement(
-    ordemDeServico: IOrdemDeServico,
-    amostras: IAmostrasCollection[]
-  ): Promise<void> {
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4',
-    });
+async generatePdfFromElement(
+  ordemDeServico: IOrdemDeServico,
+  amostras: IAmostrasCollection[]
+): Promise<void> {
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4',
+  });
 
-    doc.setFont('Helvetica');
+  doc.setFont('Helvetica');
 
-    for (const [index, amostra] of amostras.entries()) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = this.createReportTemplate(ordemDeServico, amostra);
-      tempDiv.style.width = '210mm';
-      tempDiv.style.minHeight = '297mm';
-      tempDiv.style.margin = '1cm';
-      tempDiv.style.boxSizing = 'border-box';
+  for (const [index, amostra] of amostras.entries()) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = this.createReportTemplate(ordemDeServico, amostra);
+    tempDiv.style.width = '210mm';
+    tempDiv.style.minHeight = '297mm';
+    tempDiv.style.margin = '1cm';
+    tempDiv.style.boxSizing = 'border-box';
 
-      const styleElement = document.createElement('style');
-      styleElement.textContent = this.getCssStyles();
-      tempDiv.appendChild(styleElement);
+    const styleElement = document.createElement('style');
+    styleElement.textContent = this.getCssStyles();
+    tempDiv.appendChild(styleElement);
 
-      document.body.appendChild(tempDiv);
+    document.body.appendChild(tempDiv);
 
-      try {
-        const canvas = await html2canvas(tempDiv, {
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-        });
+    try {
+      const canvas = await html2canvas(tempDiv, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        height: tempDiv.scrollHeight, // Adiciona altura total do conteúdo
+      });
 
-        document.body.removeChild(tempDiv);
+      document.body.removeChild(tempDiv);
 
-        const imgData = canvas.toDataURL('image/png');
-        if (!imgData || imgData === 'data:,') {
-          throw new Error('Imagem inválida gerada pelo canvas');
-        }
-
-        const imgProps = doc.getImageProperties(imgData);
-        const pdfWidth = doc.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-        doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
-
-        if (index < amostras.length - 1) {
-          doc.addPage();
-        }
-      } catch (error) {
-        console.error('Erro ao gerar PDF:', error);
-        document.body.removeChild(tempDiv);
+      const imgData = canvas.toDataURL('image/png');
+      if (!imgData || imgData === 'data:,') {
+        throw new Error('Imagem inválida gerada pelo canvas');
       }
-    }
 
-    doc.save(`Relatorio_${ordemDeServico.numeroOs}.pdf`);
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = doc.internal.pageSize.getHeight();
+
+      // Calcular a proporção da imagem
+      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      // Se a imagem for maior que uma página, adicionar páginas adicionais
+      if (imgHeight > pdfHeight) {
+        const pagesNeeded = Math.ceil(imgHeight / pdfHeight);
+        
+        for (let page = 0; page < pagesNeeded; page++) {
+          if (page > 0) {
+            doc.addPage();
+          }
+          
+          doc.addImage(
+            imgData, 
+            'PNG', 
+            0, 
+            -page * pdfHeight, 
+            pdfWidth, 
+            imgHeight, 
+            '', 
+            'FAST'
+          );
+        }
+      } else {
+        // Se couber em uma página, adiciona normalmente
+        doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight, '', 'FAST');
+      }
+
+      if (index < amostras.length - 1) {
+        doc.addPage();
+      }
+    } catch (error) {
+      console.error('Erro ao gerar PDF:', error);
+      document.body.removeChild(tempDiv);
+    }
   }
 
+  doc.save(`Relatorio_${ordemDeServico.numeroOs}.pdf`);
+}
   private createReportTemplate(
     ordemDeServico: IOrdemDeServico,
     amostra: IAmostrasCollection
@@ -202,6 +229,13 @@ async generatePdfForOsNumer(osNumber: string) {
               </fieldset>
 
               ${this.renderResultados(amostra['resultados'] as IResultado)}
+
+                    <fieldset class="ensaios elaboracao">
+        <div class="title">
+          <h2>Elaboração & aprovação</h2>
+        </div>
+        ${this.renderAnalistas(amostra['analistas'] as IAnalista,ordemDeServico as IOrdemDeServico)}
+      </fieldset>
             </div>
           </div>
         </div>
@@ -222,6 +256,27 @@ async generatePdfForOsNumer(osNumber: string) {
       `;
     });
     return html;
+  }
+
+  private renderAnalistas(analistas: IAnalista, ordemDeServico: IOrdemDeServico): string {
+    return Object.entries(analistas)
+      .map(
+        ([key, analista]) => `
+        <div class="container-assinatura">
+          ${analista ? `
+          <div class="analista-aprovador">
+            <div>${analista.name?.toUpperCase()}</div>
+            <div><small class="analista-funcao">${analista.funcao}</small></div>
+            <div><em><strong>${analista.area}</strong></em></div>
+          </div>` : ''}
+          <div class="analista-aprovador">
+            <div>${ordemDeServico.revisor_da_os?.name?.toUpperCase()}</div>
+            <div><small class="analista-funcao">${ordemDeServico.revisor_da_os?.funcao}</small></div>
+            <div><em><strong>${ordemDeServico.revisor_da_os?.area}</strong></em></div>
+          </div>
+        </div>`
+      )
+      .join('');
   }
 
   private renderResultadosTable(key: string, value: IResultadoValues): string {
@@ -447,6 +502,28 @@ body {
   display: flex;
   flex-direction: column;
   
+}
+  .container-assinatura{
+  padding: 5px;
+width: 100%;
+display: flex;
+flex-direction: row-reverse;
+align-items:center ;
+justify-content: space-around;
+
+  .analista-aprovador{
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    border-radius: 4px;
+    text-align: center;
+div{
+  margin: 0 10px;}
+.analista-funcao{
+  background-color: rgb(221, 221, 221);
+}
+  }
 }
 
 @page {

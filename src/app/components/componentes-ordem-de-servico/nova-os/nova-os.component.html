@@ -1,5 +1,5 @@
 <div class="form-container h-100 w-100">
-
+<!--
   <mat-card class="user-info">
     <form [formGroup]="profileForm">
       <input type="hidden" formControlName="id" />
@@ -22,12 +22,8 @@
         />
       </mat-form-field>
     </form>
-  </mat-card>
-  <div class="divisor">
-    <div></div>
-    <span> Solicitação de ensaios</span>
-    <div></div>
-  </div>
+  </mat-card> -->
+
   <!------------------------------------------------------>
 
   <mat-card class="formulario">
@@ -73,27 +69,23 @@
 
     <div class="tablela">
       <table mat-table [dataSource]="dataSource">
-        <!-- Position Column -->
         <ng-container matColumnDef="num">
           <th mat-header-cell *matHeaderCellDef>Num.</th>
           <td mat-cell *matCellDef="let element">
             {{ element.num || element.num }}
           </td>
         </ng-container>
-
-        <!-- Name Column -->
+        
         <ng-container matColumnDef="nome_amostra">
           <th mat-header-cell *matHeaderCellDef>Identificaçao</th>
           <td mat-cell *matCellDef="let element">{{ element.nome_amostra }}</td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="data_amostra">
           <th mat-header-cell *matHeaderCellDef>Data</th>
           <td mat-cell *matCellDef="let element">{{ element.data_amostra }}</td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="ensaios_solicitados">
           <th mat-header-cell *matHeaderCellDef>Ensaios</th>
           <td mat-cell *matCellDef="let element">

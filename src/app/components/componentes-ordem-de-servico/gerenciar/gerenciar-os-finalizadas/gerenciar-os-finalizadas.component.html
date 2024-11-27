@@ -33,14 +33,13 @@
                 <td mat-cell *matCellDef="let row">{{ row.status }}</td>
               </ng-container>
       
-              <ng-container matColumnDef="authorization">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Autorização</th>
-                <td mat-cell *matCellDef="let row">@if(row.authorization){
-                  <i class="material-icons green" >check</i>             
-                  }@else {
-                    <i class="material-icons red">block</i>    
-                  }</td>
+            
+              <ng-container matColumnDef="download">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Download</th>
+                <td mat-cell *matCellDef="let row"> <mat-icon class="icon" (click)="visualizarOS(row)">picture_as_pdf</mat-icon><mat-icon class="icon-2" (click)="downloadPdf(row.numeroOs)">download</mat-icon></td>
               </ng-container>
+      
+
       
               <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>

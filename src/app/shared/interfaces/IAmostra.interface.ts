@@ -10,6 +10,7 @@ export interface IAmostra {
   solicitante?: ISolicitante;
   status?: TStatus;
   resultados?: IResultadoCollection;
+  analistas?: IAnalista[];
   data_recepcao?: string;
   prazo_inicio_fim?: string;
   progresso?: number;
@@ -41,4 +42,10 @@ export interface IAmostrasCollection {
 export interface IAmostrasResponse {
   amostras: IAmostrasCollection[];
   message: string;
+}
+export interface IAnalista{
+  _id:string,
+  name: string;
+  area: string;
+  funcao?: string;
 }

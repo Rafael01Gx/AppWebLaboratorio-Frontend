@@ -55,7 +55,7 @@
 
           <ng-container matColumnDef="Excluir">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
-            <td class="t-center" (click)="openDialogDelet('0ms', '0ms',row)" mat-cell *matCellDef="let row"><i class="material-icons red-10 m-hover">delete_forever</i></td>
+            <td class="t-center" (click)="openDialogDelet(row)" mat-cell *matCellDef="let row"><i class="material-icons red-10 m-hover">delete_forever</i></td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>

@@ -26,7 +26,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -44,7 +43,6 @@ import { EStatus } from '../../../../shared/Enum/status.enum';
     FormsModule,
     MatSelectModule,
     MatButtonModule,
-    MatCheckbox,
     ReactiveFormsModule,
     MatDatepickerModule,
     MatDialogModule

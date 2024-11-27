@@ -8,8 +8,17 @@
     .icon{
       margin: 0 auto;
    &:hover{
-   color: red;
+   color: var(--red-10);
    cursor: pointer; 
+   transform: scale(1.1) ;
+}
+    }
+    .icon-2{
+      margin-left: 20px;
+   &:hover{
+   color: var(--blue-10);
+   cursor: pointer; 
+   transform: scale(1.1) ;
 }
     }
    

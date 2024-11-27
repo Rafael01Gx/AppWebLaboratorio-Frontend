@@ -1,4 +1,4 @@
-import { IAmostrasCollection } from "./IAmostra.interface";
+import { IAmostrasCollection, IAnalista } from "./IAmostra.interface";
 
 export interface INovaOs {
     amostras: object,
@@ -22,6 +22,8 @@ export interface IOrdensDeServico {
     name: string;
     email: string;
     phone: string;
+    area: string;
+    funcao: string;
   }
 
   export interface IOrdemDeServico{ 
@@ -36,6 +38,7 @@ export interface IOrdensDeServico {
     progresso?:Record<string, number>;
     observacao?:string;
     observacao_adm?:string;
+    revisor_da_os?:IAnalista;
     createdAt: string;
     updatedAt: string;
   }
@@ -48,5 +51,6 @@ export interface IOrdensDeServico {
     prazo_inicio_fim?:string;
     observacao_adm?:string;
   }
+  
 
   export type TStatus = "Aguardando Autorização" | "Autorizada" | "Em Execução" | "Finalizada" | "Cancelada";

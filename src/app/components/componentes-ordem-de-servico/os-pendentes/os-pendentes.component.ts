@@ -12,6 +12,7 @@ import { EStatus } from '../../../shared/Enum/status.enum';
 import { ToastrService } from 'ngx-toastr';
 import { MatIcon } from '@angular/material/icon';
 import { NgxMaskPipe } from 'ngx-mask';
+import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.component';
 
 @Component({
   selector: 'app-os-pendentes',
@@ -33,7 +34,7 @@ export class OsPendentesComponent implements OnInit {
   pageTitle = 'Gerenciar contas';
   #ordemDeServicoService = inject(OrdemDeServicoService);
   #toast = inject(ToastrService)
-  
+  #dialog= inject(MatDialog)
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
@@ -42,7 +43,7 @@ export class OsPendentesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private MatDialog: MatDialog) { }
+
 
   ngOnInit(): void {
   this.listarDados()
@@ -59,6 +60,17 @@ export class OsPendentesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  openDialogDelet(id: IOrdemDeServico['_id']): void {
+    const dialogDelete = this.#dialog.open(DeletModalComponent, {
+      width: '250px',
+    });  
+    dialogDelete.afterClosed().subscribe(result => {
+      if (result) {
+       this.excluirOs(id)
+    }});
+  }
+
   excluirOs(id: IOrdemDeServico['_id']){
     this.#ordemDeServicoService.httpExcluirOrdemDeServico(id).subscribe( (response) => {
       if(response.message){

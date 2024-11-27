@@ -19,7 +19,7 @@
           <div>
             <div>
               <span>Área Solicitante:</span>
-              <fieldset><p>GAPSI</p></fieldset>
+              <fieldset><p>{{ordemDeServico.solicitante?.area}}</p></fieldset>
             </div>
             <div>
               <span>Data de Início:</span>
@@ -143,6 +143,28 @@
               </div>
             </div>
           }
+        </fieldset>
+        <fieldset class="ensaios elaboracao">
+          <div class="title">
+            <h2>Elaboração & aprovação</h2>
+          </div>
+          @for(analista of objectEntries(amostra['analistas']); track analista){
+            <div class="container-assinatura">
+@if(analista[1]){
+  <div class="analista-aprovador">
+    <div >{{analista[1].name.toUpperCase()}}</div>
+    <div ><small  class="analista-funcao">{{analista[1].funcao}}</small></div>
+    <div><em><strong>{{analista[1].area}}</strong></em></div>
+  </div> 
+}
+<div class="analista-aprovador">
+  <div >{{ ordemDeServico.revisor_da_os?.name?.toUpperCase()}}</div>
+  <div ><small  class="analista-funcao">{{ordemDeServico.revisor_da_os?.funcao}}</small></div>
+  <div><em><strong>{{ordemDeServico.revisor_da_os?.area}}</strong></em></div>
+</div> 
+</div>
+          }
+    
         </fieldset>
       </div>
     </div>

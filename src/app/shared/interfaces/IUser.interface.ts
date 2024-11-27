@@ -5,6 +5,8 @@ export interface IUserData {
   phone?: string;
   authorization?: boolean;
   level?: UserLevel;
+  area?: string;
+  funcao?: string;
   createdAt?: string;
 }
 

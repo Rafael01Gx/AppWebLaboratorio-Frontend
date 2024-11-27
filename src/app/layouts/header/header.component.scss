@@ -44,7 +44,12 @@
           gap: 10px;
           
           margin-right: 20px;
-
+          mat-icon:hover{
+             cursor: pointer;
+             transform: scale(1.1);
+             transition: color 0.2s ease;
+             color: var(--gray-800);
+          }
           .ico-message{
             
           }

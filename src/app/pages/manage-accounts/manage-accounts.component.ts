@@ -88,17 +88,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openDialogDelet(enterAnimationDuration: string, exitAnimationDuration: string, user: IUserData): void {
+  openDialogDelet(user: IUserData): void {
     const dialogDelete = this.dialog.open(DeletModalComponent, {
       width: '250px',
-      data: { ...user },
-      enterAnimationDuration,
-      exitAnimationDuration,
     });
   
     dialogDelete.afterClosed().subscribe(result => {
       if (result) {
-        this.#userService.httpDeletUserAdm(result).subscribe({
+        this.#userService.httpDeletUserAdm(user._id!).subscribe({
           next: () => {
             this.#toastr.success("Usuário deletado!");
             this.loadUsers();
