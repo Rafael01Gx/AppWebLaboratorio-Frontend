@@ -12,6 +12,7 @@ import {
 import { IOrdemDeServico, IOrdemDeServicoByOsResponse, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { OrdemDeServicoService } from '../ordem-de-servico/ordem-de-servico.service';
 import { AmostraService } from '../amostra/amostra.service';
+import { HelpersService } from './helpers.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ import { AmostraService } from '../amostra/amostra.service';
 export class PdfGeneratorServiceService {
 #ordermDeServicoService = inject(OrdemDeServicoService);
 #amostraService = inject(AmostraService)
-
+#helpersService = inject(HelpersService)
 
 
 async generatePdfForOsNumer(osNumber: string) {
@@ -306,7 +307,7 @@ async generatePdfFromElement(
               : ''
           }
           <div class="result-valor-resultado">
-            <span>${resultado.valor_resultado}</span>
+            <span>${this.#helpersService.transformarResultado(resultado.valor_resultado,resultado.casas_decimais)}</span>
           </div>
           ${
             isSpecialCase

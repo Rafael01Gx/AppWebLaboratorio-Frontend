@@ -5,12 +5,11 @@ import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-analises',
   standalone: true,
-  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,NgClass,RouterLinkActive,RouterOutlet],
+  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,RouterLinkActive,RouterOutlet],
   templateUrl: './analises.component.html',
   styleUrl: './analises.component.scss'
 })
