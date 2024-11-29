@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { IAmostrasCollection, IAmostrasResponse, IAmostra } from '../../../shared/interfaces/IAmostra.interface';
 import { EStatus } from '../../../shared/Enum/status.enum';
+import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-analises-finalizadas',
@@ -22,11 +24,11 @@ export class AnalisesFinalizadasComponent  implements OnInit {
 
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)
-
+  #dialog = inject(MatDialog)
   lista_amostras: IAmostrasCollection[] = [] ;
 
 
-  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados'];
+  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados','editar'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
@@ -60,6 +62,16 @@ applyFilter(event: Event) {
     this.dataSource.paginator.firstPage();
   }
 }
+
+openAnalysisDetail(data: IAmostra) : void {
+  const detalhesAnalise= this.#dialog.open(DetalheDeAnaliseComponent,{
+     width:"auto",
+     minWidth:"50lvw",
+     maxWidth:"90lvw",
+     maxHeight:"90lvh",
+     data:data
+   })
+ }
 
 }
 

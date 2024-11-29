@@ -27,6 +27,14 @@
           <mat-label>Nome</mat-label>
           <input matInput formControlName="nome_solicitante" readonly />
         </mat-form-field>
+        <mat-form-field style="width: 150px">
+          <mat-label>Função</mat-label>
+          <input matInput formControlName="funcao" readonly />
+        </mat-form-field>
+        <mat-form-field style="width: 150px">
+          <mat-label>Área</mat-label>
+          <input matInput formControlName="area" readonly />
+        </mat-form-field>
         <mat-form-field style="width: 300px">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email_solicitante" readonly />
@@ -90,19 +98,14 @@
             }
 
             <div class="btn-container">
-              <button (click)="openDialog(item)" mat-fab extended>
-                {{ item }}
-                <mat-icon>{{ resultados[item] ? "edit" : "add" }}</mat-icon>
+              <button (click)="openDialog(item)" mat-fab><mat-icon>{{ resultados[item] ? "edit" : "add" }}</mat-icon>
               </button>
               <button
                 class="cancelar"
                 (click)="removerResultado(item)"
                 mat-fab
-                extended
                 [hidden]="!resultados[item]"
-              >
-                Remover
-                <mat-icon>remove</mat-icon>
+              ><mat-icon>remove</mat-icon>
               </button>
             </div>
           </fieldset>

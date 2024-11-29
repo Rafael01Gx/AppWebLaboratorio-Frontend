@@ -3,7 +3,11 @@
         td{
             &:hover{
                 cursor: pointer;
+               
             }
+        }
+        tr:hover>td{
+            background: var(--gray-100);
         }
     }
 }

@@ -29,7 +29,7 @@ export class GerenciarOsAutorizadasComponent {
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
-  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status'];
+  displayedColumns: string[] = ['numeroOs', 'data_solicitacao','solicitante','solicitante.area','status'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

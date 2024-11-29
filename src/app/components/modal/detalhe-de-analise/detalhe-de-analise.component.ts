@@ -55,6 +55,8 @@ export class DetalheDeAnaliseComponent implements OnInit {
 
   analiseForm = new FormGroup({
     nome_solicitante: new FormControl(''),
+    area: new FormControl(''),
+    funcao: new FormControl(''),
     email_solicitante: new FormControl(''),
     contato_solicitante: new FormControl(''),
     nome_amostra: new FormControl(''),
@@ -65,6 +67,8 @@ export class DetalheDeAnaliseComponent implements OnInit {
   ngOnInit(): void {
     this.analiseForm.patchValue({
       nome_solicitante: this.data.solicitante?.name,
+      area: this.data.solicitante?.area,
+      funcao: this.data.solicitante?.funcao,
       email_solicitante: this.data.solicitante?.email,
       contato_solicitante: this.data.solicitante?.phone,
       nome_amostra: this.data.nome_amostra,
@@ -110,10 +114,19 @@ salvarAlteracoes():void{
   amostra.progresso = this.#amostraService.calcularProgresso(amostra);
   if(id){
 try {
-  this.#amostraService.httpEditarAmostra(id,amostra).subscribe(res => {
-    this.#toast.success(res.message)
-    this.dialogRef.close(true)
-  })
+  this.#amostraService.httpEditarAmostra(id,amostra).subscribe(
+    {
+      next: () => {
+        this.#toast.success('Alterações aplicadas com sucesso!');
+      },
+      error: (error) => {
+        this.#toast.error(
+          'Erro ao salvar alterações: ',
+          error.error.message
+        );
+      },
+    }
+  )
 } catch (error) {
   this.#toast.error("Não foi possível atualizar, tente novamente mais tarde...")
 }

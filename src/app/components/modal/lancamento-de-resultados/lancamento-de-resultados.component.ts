@@ -171,7 +171,7 @@ export class LancamentoDeResultadosComponent implements OnInit {
       .httpEditarAmostra(this.data[0]._id, this.amostra)
       .subscribe({
         next: () => {
-          this.#toastr.success('Resultados lançados com sucesso!');
+          this.#toastr.success('Análise adicionada com sucesso!');
           this.dialogRef.close(this.amostra);
         },
         error: (error) => {
