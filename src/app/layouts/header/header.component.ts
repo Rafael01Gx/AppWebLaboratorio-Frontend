@@ -25,7 +25,8 @@ export class HeaderComponent {
     sessionStorage.removeItem('auth-token');
     sessionStorage.removeItem('user-name');  
     sessionStorage.removeItem('user-level'); 
-    
     this.#router.navigate(['/login']);
   }
+
+
 }

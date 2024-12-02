@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { IOrdemDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AmostraService {
 
   #editarAmostraUrl = signal(`${environment.api_url}/amostras/editar/`);
   #listarTodasAsAmostrasUrl = signal(`${environment.api_url}/amostras/listar-all`);
+  #listarAmostrasByStatusUrl = signal(`${environment.api_url}/amostras/listar-all-filter`);
   #listarAmostraByUserUrl = signal(`${environment.api_url}/amostras/listar`);
   #listarAmostraByOrdemDeServicoUrl = signal(`${environment.api_url}/amostras/listar/listar-by-os`);
   #excluirAmostraUrl = signal(`${environment.api_url}/amostras/deletar`);
@@ -41,6 +43,19 @@ export class AmostraService {
       shareReplay(),
       tap((res) => {
         this.#setListarTodasAsAmostras.set(res);
+      })
+    );   
+  }
+
+  #setListarAmostrasByStatus = signal<IAmostrasResponse| null>(null);
+  public getListarAmostrasByStatus = this.#setListarAmostrasByStatus.asReadonly();
+
+  public httpListarAmostrasByStatus(status: EStatus): Observable<IAmostrasResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+    return this.#http.get<IAmostrasResponse>(`${this.#listarAmostrasByStatusUrl()}/${status}`,{ headers }).pipe(
+      shareReplay(),
+      tap((res) => {
+        this.#setListarAmostrasByStatus.set(res);
       })
     );   
   }
@@ -84,6 +99,7 @@ export class AmostraService {
       })
     );   
   }
+  
   
  
   calcularProgresso(amostra: IAmostra): number {

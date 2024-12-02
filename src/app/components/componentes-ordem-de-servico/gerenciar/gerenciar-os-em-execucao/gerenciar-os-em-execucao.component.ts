@@ -15,7 +15,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EStatus } from '../../../../shared/Enum/status.enum';
 import { Router } from '@angular/router';
-import { Dialog } from '@angular/cdk/dialog';
 import { RevisaoDeOsComponent } from '../../../modal/revisao-de-os/revisao-de-os.component';
 
 

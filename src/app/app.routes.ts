@@ -24,6 +24,7 @@ import { NovaOsComponent } from './components/componentes-ordem-de-servico/nova-
 import { OsPendentesComponent } from './components/componentes-ordem-de-servico/os-pendentes/os-pendentes.component';
 import { OsFinalizadasComponent } from './components/componentes-ordem-de-servico/os-finalizadas/os-finalizadas.component';
 import { RelatorioDeAnaliseComponent } from './components/relatorio-de-analise/relatorio-de-analise.component';
+import { AmostrasComponent } from './pages/amostras/amostras.component';
 
 export const routes: Routes = [
   {
@@ -92,6 +93,11 @@ export const routes: Routes = [
   {
     path: 'relatorio-de-analises',
     component: RelatorioDeAnaliseComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'amostras',
+    component:AmostrasComponent ,
     canActivate: [AuthGuard]
   },
   {

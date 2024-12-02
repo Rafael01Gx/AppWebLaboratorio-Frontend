@@ -6,7 +6,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { NgxMaskPipe } from 'ngx-mask';
 import { MatButton } from '@angular/material/button';
-import { PrintPdfService } from '../../../core/services/impressao/print-pdf.service';
 import { AutorizarOsComponent } from '../gerenciar-os/autorizar-os/autorizar-os.component';
 
 
@@ -19,9 +18,6 @@ import { AutorizarOsComponent } from '../gerenciar-os/autorizar-os/autorizar-os.
 })
 export class DetalharOrdemDeServicoComponent implements OnInit {
   
-#print = inject(PrintPdfService) //Aguardando implementação
-
-
 dialogRef = inject(MatDialogRef<DetalharOrdemDeServicoComponent>)
 data: IOrdemDeServico  = inject(MAT_DIALOG_DATA)
 
