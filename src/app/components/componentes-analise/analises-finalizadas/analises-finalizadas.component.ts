@@ -12,6 +12,7 @@ import { IAmostrasCollection, IAmostrasResponse, IAmostra } from '../../../share
 import { EStatus } from '../../../shared/Enum/status.enum';
 import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LaudoAmostraComponent } from '../../modal/laudo-amostra/laudo-amostra.component';
 
 @Component({
   selector: 'app-analises-finalizadas',
@@ -28,7 +29,7 @@ export class AnalisesFinalizadasComponent  implements OnInit {
   lista_amostras: IAmostrasCollection[] = [] ;
 
 
-  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados','editar'];
+  displayedColumns: string[] = ['numeroOs','status', 'nome_amostra','data_amostra' ,'solicitante', 'ensaios_solicitados','editar','visualizar'];
   dataSource = new MatTableDataSource<IAmostrasCollection>();
 
 
@@ -42,6 +43,7 @@ this.#amostraService.httpListarTodasAsAmostras().subscribe((response: IAmostrasR
       this.#toastr.error(response.message);
     }
   });
+  
 
 }
 
@@ -72,6 +74,16 @@ openAnalysisDetail(data: IAmostra) : void {
      data:data
    })
  }
+
+ detalharResultados (amostra :IAmostra){
+  if(amostra){
+this.#dialog.open(LaudoAmostraComponent,{
+  data: amostra,
+  minWidth: '25cm',
+  maxHeight: '95lvh'  
+}) 
+}
+}
 
 }
 

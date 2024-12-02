@@ -75,6 +75,20 @@
         display: flex;
         justify-content: space-between;
        }
+       .pdf{
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        mat-icon{
+        color: black;
+        &:hover{
+          color: var(--red-10);
+          cursor: pointer;
+          transform: scale(1.1);
+        }
+        }
+       }
              p,
              strong {
                font-weight: 500;

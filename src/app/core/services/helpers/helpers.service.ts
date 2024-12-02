@@ -29,9 +29,12 @@ export class HelpersService {
       input.value = value;
     }
   }
-  transformarResultado(value: number, casasDecimais: number): string {
+  transformarResultado(value: number | string, casasDecimais: number): string {
     if (value === null || value === undefined) {
       return '';
+    }
+    if(typeof value === 'string'){
+      return value
     }
 
     const formattedValue = value.toFixed(casasDecimais);

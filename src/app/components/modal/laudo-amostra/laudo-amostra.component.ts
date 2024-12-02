@@ -1,61 +1,48 @@
-import { Component, inject, OnInit, signal, AfterViewInit } from '@angular/core';
-import { IOrdemDeServico } from '../../shared/interfaces/IOrdemDeservico.interface';
-import { IAmostrasCollection, IAnalista, IResultado, IResultadoValues } from '../../shared/interfaces/IAmostra.interface';
-import { AmostraService } from '../../core/services/amostra/amostra.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { IAmostra, IAnalista, IResultado, IResultadoCollection } from '../../../shared/interfaces/IAmostra.interface';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { HelpersService } from '../../core/services/helpers/helpers.service';
-
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HelpersService } from '../../../core/services/helpers/helpers.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-relatorio-de-analise',
+  selector: 'app-laudo-amostra',
   standalone: true,
-  imports: [],
-  templateUrl: './relatorio-de-analise.component.html',
-  styleUrl: './relatorio-de-analise.component.scss'
+  imports: [MatCardModule,MatIcon],
+  templateUrl: './laudo-amostra.component.html',
+  styleUrl: './laudo-amostra.component.scss'
 })
-export class RelatorioDeAnaliseComponent implements OnInit {
-#amoastraService = inject(AmostraService)
-ordemDeServico! : IOrdemDeServico ;
+export class LaudoAmostraComponent implements OnInit {
 #helpersService = inject(HelpersService)
-
-amostras!: IAmostrasCollection[];
+data = inject(MAT_DIALOG_DATA)
 relatorio!: SafeHtml;
-
+amostra: IAmostra = this.data
+dialogRef = inject(MatDialogRef<LaudoAmostraComponent>);
 constructor(private sanitizer: DomSanitizer) {}
 
 ngOnInit() {
-  const storedOs = sessionStorage.getItem('ordemDeServico');
-  if (storedOs) {
-    this.ordemDeServico = JSON.parse(storedOs);
-    sessionStorage.removeItem('ordemDeServico');
-  }
+  console.log(this.data)
+  const html = this.generateHTML(this.amostra);
+  this.relatorio = this.sanitizer.bypassSecurityTrustHtml(html);
 
-  try {
-    this.#amoastraService.httpListarAmostraByOrdemDeServico(this.ordemDeServico.numeroOs).subscribe((response) => {
-      this.amostras = response.amostras;
-      const html = this.generateHTML(this.ordemDeServico, this.amostras);
-      this.relatorio = this.sanitizer.bypassSecurityTrustHtml(html);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+}
+closeDialog() {
+  this.dialogRef.close();
 }
 
-
-public generateHTML(  ordemDeServico: IOrdemDeServico,
-  amostras: IAmostrasCollection[]): string{
+public generateHTML( 
+  amostras: IAmostra): string{
 let html = '';
-for (const amostra of amostras) {
-  html += this.createReportTemplate(ordemDeServico, amostra);
-}
+  html += this.createReportTemplate(amostras);
+
 
 return html;
 }
 
 
   private createReportTemplate(
-    ordemDeServico: IOrdemDeServico,
-    amostra: IAmostrasCollection
+    amostra: IAmostra
   ): string {
     return `
       <div class="book">
@@ -77,13 +64,13 @@ return html;
                 <div>
                   <div>
                     <span>Área Solicitante:</span>
-                    <fieldset><p>${ordemDeServico.solicitante?.area}</p></fieldset>
+                    <fieldset><p>${amostra.solicitante?.area}</p></fieldset>
                   </div>
                   <div>
                     <span>Data de Início:</span>
                     <fieldset>
                       <p>${
-                        ordemDeServico.prazo_inicio_fim?.trim().split('-')[0] ||
+                        amostra.prazo_inicio_fim?.trim().split('-')[0] ||
                         'N/A'
                       }</p>
                     </fieldset>
@@ -92,7 +79,7 @@ return html;
                     <span>Data Final:</span>
                     <fieldset>
                       <p>${
-                        ordemDeServico.prazo_inicio_fim?.trim().split('-')[1] ||
+                        amostra.prazo_inicio_fim?.trim().split('-')[1] ||
                         'N/A'
                       }</p>
                     </fieldset>
@@ -102,19 +89,19 @@ return html;
                   <div>
                     <span>Requerente:</span>
                     <fieldset>
-                      <p>${ordemDeServico.solicitante?.name || 'N/A'}</p>
+                      <p>${amostra.solicitante?.name || 'N/A'}</p>
                     </fieldset>
                   </div>
                   <div>
                     <span>E-mail:</span>
                     <fieldset>
-                      <p>${ordemDeServico.solicitante?.email || 'N/A'}</p>
+                      <p>${amostra.solicitante?.email || 'N/A'}</p>
                     </fieldset>
                   </div>
                   <div>
                     <span>Contato:</span>
                     <fieldset>
-                      <p>${ordemDeServico.solicitante?.phone || 'N/A'}</p>
+                      <p>${amostra.solicitante?.phone || 'N/A'}</p>
                     </fieldset>
                   </div>
                 </div>
@@ -125,13 +112,13 @@ return html;
                   <div>
                     <span>Identificação da amostra:</span>
                     <fieldset>
-                      <p>${amostra['nome_amostra']}</p>
+                      <p>${amostra.nome_amostra}</p>
                     </fieldset>
                   </div>
                   <div>
                     <span>Tipo de amostras:</span>
                     <fieldset>
-                      <p>${amostra['amostra_tipo']}</p>
+                      <p>${amostra.amostra_tipo}</p>
                     </fieldset>
                   </div>
                 </div>
@@ -139,13 +126,13 @@ return html;
                   <div>
                     <span>Data da Amostra:</span>
                     <fieldset>
-                      <p>${amostra['data_amostra']}</p>
+                      <p>${amostra.data_amostra}</p>
                     </fieldset>
                   </div>
                   <div>
                     <span>Data da Recepção:</span>
                     <fieldset>
-                      <p>${amostra['data_recepcao']}</p>
+                      <p>${amostra.data_recepcao}</p>
                     </fieldset>
                   </div>
                 </div>
@@ -156,18 +143,12 @@ return html;
                   <h2>Ensaios Solicitados</h2>
                 </div>
                 <span style="text-transform: uppercase">
-                  ${amostra['ensaios_solicitados']}
+                  ${amostra.ensaios_solicitados}
                 </span>
               </fieldset>
 
-              ${this.renderResultados(amostra['resultados'] as IResultado)}
+              ${this.renderResultados(amostra['resultados'] as IResultadoCollection)}
 
-                    <fieldset class="ensaios elaboracao">
-        <div class="title">
-          <h2>Elaboração & aprovação</h2>
-        </div>
-        ${this.renderAnalistas(amostra['analistas'] as IAnalista,ordemDeServico as IOrdemDeServico)}
-      </fieldset>
             </div>
           </div>
         </div>
@@ -175,7 +156,7 @@ return html;
     `;
   }
 
-  private renderResultados(resultados: IResultado): string {
+  private renderResultados(resultados: IResultadoCollection): string {
     let html = '';
     Object.entries(resultados).forEach(([key, value]) => {
       html += `
@@ -215,7 +196,6 @@ body {
 
 .page {
   width: 21cm;
-  min-height: 29.7cm;
   margin: auto;
   border: 1px #d3d3d3 solid;
   border-radius: 5px;
@@ -466,7 +446,7 @@ div{
     return html;
   }
 
-  private renderAnalistas(analistas: IAnalista, ordemDeServico: IOrdemDeServico): string {
+  private renderAnalistas(analistas: IAnalista): string {
     return Object.entries(analistas)
       .map(
         ([key, analista]) => `
@@ -477,17 +457,12 @@ div{
             <div><small class="analista-funcao">${analista.funcao}</small></div>
             <div><em><strong>${analista.area}</strong></em></div>
           </div>` : ''}
-          <div class="analista-aprovador">
-            <div>${ordemDeServico.revisor_da_os?.name?.toUpperCase()}</div>
-            <div><small class="analista-funcao">${ordemDeServico.revisor_da_os?.funcao}</small></div>
-            <div><em><strong>${ordemDeServico.revisor_da_os?.area}</strong></em></div>
-          </div>
         </div>`
       )
       .join('');
   }
 
-  private renderResultadosTable(key: string, value: IResultadoValues): string {
+  private renderResultadosTable(key: string, value: IResultado): string {
     const isSpecialCase = ['RDI', 'GRANULOMETRIA'].includes(
       key.trim().toUpperCase()
     );

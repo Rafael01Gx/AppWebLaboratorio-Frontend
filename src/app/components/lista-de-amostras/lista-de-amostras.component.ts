@@ -15,6 +15,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DetalharResultadoAmostraComponent } from '../modal/detalhar-resultado-amostra/detalhar-resultado-amostra.component';
+import { LaudoAmostraComponent } from '../modal/laudo-amostra/laudo-amostra.component';
 
 
 @Component({
@@ -84,6 +85,17 @@ const resultado = amostra.resultados[item]
 this.#dialog.open(DetalharResultadoAmostraComponent,{
   data:[item ,resultado],
   minWidth: '21cm'
+}) 
+}
+}
+
+
+detalharResultados (amostra :IAmostra){
+  if(amostra){
+this.#dialog.open(LaudoAmostraComponent,{
+  data: amostra,
+  minWidth: '25cm',
+  maxHeight: '95lvh'  
 }) 
 }
 }
