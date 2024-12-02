@@ -74,7 +74,7 @@
                     <strong>Resultados:</strong>
                     <ul>
                       @for (item of element.resultados| keyvalue; track item) {
-                      <li>{{ item.key }} <mat-icon>keyboard_arrow_right</mat-icon></li>
+                      <li (click)="detalharResultado(element,item.key)">{{ item.key }} <mat-icon>keyboard_arrow_right</mat-icon></li>
                       }
                     </ul>
                   </div>

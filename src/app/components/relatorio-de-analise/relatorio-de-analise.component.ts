@@ -1,10 +1,7 @@
 import { Component, inject, OnInit, signal, AfterViewInit } from '@angular/core';
 import { IOrdemDeServico } from '../../shared/interfaces/IOrdemDeservico.interface';
-import { NgxMaskPipe } from 'ngx-mask';
 import { IAmostrasCollection, IAnalista, IResultado, IResultadoValues } from '../../shared/interfaces/IAmostra.interface';
 import { AmostraService } from '../../core/services/amostra/amostra.service';
-import { NgFor} from '@angular/common';
-import { DecimalFormatPipe } from '../../shared/pipes/decimal-format.pipe';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HelpersService } from '../../core/services/helpers/helpers.service';
 
@@ -12,7 +9,7 @@ import { HelpersService } from '../../core/services/helpers/helpers.service';
 @Component({
   selector: 'app-relatorio-de-analise',
   standalone: true,
-  imports: [NgxMaskPipe],
+  imports: [],
   templateUrl: './relatorio-de-analise.component.html',
   styleUrl: './relatorio-de-analise.component.scss'
 })

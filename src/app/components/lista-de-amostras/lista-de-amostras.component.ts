@@ -1,7 +1,7 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { IAmostra, IAmostrasCollection, IAmostrasResponse } from '../../shared/interfaces/IAmostra.interface';
+import { IAmostra, IAmostrasCollection, IAmostrasResponse, IResultado } from '../../shared/interfaces/IAmostra.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AmostraService } from '../../core/services/amostra/amostra.service';
 import { MatCard } from '@angular/material/card';
@@ -13,6 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DetalharResultadoAmostraComponent } from '../modal/detalhar-resultado-amostra/detalhar-resultado-amostra.component';
 
 
 @Component({
@@ -37,7 +39,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class ListaDeAmostrasComponent {
  status = EStatus
   #amostraService = inject(AmostraService);
-  
+  #dialog = inject(MatDialog)
   listAmostras: IAmostrasCollection[]= []; 
   
   dataSource = new MatTableDataSource(this.listAmostras);
@@ -76,6 +78,14 @@ export class ListaDeAmostrasComponent {
     }
   }
 
-
+detalharResultado (amostra:IAmostra,item: any){
+  if(item && amostra.resultados){
+const resultado = amostra.resultados[item]
+this.#dialog.open(DetalharResultadoAmostraComponent,{
+  data:[item ,resultado],
+  minWidth: '21cm'
+}) 
+}
+}
 
 }
