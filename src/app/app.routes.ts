@@ -25,6 +25,7 @@ import { OsPendentesComponent } from './components/componentes-ordem-de-servico/
 import { OsFinalizadasComponent } from './components/componentes-ordem-de-servico/os-finalizadas/os-finalizadas.component';
 import { RelatorioDeAnaliseComponent } from './components/relatorio-de-analise/relatorio-de-analise.component';
 import { AmostrasComponent } from './pages/amostras/amostras.component';
+import { OsAnalyticsResolver } from './core/services/analytical-charts/OsAnalytics.resolver';
 
 export const routes: Routes = [
   {
@@ -50,7 +51,10 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      analyticsData: OsAnalyticsResolver
+    }
   },
   {
     path: 'gerenciar-contas',
