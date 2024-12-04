@@ -10,20 +10,35 @@ import { IAnalyticResult } from '../../../shared/interfaces/IAnalyticals.interfa
 })
 export class AnalyticalChartsService {
   #http = inject(HttpClient);
-#analyticalChartDataOs = signal(`${environment.api_url}/analytics/analytical-data`);
+#analyticalChartData = signal(`${environment.api_url}/analytics/analytical-data`);
 
-#setAnalyticalChartDataOs = signal<IAnalyticResult| null>(null);
-public getAnalyticalChartDataOs= this.#setAnalyticalChartDataOs.asReadonly();
 
-public httpAnalyticalChartDataOs(): Observable<IAnalyticResult> {
+#setAnalyticalChartData = signal<IAnalyticResult| null>(null);
+public getAnalyticalChartData = this.#setAnalyticalChartData.asReadonly();
+
+public httpAnalyticalChartData(): Observable<IAnalyticResult> {
   const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-  return this.#http.get<IAnalyticResult>(this.#analyticalChartDataOs(),{ headers }).pipe(
+  return this.#http.get<IAnalyticResult>(this.#analyticalChartData(),{ headers }).pipe(
     shareReplay(),
     tap((res) => {
-      this.#setAnalyticalChartDataOs.set(res);
+      this.#setAnalyticalChartData.set(res);
     })
   );   
 }
+/*
+#setAnalyticalChartDataEnsaios = signal<IAnalyticResult| null>(null);
+public getAnalyticalChartDataEnsaios= this.#setAnalyticalChartDataEnsaios.asReadonly();
+
+public httpAnalyticalChartDataEnsaios(): Observable<IAnalyticResult> {
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+  return this.#http.get<IAnalyticResult>(this.#analyticalChartDataEnsaios(),{ headers }).pipe(
+    shareReplay(),
+    tap((res) => {
+      this.#setAnalyticalChartDataEnsaios.set(res);
+    })
+  );   
+}
+  */
 
   constructor() { }
 }

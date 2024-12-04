@@ -1,3 +1,5 @@
+import { AnalyticalDemandasComponent } from '../../components/analytical-charts/analytical-demandas/analytical-demandas.component';
+import { AnalyticalEnsaiosComponent } from '../../components/analytical-charts/analytical-ensaios/analytical-ensaios.component';
 import { AnalyticalOsComponent } from '../../components/analytical-charts/analytical-os/analytical-os.component';
 import { MainComponent } from '../../layouts/main/main.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
@@ -9,7 +11,7 @@ import { MatCard } from '@angular/material/card';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent,SidenavComponent,MainComponent,MatCard,AnalyticalOsComponent],
+  imports: [HeaderComponent,SidenavComponent,MainComponent,MatCard,AnalyticalOsComponent,AnalyticalEnsaiosComponent,AnalyticalDemandasComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

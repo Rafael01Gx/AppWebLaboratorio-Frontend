@@ -1,8 +1,6 @@
 export interface IAnalyticResult {
-  ordem_de_servico_analytics: {
-    ordens_de_servicos_totais: IAnalyticResultData[];
-    ordens_de_servico_finalizadas: IAnalyticResultData[];
-  };
+  os_analytics: IOsData;
+  ensaios_analytics: TEnsaiosData;
   message?: string;
 }
 
@@ -10,3 +8,11 @@ export interface IAnalyticResultData {
   quantidade: number;
   data: string;
 }
+
+export interface IOsData {
+  total: number[] | [null];
+  finalizadas: number[]  | [null];
+  datas: string[]  | [null];
+}
+
+export type TEnsaiosData = [number, number][]

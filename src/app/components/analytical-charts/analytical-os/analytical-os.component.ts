@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ApexAxisChartSeries,
@@ -33,23 +33,21 @@ export interface ChartOptions {
 })
 export class AnalyticalOsComponent implements OnInit {
   public chartOptions!: Partial<ChartOptions>;
+  private route = inject(ActivatedRoute)
 
-  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.initializeChartFromResolver();
   }
 
   private initializeChartFromResolver(): void {
-    // Obtém os dados do resolver
     const resolvedData = this.route.snapshot.data['analyticsData'];
 
-    // Verifica se há dados válidos
-    if (resolvedData) {
+    if (resolvedData.osData) {
       this.configureChartOptions(
-        resolvedData.total, 
-        resolvedData.finalizadas, 
-        resolvedData.datas
+        resolvedData.osData.total, 
+        resolvedData.osData.finalizadas, 
+        resolvedData.osData.datas
       );
     }
   }

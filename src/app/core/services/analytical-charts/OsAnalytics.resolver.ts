@@ -1,48 +1,43 @@
+import { TEnsaiosData } from './../../../shared/interfaces/IAnalyticals.interface';
 import { inject, Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AnalyticalChartsService } from './analytical-charts.service';
-import { IAnalyticResult } from '../../../shared/interfaces/IAnalyticals.interface';
+import { IAnalyticResult, IOsData } from '../../../shared/interfaces/IAnalyticals.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OsAnalyticsResolver implements Resolve<{
-  total: number[];
-  finalizadas: number[];
-  datas: string[];
+  osData:IOsData,
+  ensaiosData : TEnsaiosData
 }> {
+
  analyticalChartsService= inject(AnalyticalChartsService)
 
   resolve(): Observable<{
-    total: number[];
-    finalizadas: number[];
-    datas: string[];
+    osData:IOsData,
+    ensaiosData : TEnsaiosData
   }> {
-    return this.analyticalChartsService.httpAnalyticalChartDataOs().pipe(
+    return this.analyticalChartsService.httpAnalyticalChartData().pipe(
       map((response: IAnalyticResult) => {
-        if (!response || !response.ordem_de_servico_analytics) {
-          return { total: [], finalizadas: [], datas: [] };
+        if (!response || !response.os_analytics) {
+          return { osData:{datas:[],finalizadas:[],total:[]} , ensaiosData : [] };
         }
+       const osData: IOsData = {
+        total : response.os_analytics.total,
+        finalizadas : response.os_analytics.finalizadas,    
+        datas : response.os_analytics.datas
+       }
+       const ensaiosData: TEnsaiosData = response.ensaios_analytics
 
-        const totaisData = response.ordem_de_servico_analytics['ordens_de_servicos_totais'] || [];
-        const finalizadasData = response.ordem_de_servico_analytics['ordens_de_servico_finalizadas'] || [];
-
-        const total = totaisData.map(item => item.quantidade);
-        const finalizadas = finalizadasData.map(item => item.quantidade);
-        
-        const datas = [...new Set([
-          ...totaisData.map(item => item.data),
-          ...finalizadasData.map(item => item.data)
-        ])];
-
-        return { total, finalizadas, datas };
+        return { osData , ensaiosData};
       }),
       catchError((error) => {
         console.error('Erro no resolver de analytics:', error);
-        // Retorna um objeto vazio em caso de erro
-        return of({ total: [], finalizadas: [], datas: [] });
+
+        return of({  osData:{datas:[],finalizadas:[],total:[]},ensaiosData : [] });
       })
     );
   }
