@@ -1,4 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -12,8 +13,13 @@ import {
   ApexTooltip,
   ApexFill,
   ApexLegend,
-  NgApexchartsModule
-} from "ng-apexcharts";
+  NgApexchartsModule,
+} from 'ng-apexcharts';
+import {
+  IAnalyticResult,
+  IDemandaEnsaios,
+} from '../../../shared/interfaces/IAnalyticals.interface';
+import { HelpersService } from '../../../core/services/helpers/helpers.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -28,88 +34,101 @@ export type ChartOptions = {
   fill: ApexFill;
   legend: ApexLegend;
 };
+export type TSeries = {
+  name: string;
+  data: number[];
+};
 
 @Component({
   selector: 'app-analytical-demandas',
   standalone: true,
   imports: [NgApexchartsModule],
   templateUrl: './analytical-demandas.component.html',
-  styleUrl: './analytical-demandas.component.scss'
+  styleUrl: './analytical-demandas.component.scss',
 })
-export class AnalyticalDemandasComponent {
+export class AnalyticalDemandasComponent implements OnInit {
+  #helpService = inject(HelpersService);
+  @ViewChild('chart') chart!: ChartComponent;
+  private route = inject(ActivatedRoute);
+  public chartOptions!: Partial<ChartOptions>;
+  ngOnInit(): void {
+    this.initializeChartFromResolver();
+  }
 
-  @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  private initializeChartFromResolver(): void {
+    const formater = this.#helpService.getMonthAndWeek
+    const resolvedData = this.route.snapshot.data['analyticsData'];
+    let values : TSeries[]=[] ;
+    let categories : string[]=[];
+    let categoriesFormat: string[];
+    if (resolvedData.demanda_ensaios) {
+      for (let key in resolvedData.demanda_ensaios) {
+        if (resolvedData.demanda_ensaios.hasOwnProperty(key)) {
+         const data = resolvedData.demanda_ensaios[key].semana
+          const series:TSeries = {
+            name: key,
+            data: resolvedData.demanda_ensaios[key].quantidade,
+          };
 
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Marine Sprite",
-          data: [44, 55, 41, 37, 22, 43, 21]
-        },
-        {
-          name: "Striking Calf",
-          data: [53, 32, 33, 52, 13, 43, 32]
-        },
-        {
-          name: "Tank Picture",
-          data: [12, 17, 11, 9, 15, 11, 20]
-        },
-        {
-          name: "Bucket Slope",
-          data: [9, 7, 5, 8, 6, 9, 4]
-        },
-        {
-          name: "Reborn Kid",
-          data: [25, 12, 19, 32, 25, 24, 10]
+          categories=data;
+         values.push(series);
         }
-      ],
+      }
+      categoriesFormat = categories.map((week: string) => formater(week))
+
+      this.initChart(resolvedData.demanda_ensaios,values,categoriesFormat);
+    }
+
+  }
+
+  initChart(data: IDemandaEnsaios, values: TSeries[], categories: string[]) {
+    this.chartOptions = {
+      series: values,
       chart: {
-        type: "bar",
+        type: 'bar',
         height: 350,
-        stacked: true
+        stacked: true,
       },
       plotOptions: {
         bar: {
-          horizontal: true
-        }
+          horizontal: true,
+        },
       },
       stroke: {
         width: 1,
-        colors: ["#fff"]
+        colors: ['#fff'],
       },
       title: {
-        text: "Fiction Books Sales"
+        text: 'Demanda de Ensaios por Semana',
       },
       xaxis: {
-        categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+        categories: categories,
         labels: {
-          formatter: function(val) {
-            return val + "K";
-          }
-        }
+          formatter: function (val) {
+            return val;
+          },
+        },
       },
       yaxis: {
         title: {
-          text: undefined
-        }
+          text: undefined,
+        },
       },
       tooltip: {
         y: {
-          formatter: function(val) {
-            return val + "K";
-          }
-        }
+          formatter: function (val) {
+            return val + '';
+          },
+        },
       },
       fill: {
-        opacity: 1
+        opacity: 1,
       },
       legend: {
-        position: "top",
-        horizontalAlign: "left",
-        offsetX: 40
-      }
+        position: 'top',
+        horizontalAlign: 'left',
+        offsetX: 40,
+      },
     };
   }
 }

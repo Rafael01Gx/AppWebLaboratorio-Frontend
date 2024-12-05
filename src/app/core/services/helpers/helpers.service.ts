@@ -44,4 +44,24 @@ export class HelpersService {
 
     return partes.join(',');
   }
+
+
+  getMonthAndWeek(weekNumber:string| number) {
+weekNumber = Number(weekNumber)
+    if ( typeof weekNumber !== 'number'){
+      return weekNumber;
+    }
+    const year = new Date().getFullYear();
+    const firstDayOfYear = new Date(year, 0, 1);
+
+    const targetDate = new Date(year, 0, 1 + (weekNumber - 1) * 7);
+
+    const month = targetDate.toLocaleString('pt-BR', { month: 'short' });
+    const firstDayOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+    const weekOfMonth = Math.ceil((targetDate.getDate() + firstDayOfMonth.getDay()) / 7);
+    
+
+    return `S${weekOfMonth}-${month.charAt(0).toUpperCase() + month.slice(1)}`;
+  }
+
 }

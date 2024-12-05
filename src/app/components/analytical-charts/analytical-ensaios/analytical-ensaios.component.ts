@@ -109,12 +109,14 @@ ngOnInit(): void {
           name: 'Qnt de Ensaios',
         },
       ],
+      title:{
+        text:'Distribuição Diária das Solicitações de Ensaios'},
       chart: {
         type: 'area',
         height: 350,
       },
       annotations: {
-        
+       
         yaxis: [
           {
             y: 30,

@@ -1,4 +1,4 @@
-import { TEnsaiosData } from './../../../shared/interfaces/IAnalyticals.interface';
+import { IDemandaEnsaios, TEnsaiosData } from './../../../shared/interfaces/IAnalyticals.interface';
 import { inject, Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -11,14 +11,16 @@ import { IAnalyticResult, IOsData } from '../../../shared/interfaces/IAnalytical
 })
 export class OsAnalyticsResolver implements Resolve<{
   osData:IOsData,
-  ensaiosData : TEnsaiosData
+  ensaiosData : TEnsaiosData,
+  demanda_ensaios?:IDemandaEnsaios
 }> {
 
  analyticalChartsService= inject(AnalyticalChartsService)
 
   resolve(): Observable<{
     osData:IOsData,
-    ensaiosData : TEnsaiosData
+    ensaiosData : TEnsaiosData,
+    demanda_ensaios?: IDemandaEnsaios
   }> {
     return this.analyticalChartsService.httpAnalyticalChartData().pipe(
       map((response: IAnalyticResult) => {
@@ -31,13 +33,13 @@ export class OsAnalyticsResolver implements Resolve<{
         datas : response.os_analytics.datas
        }
        const ensaiosData: TEnsaiosData = response.ensaios_analytics
-
-        return { osData , ensaiosData};
+       const demanda_ensaios:IDemandaEnsaios = response.demanda_ensaios
+        return { osData , ensaiosData,demanda_ensaios};
       }),
       catchError((error) => {
         console.error('Erro no resolver de analytics:', error);
 
-        return of({  osData:{datas:[],finalizadas:[],total:[]},ensaiosData : [] });
+        return of({  osData:{datas:[],finalizadas:[],total:[]},ensaiosData : []});
       })
     );
   }
