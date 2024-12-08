@@ -14,6 +14,7 @@ import {
   ApexAnnotations,
   ApexStroke,
   NgApexchartsModule,
+  ApexResponsive,
 } from 'ng-apexcharts';
 import { TEnsaiosData } from '../../../shared/interfaces/IAnalyticals.interface';
 
@@ -32,6 +33,7 @@ export type ChartOptions = {
   colors: any;
   toolbar: any;
   grid: ApexGrid;
+  responsive: ApexResponsive[]
 };
 interface Xaxis {
   min: number | undefined;
@@ -109,11 +111,22 @@ ngOnInit(): void {
           name: 'Qnt de Ensaios',
         },
       ],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+             
+              height: 250 
+            }
+          }
+        }
+      ],
       title:{
-        text:'Distribuição Diária das Solicitações de Ensaios'},
+        text:'Distribuição Diária das Solicitações'},
       chart: {
         type: 'area',
-        height: 350,
+        height:350
       },
       annotations: {
        

@@ -2,6 +2,7 @@ export interface IAnalyticResult {
   os_analytics: IOsData;
   ensaios_analytics: TEnsaiosData;
   demanda_ensaios:IDemandaEnsaios;
+  ensaios_em_atraso:IEmAtrasoResultData;
   message?: string;
 }
 
@@ -20,6 +21,10 @@ export interface IDemandaEnsaios{
     semana: string[],
     quantidade: number[]
   }
+}
+export interface IEmAtrasoResultData{
+  totalAmostrasEmAtraso: number,
+  ensaios_em_atraso:[string,number][]
 }
 
 export type TEnsaiosData = [number, number][]

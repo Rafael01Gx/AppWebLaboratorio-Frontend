@@ -50,7 +50,7 @@ export class DetalheDeAnaliseComponent implements OnInit {
   #prazo = inject(HelpersService).calcularPrazoEmDias;
   prazo_atual = this.#prazo(this.data.prazo_inicio_fim!.split('-')[1]);
   resultados: IResultadoCollection = {};
-  public analises: string[] = this.data.ensaios_solicitados?.split(',') || [];
+  public analises: string[] = this.data.ensaios_solicitados?.split(',').map(item => item.trim()) || [];
   exibirBtt = false;
 
   analiseForm = new FormGroup({
@@ -76,6 +76,7 @@ export class DetalheDeAnaliseComponent implements OnInit {
       status_amostra: this.data.status,
     });
     this.resultados = this.data.resultados || {};
+
   }
 
   closeDialog(): void {

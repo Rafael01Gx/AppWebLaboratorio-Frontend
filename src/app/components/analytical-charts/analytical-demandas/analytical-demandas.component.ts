@@ -86,8 +86,13 @@ export class AnalyticalDemandasComponent implements OnInit {
       series: values,
       chart: {
         type: 'bar',
-        height: 350,
+        height: 300,
+        width:"100%",
         stacked: true,
+        events: {
+          mounted: (chart) => {
+            chart.windowResizeHandler();
+          }}
       },
       plotOptions: {
         bar: {

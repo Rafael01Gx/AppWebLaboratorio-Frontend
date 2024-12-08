@@ -9,6 +9,7 @@ import {
   ApexTitleSubtitle,
   ApexXAxis,
   NgApexchartsModule,
+  
 } from 'ng-apexcharts';
 
 export interface ChartOptions {
@@ -22,6 +23,7 @@ export interface ChartOptions {
   dataLabels: { enabled: boolean; enabledOnSeries: number[] };
   fill: ApexFill;
   tooltip: ApexTooltip;
+
 }
 
 @Component({
@@ -71,12 +73,16 @@ export class AnalyticalOsComponent implements OnInit {
         },
       ],
       chart: {
-        height: 350,
         type: 'line',
         toolbar: {
           show: true,
-        },
+        }, events: {
+          mounted: (chart) => {
+            chart.windowResizeHandler();
+          }
+        }
       },
+    
       stroke: {
         width: [0, 4],
       },
@@ -109,6 +115,7 @@ export class AnalyticalOsComponent implements OnInit {
           },
         },
       ],
+
     };
   }
 }

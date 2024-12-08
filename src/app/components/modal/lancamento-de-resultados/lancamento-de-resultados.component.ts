@@ -65,7 +65,7 @@ export class LancamentoDeResultadosComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
   helpersService = inject(HelpersService);
   amostra: IAmostra = this.data[0];
-  ensaio: string = this.data[1];
+  ensaio: string = this.data[1].trim();
   listConfigAnalises: IConfigAnalise[] = [];
   analista!: IAnalista;
   configuracaoSelecionada = signal<IParametrosDeAnaliseCollection>({});
