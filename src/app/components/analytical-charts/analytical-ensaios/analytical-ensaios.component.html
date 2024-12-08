@@ -1,10 +1,10 @@
-
-<button
+<div class="chart">
+<!--<button
   (click)="updateOptions( 'all' )"
   [class.active]="activeOptionButton=='all'"
 >
   All
-</button>
+</button> -->
 <apx-chart
   #chart
   [series]="chartOptions.series!"
@@ -20,3 +20,7 @@
   [tooltip]="chartOptions.tooltip!"
   [annotations]="chartOptions.annotations!"
 ></apx-chart>
+<div class="char-title">
+  Distribuição Diárias de Análises Solicitadas
+</div>
+</div>

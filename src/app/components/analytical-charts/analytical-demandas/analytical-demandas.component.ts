@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ApexAxisChartSeries,
@@ -46,7 +53,11 @@ export type TSeries = {
   templateUrl: './analytical-demandas.component.html',
   styleUrl: './analytical-demandas.component.scss',
 })
-export class AnalyticalDemandasComponent implements OnInit {
+export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
+  @Input({ alias: 'widthAndHeight', required: true }) widthAndHeight!: {
+    width: number;
+    height: number;
+  };
   #helpService = inject(HelpersService);
   @ViewChild('chart') chart!: ChartComponent;
   private route = inject(ActivatedRoute);
@@ -54,31 +65,34 @@ export class AnalyticalDemandasComponent implements OnInit {
   ngOnInit(): void {
     this.initializeChartFromResolver();
   }
+  ngAfterViewInit(): void {
+    this.chartOptions.chart!.height = this.widthAndHeight.height;
+    this.chartOptions.chart!.width = "100%";
+  }
 
   private initializeChartFromResolver(): void {
-    const formater = this.#helpService.getMonthAndWeek
+    const formater = this.#helpService.getMonthAndWeek;
     const resolvedData = this.route.snapshot.data['analyticsData'];
-    let values : TSeries[]=[] ;
-    let categories : string[]=[];
+    let values: TSeries[] = [];
+    let categories: string[] = [];
     let categoriesFormat: string[];
     if (resolvedData.demanda_ensaios) {
       for (let key in resolvedData.demanda_ensaios) {
         if (resolvedData.demanda_ensaios.hasOwnProperty(key)) {
-         const data = resolvedData.demanda_ensaios[key].semana
-          const series:TSeries = {
+          const data = resolvedData.demanda_ensaios[key].semana;
+          const series: TSeries = {
             name: key,
             data: resolvedData.demanda_ensaios[key].quantidade,
           };
 
-          categories=data;
-         values.push(series);
+          categories = data;
+          values.push(series);
         }
       }
-      categoriesFormat = categories.map((week: string) => formater(week))
+      categoriesFormat = categories.map((week: string) => formater(week));
 
-      this.initChart(resolvedData.demanda_ensaios,values,categoriesFormat);
+      this.initChart(resolvedData.demanda_ensaios, values, categoriesFormat);
     }
-
   }
 
   initChart(data: IDemandaEnsaios, values: TSeries[], categories: string[]) {
@@ -86,13 +100,9 @@ export class AnalyticalDemandasComponent implements OnInit {
       series: values,
       chart: {
         type: 'bar',
-        height: 300,
-        width:"100%",
+        height: 350,
+        width: '100%',
         stacked: true,
-        events: {
-          mounted: (chart) => {
-            chart.windowResizeHandler();
-          }}
       },
       plotOptions: {
         bar: {
@@ -102,9 +112,6 @@ export class AnalyticalDemandasComponent implements OnInit {
       stroke: {
         width: 1,
         colors: ['#fff'],
-      },
-      title: {
-        text: 'Demanda de Ensaios por Semana',
       },
       xaxis: {
         categories: categories,
@@ -130,7 +137,7 @@ export class AnalyticalDemandasComponent implements OnInit {
         opacity: 1,
       },
       legend: {
-        position: 'top',
+        position: 'bottom',
         horizontalAlign: 'left',
         offsetX: 40,
       },

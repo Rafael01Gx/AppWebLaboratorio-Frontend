@@ -1,5 +1,5 @@
-@defer (on idle) {
-<div id="chart">
+
+<div #chart class="chart">
     <apx-chart
       [series]="chartOptions.series!"
       [chart]="chartOptions.chart!"
@@ -12,8 +12,9 @@
       [fill]="chartOptions.fill!"
       [tooltip]="chartOptions.tooltip!"
 
-    ></apx-chart>
-    
+    ></apx-chart> 
+    <div class="char-title">
+      Total de Ordens de Serviço X Finalizadas por Mês
+    </div>
   </div>
   
-}

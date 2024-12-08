@@ -1,10 +1,12 @@
 <div class="container-1">
-  <div class="text">
-    <span class="title"><strong>Análises</strong></span>
-    <span class="subtitle">em atraso</span>
+  <div class="col-2">
+    <span class="title-1">Painel</span>
+    <span class="title-2">Análises Preditivas</span>
   </div>
-  <div id="chart">
-    <apx-chart
+  <div class="col-2">
+    
+    <div id="chart">
+      <apx-chart
       [series]="chartOptions.series!"
       [chart]="chartOptions.chart!"
       [plotOptions]="chartOptions.plotOptions!"
@@ -12,6 +14,11 @@
       [legend]="chartOptions.legend!"
       [colors]="chartOptions.colors!"
       [responsive]="chartOptions.responsive!"
-    ></apx-chart>
+      ></apx-chart>
+    </div>
+    <div class="text">
+      <span ><strong>Análises</strong></span>
+      <span class="subtitle">em atraso</span>
+    </div>
   </div>
 </div>

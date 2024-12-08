@@ -1,11 +1,14 @@
 :host{
-    #chart {
-        width: 100%; 
-        max-width: 100%;
-        overflow: hidden;
-      }
-      
-      apx-chart {
-        width: 100%;
-      }
-}
+  margin: auto;
+    #chart{
+      width: 100%;
+      height: 100%;
+  
+  
+    }
+    .char-title{
+      text-align: center;
+      background-color: var(--gray-100);
+
+    }
+  }

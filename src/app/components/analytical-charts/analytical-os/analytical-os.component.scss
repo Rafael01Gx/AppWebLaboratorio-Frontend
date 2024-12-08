@@ -1,13 +1,14 @@
-:host {
-  width: 100%;
-  height: 100%;
-  
+:host{
+margin: auto;
+  .chart{
+    width: 100%;
+    height: 100%;
 
 
-  #chart {
-    box-sizing: border-box !important;
-    margin: 35px auto;
-    margin-bottom: auto;
-    max-width: 90%;
+  }
+  .char-title{
+    text-align: center;
+    background-color: var(--gray-100);
+
   }
 }

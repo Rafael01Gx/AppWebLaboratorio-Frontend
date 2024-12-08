@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ChartComponent,
@@ -50,7 +50,8 @@ export type TOptions = {
   templateUrl: './analytical-ensaios.component.html',
   styleUrl: './analytical-ensaios.component.scss',
 })
-export class AnalyticalEnsaiosComponent implements OnInit{
+export class AnalyticalEnsaiosComponent implements OnInit, AfterViewInit{
+  @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };
   private route = inject(ActivatedRoute)
   @ViewChild('chart', { static: false }) chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
@@ -91,6 +92,10 @@ export class AnalyticalEnsaiosComponent implements OnInit{
 ngOnInit(): void {
   this.initializeChartFromResolver()
 }
+ngAfterViewInit(): void {
+  this.chartOptions.chart!.height = this.widthAndHeight.height;
+  this.chartOptions.chart!.width = "100%";
+}
 
   private initializeChartFromResolver(): void {
     const resolvedData = this.route.snapshot.data['analyticsData'];
@@ -105,28 +110,18 @@ ngOnInit(): void {
 
   initChart(data:TEnsaiosData): void {
     this.chartOptions = {
+      
       series: [       
         {
           data: data,
           name: 'Qnt de Ensaios',
         },
       ],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-             
-              height: 250 
-            }
-          }
-        }
-      ],
-      title:{
-        text:'Distribuição Diária das Solicitações'},
+
       chart: {
         type: 'area',
-        height:350
+        height:350,
+        width: "100%"
       },
       annotations: {
        

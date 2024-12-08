@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { F } from '@angular/cdk/keycodes';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ApexAxisChartSeries,
@@ -33,14 +34,22 @@ export interface ChartOptions {
   templateUrl: './analytical-os.component.html',
   styleUrl: './analytical-os.component.scss',
 })
-export class AnalyticalOsComponent implements OnInit {
+export class AnalyticalOsComponent implements OnInit,AfterViewInit {
+
+  @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };
   public chartOptions!: Partial<ChartOptions>;
-  private route = inject(ActivatedRoute)
+  private route = inject(ActivatedRoute);
 
 
   ngOnInit(): void {
     this.initializeChartFromResolver();
+ 
   }
+ngAfterViewInit(): void {
+  this.chartOptions.chart!.height = this.widthAndHeight.height;
+  this.chartOptions.chart!.width = "100%";
+}
+  
 
   private initializeChartFromResolver(): void {
     const resolvedData = this.route.snapshot.data['analyticsData'];
@@ -49,7 +58,7 @@ export class AnalyticalOsComponent implements OnInit {
       this.configureChartOptions(
         resolvedData.osData.total, 
         resolvedData.osData.finalizadas, 
-        resolvedData.osData.datas
+        resolvedData.osData.datas,
       );
     }
   }
@@ -74,11 +83,20 @@ export class AnalyticalOsComponent implements OnInit {
       ],
       chart: {
         type: 'line',
+        height:300,
+        width:"100%",
+        stacked: true,
         toolbar: {
           show: true,
-        }, events: {
-          mounted: (chart) => {
-            chart.windowResizeHandler();
+          tools:{
+            download:true,
+            selection:true,
+            zoom: false,
+            pan: false,
+            zoomin:false,
+            zoomout:false,
+            reset: false,
+
           }
         }
       },
@@ -86,10 +104,7 @@ export class AnalyticalOsComponent implements OnInit {
       stroke: {
         width: [0, 4],
       },
-      title: {
-        text: 'Análise de Ordens de Serviço',
-        align: 'left',
-      },
+      
       dataLabels: {
         enabled: true,
         enabledOnSeries: [1],
@@ -118,4 +133,5 @@ export class AnalyticalOsComponent implements OnInit {
 
     };
   }
+
 }

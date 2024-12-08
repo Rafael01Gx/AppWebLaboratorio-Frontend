@@ -1,40 +1,14 @@
+:host{
+  margin: auto;
+    .chart{
+      width: 100%;
+      height: 100%;
+  
+  
+    }
+    .char-title{
+      text-align: center;
+      background-color: var(--gray-100);
 
-  :host{
-    width: 100%;
-    button {
-      background: #fff;
-      color: #222;
-      border: 1px solid #e7e7e7;
-      border-bottom: 2px solid #ddd;
-      border-radius: 2px;
-      padding: 4px 17px;
     }
-    
-    button.active {
-      color: #fff;
-      background: #008ffb;
-      border: 1px solid blue;
-      border-bottom: 2px solid blue;
-    }
-    
-    button:focus {
-      outline: 0;
-    }
-    #chart {
-      width: 100%;
-      overflow: hidden;
-    }
-    
-    apx-chart {
-      width: 100%;
-    }
-    .apexcharts-canvas {
-      overflow: visible !important;
-    }
-    
-    foreignObject {
-      overflow: visible !important;
-      max-width: 90% !important;
-      max-height: 90% !important;
-    }
-}
+  }
