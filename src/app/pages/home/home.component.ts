@@ -24,7 +24,6 @@ public widthAndHeight!:{ width: number, height: number } ;
 
   ngAfterViewInit(): void {
     this.widthAndHeight= this.getChartDimensions()
-    console.log(this.widthAndHeight)
   }
 
   getChartDimensions(): { width: number, height: number }{

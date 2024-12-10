@@ -10,7 +10,19 @@
         <span>Olá, {{name}}!</span>    
         <mat-icon [routerLink]="['/']" >home</mat-icon>
         <mat-icon [routerLink]="['/perfil']" >person</mat-icon>
-        <mat-icon matBadge="!" [matBadgeHidden]="hidden" aria-hidden="false" class="ico-message">notifications</mat-icon>
+        <mat-icon matBadge="!" (click)="exibirNotificacoes()" [matBadgeHidden]="hasNotification" aria-hidden="false" class="ico-message">notifications</mat-icon>
+    </div>
+    <div class="notifications"[ngClass]="{'show': !hiddenNotification}" > 
+        <mat-list>
+    @for(item of notificationsArray ; track item._id){
+            <mat-list-item [ngClass]="{'ready': item.read}" (click)="atualizarRead($event, item)"  >
+                <span class="title" matListItemTitle>{{item.title}}</span>
+                <span class="message" matListItemLine>{{item.message}}</span>
+                <small>{{item.data}}</small>
+            </mat-list-item>
+        }
+        </mat-list>
+
     </div>
     <div (click)="logout()" class="logout" ><i  class="material-icons">logout</i></div>
 </header>

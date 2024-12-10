@@ -7,6 +7,7 @@ export interface IUserData {
   level?: UserLevel;
   area?: string;
   funcao?: string;
+  notifications?: INotifications[];
   createdAt?: string;
 }
 
@@ -20,5 +21,11 @@ export interface IUserRecoveryPassword {
   password: string;
   confirmpassword: string;
 }
-
+export interface INotifications {
+  _id: string;
+  title: string;
+  message: string;
+  data: string;
+  read: boolean;
+};
 export type UserLevel = 'Usuário' | 'Operador' | 'Administrador';

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
@@ -18,7 +18,7 @@ import { IAnalista } from '../../../shared/interfaces/IAmostra.interface';
   templateUrl: './revisao-de-os.component.html',
   styleUrl: './revisao-de-os.component.scss'
 })
-export class RevisaoDeOsComponent implements OnInit {
+export class RevisaoDeOsComponent implements AfterViewInit {
 dialogRef = inject(MatDialogRef<RevisaoDeOsComponent>);
 element: IOrdemDeServico = inject(MAT_DIALOG_DATA)
 #toast= inject(ToastrService)
@@ -26,7 +26,7 @@ element: IOrdemDeServico = inject(MAT_DIALOG_DATA)
 #ordemDeServicoService = inject(OrdemDeServicoService)
 revisor!: IAnalista;
 
-ngOnInit(): void {
+ngAfterViewInit(): void {
   this.#userService.httpCheckUser().subscribe((response) => {
     if (response)
       this.revisor = {
