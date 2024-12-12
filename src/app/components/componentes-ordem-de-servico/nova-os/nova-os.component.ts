@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -54,7 +54,7 @@ import { NgIf } from '@angular/common';
   templateUrl: './nova-os.component.html',
   styleUrl: './nova-os.component.scss',
 })
-export class NovaOsComponent implements AfterViewInit {
+export class NovaOsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   #userService = inject(UserService);

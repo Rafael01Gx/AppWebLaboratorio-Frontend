@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +22,7 @@ import { EStatus } from '../../../shared/Enum/status.enum';
   templateUrl: './os-aguardando-autorizacao.component.html',
   styleUrl: './os-aguardando-autorizacao.component.scss'
 })
-export class OsAguardandoAutorizacaoComponent {
+export class OsAguardandoAutorizacaoComponent implements OnInit, AfterViewInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 

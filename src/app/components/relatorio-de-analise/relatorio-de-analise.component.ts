@@ -400,37 +400,87 @@ div{
 }
 
 @media print {
-  *{
-display: block;
-  height: 100vh;
-  overflow-y: auto;
-  overflow: hidden;
-  }
-  html, body {
-    height: 100%;
-    overflow: visible;
-  }
-
-  .book {
-    display: block;
+  body {
     margin: 0;
+    padding: 0;
+    background-color: white;
   }
 
   .page {
+    width: 100%;
     margin: 0;
     padding: 0;
     border: none;
     border-radius: 0;
-    width: 100%;
-    height: auto;
-    page-break-before: always;
-    page-break-after: always;
+    box-shadow: none;
   }
 
   .subpage {
-    display: block;
-    min-height: 100%;
-    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    outline: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .header {
+    background-color: #538dd5 !important;
+    color: white !important;
+    height: auto;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 450;
+    color: white !important;
+    margin: 0;
+  }
+
+  .body {
+    margin-top: 0;
+    padding: 10px;
+  }
+
+  .solicitante,
+  .analise {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    border: 1px #005cbb solid;
+  }
+
+  .tabela-resultado {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    gap: 1px;
+    page-break-inside: avoid;
+  }
+
+  .ensaios {
+    margin-top: 20px;
+    page-break-inside: avoid;
+  }
+
+  .ensaios .title {
+    background-color: #538dd5;
+    color: white !important;
+  }
+
+  .result-item {
+    background: #a39fa9 !important;
+    color: white !important;
+  }
+
+  .container-assinatura {
+    margin-top: 20px;
     page-break-inside: avoid;
   }
 
@@ -440,30 +490,14 @@ display: block;
     print-color-adjust: exact !important;
   }
 
-  .header {
-    background: #538DD5 !important;
-    color: white !important;
-    padding: 10px 0;
-  }
-
-  .body {
-    background: white !important;
-    color: black !important;
-  }
-
-  .tabela-resultado {
-    background: white !important;
-    color: #333 !important;
-    border: 1px solid #ccc;
-    page-break-inside: avoid;
-  }
-
-  .result-item {
-    background: #a39fa9;
-    color: white;
-  }
-
-  .ensaios {
+  /* Ensure content fits on page */
+  .header,
+  .body,
+  .solicitante,
+  .analise,
+  .tabela-resultado,
+  .ensaios,
+  .container-assinatura {
     page-break-inside: avoid;
   }
 }
@@ -483,9 +517,9 @@ display: block;
             <div><em><strong>${analista.area}</strong></em></div>
           </div>` : ''}
           <div class="analista-aprovador">
-            <div>${ordemDeServico.revisor_da_os?.name?.toUpperCase()}</div>
-            <div><small class="analista-funcao">${ordemDeServico.revisor_da_os?.funcao}</small></div>
-            <div><em><strong>${ordemDeServico.revisor_da_os?.area}</strong></em></div>
+            <div>${ordemDeServico.revisor_da_os?.name?.toUpperCase()||  ''}</div>
+            <div><small class="analista-funcao">${ordemDeServico.revisor_da_os?.funcao || ''}</small></div>
+            <div><em><strong>${ordemDeServico.revisor_da_os?.area || ''}</strong></em></div>
           </div>
         </div>`
       )

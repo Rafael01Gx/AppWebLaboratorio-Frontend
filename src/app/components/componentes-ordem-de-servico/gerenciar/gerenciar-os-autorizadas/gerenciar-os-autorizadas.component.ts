@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +22,7 @@ import { DetalharOrdemDeServicoComponent } from '../../../modal/detalhar-ordem-d
   templateUrl: './gerenciar-os-autorizadas.component.html',
   styleUrl: './gerenciar-os-autorizadas.component.scss'
 })
-export class GerenciarOsAutorizadasComponent {
+export class GerenciarOsAutorizadasComponent implements OnInit, AfterViewInit {
   #dialog = inject(MatDialog)
   #ordemDeServicoService = inject(OrdemDeServicoService);
   

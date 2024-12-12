@@ -45,16 +45,25 @@ async generatePdfFromElement(
     format: 'a4',
   });
 
+  // Tamanho da página A4 em mm
+  const PAGE_HEIGHT = 297;
+  const PAGE_WIDTH = 210;
+  
+  // Espaço de margem para quebra de página (1cm = 10mm)
+  const PAGE_BREAK_MARGIN = 0;
+
   doc.setFont('Helvetica');
 
   for (const [index, amostra] of amostras.entries()) {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = this.createReportTemplate(ordemDeServico, amostra);
+    
     tempDiv.style.width = '210mm';
-    tempDiv.style.minHeight = '297mm';
-    tempDiv.style.margin = '1cm';
-    tempDiv.style.boxSizing = 'border-box';
-
+    tempDiv.style.maxWidth = '210mm';
+    tempDiv.style.height = 'auto';
+    tempDiv.style.overflow = 'visible';
+    tempDiv.style.position = 'relative';
+    
     const styleElement = document.createElement('style');
     styleElement.textContent = this.getCssStyles();
     tempDiv.appendChild(styleElement);
@@ -68,7 +77,10 @@ async generatePdfFromElement(
         logging: false,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        height: tempDiv.scrollHeight, // Adiciona altura total do conteúdo
+        height: tempDiv.scrollHeight,
+        width: tempDiv.scrollWidth,
+        windowWidth: tempDiv.scrollWidth,
+        windowHeight: tempDiv.scrollHeight
       });
 
       document.body.removeChild(tempDiv);
@@ -79,43 +91,43 @@ async generatePdfFromElement(
       }
 
       const imgProps = doc.getImageProperties(imgData);
-      const pdfWidth = doc.internal.pageSize.getWidth();
-      const pdfHeight = doc.internal.pageSize.getHeight();
+      const imgWidth = PAGE_WIDTH;
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
 
-      // Calcular a proporção da imagem
-      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      // Se a imagem for maior que uma página, adicionar páginas adicionais
-      if (imgHeight > pdfHeight) {
-        const pagesNeeded = Math.ceil(imgHeight / pdfHeight);
-        
-        for (let page = 0; page < pagesNeeded; page++) {
-          if (page > 0) {
-            doc.addPage();
-          }
-          
-          doc.addImage(
-            imgData, 
-            'PNG', 
-            0, 
-            -page * pdfHeight, 
-            pdfWidth, 
-            imgHeight, 
-            '', 
-            'FAST'
-          );
+      // Lógica ajustada para considerar margem de quebra de página
+      const pagesNeeded = Math.ceil((imgHeight + PAGE_BREAK_MARGIN) / PAGE_HEIGHT);
+      
+      for (let page = 0; page < pagesNeeded; page++) {
+        if (page > 0) {
+          doc.addPage();
         }
-      } else {
-        // Se couber em uma página, adiciona normalmente
-        doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight, '', 'FAST');
+        
+        // Ajusta a posição da imagem considerando a margem de quebra
+        const yOffset = page === 0 
+          ? 0 
+          : -((page * PAGE_HEIGHT) - PAGE_BREAK_MARGIN);
+        
+        doc.addImage(
+          imgData, 
+          'PNG', 
+          0, 
+          yOffset, 
+          imgWidth, 
+          imgHeight, 
+          '', 
+          'FAST'
+        );
       }
 
+      // Adiciona página apenas se não for o último item
       if (index < amostras.length - 1) {
         doc.addPage();
       }
     } catch (error) {
       console.error('Erro ao gerar PDF:', error);
-      document.body.removeChild(tempDiv);
+      if (document.body.contains(tempDiv)) {
+        document.body.removeChild(tempDiv);
+      }
     }
   }
 
@@ -323,7 +335,8 @@ async generatePdfFromElement(
   private getCssStyles(): string {
     
     return `
-      * { box-sizing: border-box; }    
+          * { box-sizing: border-box; }    
+    
 .header,
 .body {
   max-width: 100%;
@@ -349,21 +362,23 @@ body {
 
 .page {
   width: 21cm;
-  min-height: 29.7cm;
   margin: auto;
   border: 1px #d3d3d3 solid;
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  
 }
 
 .subpage {
+margin: 0;
   width: 100%;
   max-width: 100%;
   height: 100%;
   border: 2px #005cbb solid;
   outline: 1cm white solid;
   overflow: hidden;
+
 
   .header {
     height: 45px;
@@ -532,34 +547,87 @@ div{
 }
 
 @media print {
-  *{
-    overflow: hidden;
-  }
-  html, body {
-    height: 100%;
-    overflow: visible;
-  }
-
-  .book {
-    display: block;
+  body {
     margin: 0;
+    padding: 0;
+    background-color: white;
   }
 
   .page {
+    width: 100%;
     margin: 0;
     padding: 0;
     border: none;
     border-radius: 0;
-    width: 100%;
-    height: auto;
-    page-break-before: always;
-    page-break-after: always;
+    box-shadow: none;
   }
 
   .subpage {
-    display: block;
-    min-height: 100%;
-    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    outline: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .header {
+    background-color: #538dd5 !important;
+    color: white !important;
+    height: auto;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 450;
+    color: white !important;
+    margin: 0;
+  }
+
+  .body {
+    margin-top: 0;
+    padding: 10px;
+  }
+
+  .solicitante,
+  .analise {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    border: 1px #005cbb solid;
+  }
+
+  .tabela-resultado {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    gap: 1px;
+    page-break-inside: avoid;
+  }
+
+  .ensaios {
+    margin-top: 20px;
+    page-break-inside: avoid;
+  }
+
+  .ensaios .title {
+    background-color: #538dd5;
+    color: white !important;
+  }
+
+  .result-item {
+    background: #a39fa9 !important;
+    color: white !important;
+  }
+
+  .container-assinatura {
+    margin-top: 20px;
     page-break-inside: avoid;
   }
 
@@ -569,34 +637,17 @@ div{
     print-color-adjust: exact !important;
   }
 
-  .header {
-    background: #538DD5 !important;
-    color: white !important;
-    padding: 10px 0;
-  }
-
-  .body {
-    background: white !important;
-    color: black !important;
-  }
-
-  .tabela-resultado {
-    background: white !important;
-    color: #333 !important;
-    border: 1px solid #ccc;
-    page-break-inside: avoid;
-  }
-
-  .result-item {
-    background: #a39fa9;
-    color: white;
-  }
-
-  .ensaios {
+  /* Ensure content fits on page */
+  .header,
+  .body,
+  .solicitante,
+  .analise,
+  .tabela-resultado,
+  .ensaios,
+  .container-assinatura {
     page-break-inside: avoid;
   }
 }
-
-    `;
+     `;
   }
 }

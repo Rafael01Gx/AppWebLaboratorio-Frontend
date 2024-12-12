@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,7 +25,7 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './gerenciar-os-finalizadas.component.html',
   styleUrl: './gerenciar-os-finalizadas.component.scss'
 })
-export class GerenciarOsFinalizadasComponent {
+export class GerenciarOsFinalizadasComponent implements OnInit,AfterViewInit {
   #pdfService = inject(PdfGeneratorServiceService)
   #ordemDeServicoService = inject(OrdemDeServicoService);
   

@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -42,7 +42,7 @@ import { RevisaoDeOsComponent } from '../../../modal/revisao-de-os/revisao-de-os
   templateUrl: './gerenciar-os-em-execucao.component.html',
   styleUrl: './gerenciar-os-em-execucao.component.scss'
 })
-export class GerenciarOsEmExecucaoComponent {
+export class GerenciarOsEmExecucaoComponent implements OnInit, AfterViewInit {
 
   #ordemDeServicoService = inject(OrdemDeServicoService);
   #dialog= inject(MatDialog)

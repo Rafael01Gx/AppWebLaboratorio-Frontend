@@ -32,6 +32,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { EStatus } from '../../../../shared/Enum/status.enum';
+import { E } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-autorizar-os',
@@ -140,5 +141,5 @@ export class AutorizarOsComponent implements OnInit {
   
   }
 
-  opcoes_status: string[] = Object.values(EStatus);
+  opcoes_status: string[] = [EStatus.Autorizada,EStatus.Cancelada];
 }

@@ -1,6 +1,6 @@
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +24,7 @@ import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-g
   templateUrl: './os-finalizadas.component.html',
   styleUrl: './os-finalizadas.component.scss'
 })
-export class OsFinalizadasComponent {
+export class OsFinalizadasComponent implements OnInit, AfterViewInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);
   #pdfService = inject(PdfGeneratorServiceService)
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
