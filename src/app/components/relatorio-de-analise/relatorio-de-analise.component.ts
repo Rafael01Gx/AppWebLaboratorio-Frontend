@@ -215,21 +215,23 @@ body {
 
 .page {
   width: 21cm;
-  min-height: 29.7cm;
   margin: auto;
   border: 1px #d3d3d3 solid;
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  
 }
 
 .subpage {
+margin:35px 0;
   width: 100%;
   max-width: 100%;
   height: 100%;
   border: 2px #005cbb solid;
   outline: 1cm white solid;
   overflow: hidden;
+
 
   .header {
     height: 45px;
@@ -399,7 +401,10 @@ div{
 
 @media print {
   *{
-    overflow: hidden;
+display: block;
+  height: 100vh;
+  overflow-y: auto;
+  overflow: hidden;
   }
   html, body {
     height: 100%;

@@ -321,7 +321,7 @@ async generatePdfFromElement(
   }
 
   private getCssStyles(): string {
-    // Aqui você pode copiar o conteúdo completo do seu SCSS
+    
     return `
       * { box-sizing: border-box; }    
 .header,
