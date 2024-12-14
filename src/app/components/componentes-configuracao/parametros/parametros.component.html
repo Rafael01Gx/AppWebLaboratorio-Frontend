@@ -1,112 +1,117 @@
-<mat-card>
-
-    <form [formGroup]="parametrosForm">
-        
-        <mat-form-field>
-            <mat-label>Selecione</mat-label>
-            <mat-select  formControlName="tipo_de_analise">
-              @for (item of classeTipo; track item) {
-                <mat-option [value]="item" >{{item.tipo}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        <mat-form-field>
-          <mat-label>Valor/Descrição</mat-label>
-          <input type="text" matInput formControlName="descricao"  />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Sub-descrição</mat-label>
-          <input type="text" matInput formControlName="unidade_de_medida"  />
-        </mat-form-field>
-
-          <button (click)=" incluir()" [hidden]="!parametrosForm.valid" mat-icon-button aria-label="Botão adicionar">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button *ngIf="isEditing" (click)="cancelarEdicao()"  class="cancelar" mat-icon-button aria-label="Cancelar edição">
-            <mat-icon>close</mat-icon>
-          </button>
+<mat-card class="parameters-card">
+  <form [formGroup]="parametrosForm" class="form-container">
+    <mat-form-field>
+      <mat-label>Selecione</mat-label>
+      <mat-select formControlName="tipo_de_analise">
+        @for (item of classeTipo; track item) {
+          <mat-option [value]="item">{{item.tipo}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
     
-    </form>
+    <mat-form-field>
+      <mat-label>Valor/Descrição</mat-label>
+      <input type="text" matInput formControlName="descricao" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Sub-descrição</mat-label>
+      <input type="text" matInput formControlName="unidade_de_medida" />
+    </mat-form-field>
 
-    <div class="divisor">
-      <div></div>
-      <span> Matérias-primas</span>
-      <div></div>
+    <div class="action-buttons">
+      <button 
+        (click)="incluir()" 
+        [hidden]="!parametrosForm.valid" 
+        mat-icon-button 
+        aria-label="Botão adicionar">
+        <mat-icon>add</mat-icon>
+      </button>
+      
+      <button 
+        *ngIf="isEditing" 
+        (click)="cancelarEdicao()" 
+        class="cancelar" 
+        mat-icon-button 
+        aria-label="Cancelar edição">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </form>
+
+  <div class="divisor">
+    <div></div>
+    <span>Matérias-primas</span>
+    <div></div>
+  </div>
+
+  <div class="tabela-container">
+    <mat-form-field class="filter-field">
+      <mat-label>Filtro</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder=""
+        #input
+      />
+    </mat-form-field>
+
+    <div class="table-wrapper mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort class="parameters-table">
+        <ng-container matColumnDef="item">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Num.Item</th>
+          <td mat-cell *matCellDef="let row">{{ row.item }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descricao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor/Descrição</th>
+          <td mat-cell *matCellDef="let row">{{ row.descricao }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="unidade_de_medida">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub-descrição</th>
+          <td mat-cell *matCellDef="let row">{{ row.unidade_de_medida }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo_de_analise.tipo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ensaio</th>
+          <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.tipo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo_de_analise.classe">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Classe</th>
+          <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.classe }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Editar">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Editar</th>
+          <td mat-cell *matCellDef="let row">
+            <i class="material-icons editar m-hover" (click)="editarItem(row)">edit</i>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="excluir">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
+          <td mat-cell *matCellDef="let row">
+            <i class="material-icons red-10 m-hover" (click)="openDialogDelet(row)">delete_forever</i>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            {{ input.value }}
+          </td>
+        </tr>
+      </table>
     </div>
 
-
-
-
- <div class="tabela">
-            
-        <mat-form-field class="w-100">
-          <mat-label>Filtro</mat-label>
-          <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder=""
-            #input
-          />
-        </mat-form-field>
-    
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="item">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Num.Item</th>
-              <td  mat-cell *matCellDef="let row">{{ row.item }}</td>
-            </ng-container>
-     
-            <ng-container matColumnDef="descricao">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor/Descrição</th>
-              <td  mat-cell *matCellDef="let row">{{ row.descricao }}</td>
-            </ng-container>
-    
-          
-            <ng-container matColumnDef="unidade_de_medida">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub-descrição</th>
-              <td mat-cell *matCellDef="let row">{{ row.unidade_de_medida }}</td>
-            </ng-container>
-            <ng-container matColumnDef="tipo_de_analise.tipo">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Ensaio</th>
-              <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.tipo }}</td>
-            </ng-container>
-            <ng-container matColumnDef="tipo_de_analise.classe">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Classe</th>
-              <td mat-cell *matCellDef="let row">{{ row.tipo_de_analise.classe }}</td>
-            </ng-container>
-            <ng-container matColumnDef="Editar" >
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Editar</th>
-              <td  mat-cell *matCellDef="let row" ><i class="material-icons editar m-hover" (click)="editarItem(row)">edit</i></td>
-            </ng-container>
-
-            <ng-container matColumnDef="excluir" >
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
-              <td  mat-cell *matCellDef="let row" ><i class="material-icons red-10 m-hover" (click)="openDialogDelet('0ms', '0ms',row)">delete_forever</i></td>
-            </ng-container>
-    
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>
-    
-    
-            <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">
-                 {{ input.value }}
-              </td>
-            </tr>
-          </table>
-    
-          <mat-paginator
-            [pageSizeOptions]="[5,10,30,50]"
-            aria-label="Selecione"
-          ></mat-paginator>
-        </div>
-          </div>
-
-          
+    <mat-paginator 
+      [pageSizeOptions]="[10, 30, 50]"
+      class="sticky-paginator"
+      aria-label="Selecione">
+    </mat-paginator>
+  </div>
 </mat-card>
-
-
-
-
-  

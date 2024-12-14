@@ -184,20 +184,15 @@ export class MateriaPrimaComponent implements OnInit {
   }
 
   openDialogDelet(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string,
-    tipo_de_analise: IMateriaPrima
+    tipo_de_analise: IMateria_Prima
   ): void {
     const dialogDelete = this.dialog.open(DeletModalComponent, {
       width: '250px',
-      data: { ...tipo_de_analise },
-      enterAnimationDuration,
-      exitAnimationDuration,
     });
-
+const id = tipo_de_analise._id
     dialogDelete.afterClosed().subscribe((result) => {
       if (result) {
-        this.#materiaPrimaService.httpDeletarTipoDeAnalise(result).subscribe({
+        this.#materiaPrimaService.httpDeletarTipoDeAnalise(id).subscribe({
           next: () => {
             this.#toastr.success('Análise removida!');
             this.loadListAnalise();

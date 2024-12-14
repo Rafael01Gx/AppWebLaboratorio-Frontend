@@ -1,0 +1,10 @@
+
+
+:host{
+    ::ng-deep .mat-mdc-tab-body-content{
+        overflow: hidden !important;
+        max-height: 100%;
+    }
+
+}
+

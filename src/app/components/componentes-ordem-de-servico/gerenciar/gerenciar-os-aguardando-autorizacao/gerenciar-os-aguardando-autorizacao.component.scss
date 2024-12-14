@@ -1,12 +1,45 @@
 :host {
- mat-card{
-     display: flex;
+  .tabela-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
 
-    table {
+    .filter-field {
+      width: 100%;
 
+      .mat-mdc-form-field-infix {
         width: 100%;
       }
-    
+    }
+
+    .table-wrapper {
+      flex-grow: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .t-table {
+      width: 100%;
+
+      th {
+
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+    }
+
+    .sticky-paginator {
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+    }
+  }
+
+ mat-card{
+     display: flex;
+    max-height: 100%;
       tr.example-detail-row {
         height: 0;
       }

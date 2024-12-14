@@ -1,4 +1,4 @@
-<mat-card>
+<div class="mat-card">
   <form [formGroup]="configDeAnaliseForm">
     <mat-form-field>
       <mat-label>Matéria-prima</mat-label>
@@ -74,50 +74,53 @@
           <mat-icon style="margin: 0">add</mat-icon>
         </button>
       </form>
-  
-      <div class="tablela">
-        <table mat-table [dataSource]="dataSource">
+  <div class="tabela-container">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" class="materia-prima-table">
 
-          <ng-container matColumnDef="num">
-            <th mat-header-cell *matHeaderCellDef>Num.</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.num || element.num }}
-            </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="item">
-            <th mat-header-cell *matHeaderCellDef>Item</th>
-            <td mat-cell *matCellDef="let element">{{ element.item }}</td>
-          </ng-container>
-        
-          <ng-container matColumnDef="unidade_resultado">
-            <th mat-header-cell *matHeaderCellDef>Unidade_resultado</th>
-            <td mat-cell *matCellDef="let element">{{ element.unidade_resultado }}</td>
-          </ng-container>
-          <ng-container matColumnDef="ordenar">
-            <th mat-header-cell *matHeaderCellDef>Ordem</th>
-            <td mat-cell *matCellDef="let element; let i = index" ><i class="material-icons m-hover" (click)="moveParametro(i, 'up')">arrow_upward</i> <i class="material-icons m-hover" (click)="moveParametro(i, 'down')">arrow_downward</i></td>
-          </ng-container>
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef>Num.</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.num || element.num }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="remover" >
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Remover</th>
-            <td  mat-cell *matCellDef="let row" ><i class="material-icons red-10 m-hover"  (click)="removeParametro(row)" >delete_forever</i></td>
-          </ng-container>
+        <ng-container matColumnDef="item">
+          <th mat-header-cell *matHeaderCellDef>Item</th>
+          <td mat-cell *matCellDef="let element">{{ element.item }}</td>
+        </ng-container>
       
+        <ng-container matColumnDef="unidade_resultado">
+          <th mat-header-cell *matHeaderCellDef>Unidade_resultado</th>
+          <td mat-cell *matCellDef="let element">{{ element.unidade_resultado }}</td>
+        </ng-container>
+        <ng-container matColumnDef="ordenar">
+          <th mat-header-cell *matHeaderCellDef>Ordem</th>
+          <td mat-cell *matCellDef="let element; let i = index" ><i class="material-icons m-hover" (click)="moveParametro(i, 'up')">arrow_upward</i> <i class="material-icons m-hover" (click)="moveParametro(i, 'down')">arrow_downward</i></td>
+        </ng-container>
+
+        <ng-container matColumnDef="remover" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Remover</th>
+          <td  mat-cell *matCellDef="let row" ><i class="material-icons red-10 m-hover"  (click)="removeParametro(row)" >delete_forever</i></td>
+        </ng-container>
+    
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns" [ngClass]="animatedRows[i]"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[9,20,30,50]"
+        showFirstLastButtons
+        class="sticky-paginator"
+        aria-label="Selecione as amostras"
+      >
+      </mat-paginator>
+    </div>
+
+  </div>
   
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns" [ngClass]="animatedRows[i]"></tr>
-        </table>
-  
-        <mat-paginator
-          [pageSizeOptions]="[20]"
-          showFirstLastButtons
-          aria-label="Selecione as amostras"
-        >
-        </mat-paginator>
-      </div>
-  
-    </mat-card>
+</div>
     <div class="form-buttons">
       <button mat-flat-button (click)="salvarConfiguracaoDeAnalise()"><mat-icon>add</mat-icon> incluir</button>
     </div>

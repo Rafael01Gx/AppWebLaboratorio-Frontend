@@ -29,6 +29,7 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
 import { MatDialog } from '@angular/material/dialog';
 import { ITipoDeAnalise } from '../../../shared/models/IResponseData';
 import { NgIf } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-tipo-de-analise',
@@ -47,7 +48,7 @@ import { NgIf } from '@angular/common';
     MatOption,
     MatPaginator,
     MatTableModule,
-    NgIf
+    NgIf,ScrollingModule
   ],
   templateUrl: './tipo-de-analise.component.html',
   styleUrl: './tipo-de-analise.component.scss',

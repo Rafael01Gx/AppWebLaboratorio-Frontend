@@ -12,9 +12,9 @@
   </div>
 
 
- <div class="tabela">
+ <div class="tabela-container">
             
-        <mat-form-field class="w-100">
+        <mat-form-field class="w-100 filter-field">
           <mat-label>Filtro</mat-label>
           <input
             matInput
@@ -24,8 +24,8 @@
           />
         </mat-form-field>
     
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource" matSort>
+        <div class="mat-elevation-z8 table-wrapper">
+          <table mat-table [dataSource]="dataSource" matSort class="materia-prima-table">
             <ng-container matColumnDef="item">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Num.Item</th>
               <td  mat-cell *matCellDef="let row">{{ row.item }}</td>
@@ -64,8 +64,9 @@
           </table>
     
           <mat-paginator
-            [pageSizeOptions]="[5,10,30,50]"
+            [pageSizeOptions]="[10,30,50]"
             aria-label="Selecione"
+            class="sticky-paginator"
           ></mat-paginator>
         </div>
           </div>

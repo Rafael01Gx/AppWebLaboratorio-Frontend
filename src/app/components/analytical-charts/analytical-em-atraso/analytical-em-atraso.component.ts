@@ -37,6 +37,7 @@ export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
   public emAtrasoResultData!: IEmAtrasoResultData;
   public ensaios_em_atraso!: TData;
+  informacoes=false
 
   @ViewChild('chart') chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
@@ -64,7 +65,7 @@ export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
         { y: [], x: [] }
       );
       this.ensaios_em_atraso = { ensaios: y, quantidades: x };
-
+      this.ensaios_em_atraso.quantidades.length ? this.informacoes=true : this.informacoes=false;
       this.initChart(this.ensaios_em_atraso);
     }
   }

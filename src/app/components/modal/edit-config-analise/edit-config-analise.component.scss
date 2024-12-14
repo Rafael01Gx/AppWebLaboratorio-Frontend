@@ -12,7 +12,6 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 :host {
   .mat-mdc-row {
     transition: all 0.3s ease;
@@ -49,72 +48,96 @@
     }
   }
 
-  mat-card {
-    margin: 20px;
-    padding: 20px;
-
-    form {
-      display: flex;
-      align-items: center;
-      justify-content: start;
-      gap: 20px;
-
-      button {
-        margin-bottom: 15px;
-      }
-    }
-    .divisor {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: baseline;
-
-      font-size: 12px;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      gap: 20px;
-      width: 100%;
-
-      div {
-        flex-grow: 1;
-        height: 2px;
-        opacity: 0.8;
-        background: var(--red-10);
-      }
-    }
-
-    .tabela {
-      width: 100%;
+    .mat-card{
+      
       display: flex;
       flex-direction: column;
+      margin: 20px;
+      padding: 20px;
+      max-height: 95%;
+      overflow: hidden;
 
-      table {
+       form{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-bottom: 10px;
+  
+        button{
+         margin-bottom: 15px;
+        }
+       }
+       .divisor {
+         margin-top: 10px;
+         display: flex;
+         align-items: center;
+         justify-content: baseline;
+  
+         font-size: 12px;
+         text-transform: uppercase;
+         color: var(--gray-400);
+         gap: 20px;
+         width: 100%;
+  
+         div {
+           flex-grow: 1;
+           height: 2px;
+           opacity: 0.8;
+           background: var(--red-10)
+         }
+  
+     }
+     .tabela-container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow: hidden;
+
+      .filter-field {
         width: 100%;
+        margin-bottom: 10px;
+
+        .mat-mdc-form-field-infix {
+          width: 100%;
+        }
       }
 
-      .mat-mdc-form-field {
-        font-size: 14px;
+      .table-wrapper {
+        flex-grow: 1;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .materia-prima-table {
         width: 100%;
+
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+
+        th {
+          background: var(--gray-100);
+          position: sticky;
+          top: 0;
+          z-index: 1;
+        }
       }
 
-      td,
-      th {
-        width: 25%;
-      }
-      th {
-        background: var(--gray-100);
-      }
-      .t-center {
-        text-align: center;
+      .sticky-paginator {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
       }
     }
-  }
-  .form-buttons {
-    margin: auto 20px 20px auto;
-    .btn-cancel {
-      background: var(--red-10);
-      color: var(--gray-400);
-      margin-right: 10px;
+
     }
+    .form-buttons{
+     margin: auto 20px 20px auto;
+    }
+    
   }
-}
+   
+   
+       

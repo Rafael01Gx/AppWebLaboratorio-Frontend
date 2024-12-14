@@ -131,8 +131,8 @@ export class ParametrosComponent implements OnInit{
     }
   }
   editarItem(item: IParametro) {
+    console.log(item.tipo_de_analise.tipo)
     this.parametrosForm.patchValue({
-      tipo_de_analise: item.tipo_de_analise.tipo,
       descricao: item.descricao,
       unidade_de_medida: item.unidade_de_medida,
     });
@@ -165,20 +165,16 @@ export class ParametrosComponent implements OnInit{
   }
 
   openDialogDelet(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string,
-    tipo_de_analise: IParametros
+    tipo_de_analise: IParametro
   ): void {
     const dialogDelete = this.dialog.open(DeletModalComponent, {
       width: '250px',
-      data: { ...tipo_de_analise },
-      enterAnimationDuration,
-      exitAnimationDuration,
+      data: tipo_de_analise ,
     });
-
+const id = tipo_de_analise._id
     dialogDelete.afterClosed().subscribe((result) => {
       if (result) {
-        this.#parametrosService.httpDeletarParametros(result).subscribe({
+        this.#parametrosService.httpDeletarParametros(id).subscribe({
           next: () => {
             this.#toastr.success('Análise removida!');
             this.loadListAnalise();

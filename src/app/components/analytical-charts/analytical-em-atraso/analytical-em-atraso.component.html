@@ -4,21 +4,23 @@
     <span class="title-2">Análises Preditivas</span>
   </div>
   <div class="col-2">
-    
-    <div id="chart">
-      <apx-chart
-      [series]="chartOptions.series!"
-      [chart]="chartOptions.chart!"
-      [plotOptions]="chartOptions.plotOptions!"
-      [labels]="chartOptions.labels!"
-      [legend]="chartOptions.legend!"
-      [colors]="chartOptions.colors!"
-      [responsive]="chartOptions.responsive!"
-      ></apx-chart>
-    </div>
-    <div class="text">
-      <span ><strong>Análises</strong></span>
-      <span class="subtitle">em atraso</span>
-    </div>
+    @if(informacoes){
+      
+      <div id="chart">
+        <apx-chart
+        [series]="chartOptions.series!"
+        [chart]="chartOptions.chart!"
+        [plotOptions]="chartOptions.plotOptions!"
+        [labels]="chartOptions.labels!"
+        [legend]="chartOptions.legend!"
+        [colors]="chartOptions.colors!"
+        [responsive]="chartOptions.responsive!"
+        ></apx-chart>
+      </div>
+      <div class="text">
+        <span ><strong>Análises</strong></span>
+        <span class="subtitle">em atraso</span>
+      </div>
+    }
   </div>
 </div>

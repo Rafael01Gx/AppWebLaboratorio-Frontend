@@ -1,15 +1,19 @@
 :host { 
     mat-card{
-       display: flex;
-       flex-flow: column wrap;
-       margin: 20px;
-       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      margin: 20px;
+      padding: 20px;
+      height: auto;
+      max-height: 95%;
+      overflow: hidden;
   
        form{
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        gap: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-bottom: 10px;
   
         button{
          background: var(--salmao);
@@ -38,32 +42,49 @@
   
      }
   
-     .tabela {
-      width: 100%;
+     .tabela-container {
       display: flex;
       flex-direction: column;
-  
-      table {
+      flex-grow: 1;
+      overflow: hidden;
+
+      .filter-field {
+        width: 100%;
+        margin-bottom: 10px;
+
+        .mat-mdc-form-field-infix {
           width: 100%;
         }
-        
-        .mat-mdc-form-field {
-          font-size: 14px;
-          width: 100%;
-          
+      }
+
+      .table-wrapper {
+        flex-grow: 1;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .materia-prima-table {
+        width: 100%;
+
+        th, td {
+          text-align: left;
+          padding: 8px;
         }
-        
-        td, th {
-          width: 25%;      
+
+        th {
+          background: var(--gray-100);
+          position: sticky;
+          top: 0;
+          z-index: 1;
         }
-        th  {
-         background: var(--gray-100);
-        }
-        .t-center{
-          text-align: center;
-        
+      }
+
+      .sticky-paginator {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+      }
     }
-  }
     }
    
    

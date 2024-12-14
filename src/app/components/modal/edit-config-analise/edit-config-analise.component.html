@@ -1,4 +1,4 @@
-<mat-card>
+<div class="mat-card">
     <form [formGroup]="configDeAnaliseForm">
       <mat-form-field>
         <mat-label>Matéria-prima</mat-label>
@@ -78,9 +78,9 @@
             <mat-icon style="margin: 0">add</mat-icon>
           </button>
         </form>
-    
-        <div class="tablela">
-          <table mat-table [dataSource]="dataSource">
+        <div class="tabela-container">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="dataSource" class="materia-prima-table">
   
             <ng-container matColumnDef="num">
               <th mat-header-cell *matHeaderCellDef>Num.</th>
@@ -122,14 +122,15 @@
           </table>
     
           <mat-paginator
-            [pageSizeOptions]="[20]"
+            [pageSizeOptions]="[50]"
             showFirstLastButtons
+            class="sticky-paginator"
             aria-label="Selecione as amostras"
           >
           </mat-paginator>
         </div>
-    
-      </mat-card>
+    </div>
+      </div>
       <div class="form-buttons">
         <button mat-raised-button (click)="onNoClick()" class="btn-cancel"><mat-icon>close</mat-icon> Cancelar</button>
         <button mat-flat-button (click)="salvarConfiguracaoDeAnalise()"><mat-icon>check</mat-icon> Salvar</button>
