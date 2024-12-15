@@ -20,9 +20,7 @@ import {
 import { IAmostra, IAmostrasCollection } from '../../../shared/interfaces/IAmostra.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
@@ -30,6 +28,11 @@ import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/o
 import { TipoDeAnaliseService } from '../../../core/services/tipo-de-analise/tipo-de-analise.service';
 import { ITipoAnalise, ITipoDeAnaliseResponse } from '../../../shared/interfaces/ITipoDeAnalise.interface';
 import { NgIf } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { IOrdemDeServico, IOrdemDeServicoByOsResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-generator-service.service';
+import { MatDialog } from '@angular/material/dialog';
+import { GerarEtiquetaComponent } from '../../modal/gerar-etiqueta/gerar-etiqueta.component';
 
 @Component({
   selector: 'app-nova-os',
@@ -45,24 +48,22 @@ import { NgIf } from '@angular/common';
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatSelectModule,
-    NgxMaskDirective
+    MatSelectModule
   ,MatIcon,
-    MatSortModule,
-    MatDatepickerModule,NgIf
+    MatDatepickerModule,NgIf,MatCheckboxModule
   ],
   templateUrl: './nova-os.component.html',
   styleUrl: './nova-os.component.scss',
 })
 export class NovaOsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
+  #matDialog= inject(MatDialog)
   #userService = inject(UserService);
   #ordemDeServicoService = inject(OrdemDeServicoService);
   #toastr = inject(ToastrService);
   #user = signal<IUserData>({});
   #tipoDeAnaliseService= inject(TipoDeAnaliseService)
-  
+  #pdfService = inject(PdfGeneratorServiceService)
 
   ensaios = new FormControl('');
 
@@ -142,20 +143,35 @@ public profileForm = new FormGroup({
   }
 
   
-
-   public  enviarOs() {
-   if(Object.keys(this.amostras).length > 0){
-    this.#ordemDeServicoService.httpCriarOrdemDeServico(this.amostras,this.obsForm.value.observacao!).subscribe({
-      next: () => {
-        this.#toastr.success("Ordem de serviço criada com sucesso!");
+  
+  
+  public  enviarOs() {
+    if(Object.keys(this.amostras).length > 0){
+      this.#ordemDeServicoService.httpCriarOrdemDeServico(this.amostras,this.obsForm.value.observacao!).subscribe({
+        next: (res:IOrdemDeServicoByOsResponse) => {
+          this.#toastr.success("Ordem de serviço criada com sucesso!");
         this.amostraForm.reset();
         this.amostras= {}
         this.dataSource.data= []
+        this.dialogGerarEtiquetas(res.ordemDeServico)
+      
       },
-      error: (err) => this.#toastr.error(err.error.message),
+      error: (err) => this.#toastr.error(err.error.message)
     });
-   }else{
+  }else{
     this.#toastr.info("Ordem de serviço não contém 'amostras'!")
    }
   }
+
+
+  dialogGerarEtiquetas(ordemDeServico:IOrdemDeServico){
+   const gerarEtiquetas= this.#matDialog.open(GerarEtiquetaComponent,{
+    })
+    gerarEtiquetas.afterClosed().subscribe((res)=>{
+      if(res){
+        this.#pdfService.gerarPDFEtiqueta(ordemDeServico)
+      }
+    })
+  }
+  
 }

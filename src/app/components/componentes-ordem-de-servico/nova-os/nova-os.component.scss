@@ -1,106 +1,114 @@
 :host {
+  mat-card {
+    border-radius: 1px;
+  }
 
   .form-container {
-    width: 100%;
-    height: 100%;
-    padding: 15px;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    height: 100%;
+    gap: 2px;
+  }
+
+  .formulario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .tabela-header {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .tabela-header-row1,
+  .tabela-header-row2 {
+    display: flex;
+    gap: 20px;
     align-items: center;
+  }
 
-    .user-info {
-      width: 100%;
-      form {
-        margin: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        gap: 20px;
-
-        mat-form-field {
-          width: 100%;
-        }
-      }
-    }
-    .divisor {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: baseline;
-
-      font-size: 12px;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      gap: 20px;
-      width: 100%;
-
-      div {
-        flex-grow: 1;
-        height: 2px;
-        opacity: 0.3;
-        background: var(--orange-red);
-      }
-    }
-    .formulario {
-      width: 100%;
-      display: flex;
-      flex-flow: column wrap;
-      .tabela-header {
-        margin: 20px;
-        display: flex;
-        flex-flow: column wrap;
-        gap: 20px;
-        .tabela-header-row1 {
-          display: flex;
-          gap: 20px;
-          align-items: center;
-        }
-        .tabela-header-row2 {
-          display: flex;
-          gap: 20px;
-          button {
-            width: 50px;
-            height: 50px;
-            opacity: 0.8;
-
-            mat-icon {
-              color: var(--blue-10);
-            }
-          }
-        }
-        mat-form-field {
-          width: 100%;
-        }
-      }
-      .tabela {
-        margin: 20px;
-
-        table {
-          height: 50%;
-        }
-      }
-    }
-    .formulario-footer {
-      margin-top: 10px;
-      width: 100%;
-      form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        mat-form-field {
-          margin: 20px;
-        }
-
-      }
+  .tabela-header-row2 button {
+    width: 50px;
+    height: 50px;
+    opacity: 0.8;
+    mat-icon {
+      color: var(--blue-10);
     }
   }
-  .form-action {
-    margin: 10px 20px 20px auto;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .tabela-container {
+    flex-grow: 1;
     display: flex;
-    justify-content: end;
-    button{
-      border-radius: 5px;
-    }
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-y: auto;
+    table-layout: fixed;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  th.mat-header-cell {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  th {
+    
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .sticky-paginator {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background-color: white;
+  }
+
+  .formulario-footer {
+    margin-top: auto;
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .formulario-footer form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .formulario-footer mat-form-field {
+    margin: 10px 0;
+  }
+
+  .form-action {
+    margin: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .form-action button {
+    border-radius: 5px;
+  }
+
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
   }
 }

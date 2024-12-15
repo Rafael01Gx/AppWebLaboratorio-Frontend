@@ -34,7 +34,6 @@ async generatePdfForOsNumer(osNumber: string) {
     console.error('Erro ao gerar o PDF:', error);
   }
 }
-
 async generatePdfFromElement(
   ordemDeServico: IOrdemDeServico,
   amostras: IAmostrasCollection[]
@@ -650,4 +649,350 @@ div{
 }
      `;
   }
+
+
+  private etiqueta_de_amostras(ordemdeservico:IOrdemDeServico):string{
+    let paginasHtml = '';
+    for (let amostraId in ordemdeservico.amostras) {
+      const amostra = ordemdeservico.amostras[amostraId];
+      const solicitante = ordemdeservico.solicitante;
+      const numeroOs = ordemdeservico.numeroOs;
+      const observacao = ordemdeservico.observacao;
+    
+    
+      const paginaHtml = `
+     
+        <div class="page">
+          <div class="subpage">
+            <div class="header">
+              <div class="header-text">
+                <h1>N.º OS ${numeroOs}</h1>
+              </div>
+              <div class="header-right">
+                <img height="24px" src="img/arcelorWhite.png" alt="logo Arcelor" />
+              </div>
+            </div>
+      
+            <div class="body">
+              <fieldset class="container">
+                <div class="title">
+                  <p>Amostra</p>
+                </div>
+                <div class="row">
+                  <span>Identificação:</span>
+                  <p>${amostra.nome_amostra}</p>
+                </div>
+                <div class="row">
+                  <span>Data:</span>
+                  <p>${amostra.data_amostra}</p>
+                </div>
+                <div class="row">
+                  <span>Ensaios:</span>
+                  <p>${amostra.ensaios_solicitados}</p>
+                </div>
+                <div class="row">
+                  <span>Observações:</span>
+                  <p>${observacao || "s/ obs."}</p>
+                </div>
+              </fieldset>
+      
+              <fieldset class="container">
+                <div class="title">
+                  <p>Informações do Solicitante</p>
+                </div>
+                <div class="solicitante-info">
+                  <div class="info-item">
+                    <span>Nome:</span>
+                    <p>${solicitante?.name}</p>
+                  </div>
+                  <div class="info-item">
+                    <span>Área:</span>
+                    <p>${solicitante?.area}</p>
+                  </div>
+                  <div class="info-item">
+                    <span>Email:</span>
+                    <p>${solicitante?.email}</p>
+                  </div>
+                  <div class="info-item">
+                    <span>Contato:</span>
+                    <p>${solicitante?.phone}</p>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>    
+      `;
+      
+      paginasHtml += paginaHtml;
+    }
+    const css= ` <style>
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #f7f9fc;
+          font-family: 'Roboto', sans-serif;
+          color: #2d3436;
+          overflow: auto !important;
+        }
+        
+        .page {
+          width: 29.7cm;
+          height: 21cm;
+          margin: auto auto 20px;
+          border: 1px solid #dfe6e9;
+          border-radius: 12px;
+          background-color: #ffffff;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .subpage {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+          padding: 25px;
+          
+        }
+        
+        .header {
+        position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #1e3799;
+          padding: 20px 25px;
+          color: white;
+          border-radius: 12px 12px 0 0;
+        }
+          .header-text{
+        position: absolute;
+         top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          }
+        .header-right{
+        margin-left:auto;}
+        .header div img {
+          height: 50px;
+        }
+        
+        .header h1 {
+          font-size: 24px;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+        
+        .body {
+          flex-grow: 1;
+          padding: 10px;
+        }
+        
+        .container {
+          margin-bottom: 15px;
+          border: 1px solid #1e3799;
+          border-radius: 12px;
+          padding: 10px;
+        }
+        
+        .title {
+          text-align: center;
+          background-color: #4a69bd;
+          color: white;
+          padding: 2px;
+          font-size: 16px;
+          font-weight: 700;
+          border-radius: 10px 10px 0 0;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+          p{
+          margin:0;}
+        }
+        
+        .row {
+          display: flex;
+          align-items: center;
+          margin: 2px 0;
+        }
+        
+        .row span {
+          font-weight: bold;
+          width: 180px;
+          color: #1e3799;
+          font-size: 14px;
+        }
+        
+        .row p {
+          flex-grow: 1;
+          background-color: #f1f2f6;
+          padding: 10px;
+          border-radius: 6px;
+          border: 1px solid #dcdde1;
+          font-size: 14px;
+        }
+        
+        .solicitante-info {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 0 20px;
+        }
+        
+        .info-item {
+          display: flex;
+          align-items: center;
+          width: calc(50% - 12.5px);
+        }
+        
+        .info-item span {
+          font-weight: bold;
+          width: 140px;
+          color: #1e3799;
+          font-size: 14px;
+        }
+        
+        .info-item p {
+          flex-grow: 1;
+          background-color: #f1f2f6;
+          padding: 10px;
+          border-radius: 6px;
+          border: 1px solid #dcdde1;
+          font-size: 14px;
+        }
+        
+        @page {
+          size: A4 landscape;
+          margin: 0;
+        }
+        
+        @media print {
+          body, html {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            background-color: #ffffff !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+      
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+            font-size: calc(16px * 0.9) !important;
+            line-height: 1.5 !important;
+          }
+      
+          .page {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            page-break-inside: avoid !important;
+            box-shadow: none !important;
+            border: 1px solid #dfe6e9 !important;
+          }
+      
+          .subpage {
+            height: 100% !important;
+            max-height: 100% !important;
+            overflow: hidden !important;
+            
+          }
+      
+          .container {
+            page-break-inside: avoid !important;
+          }
+      
+          .header {
+            background-color: #1e3799 !important;
+            color: white !important;
+          }
+      
+          .title {
+            background-color: #4a69bd !important;
+            color: white !important;
+          }
+      
+          .row p,
+          .info-item p {
+            background-color: #f1f2f6 !important;
+            border: 1px solid #dcdde1 !important;
+          }
+      
+          @page {
+            size: A4 landscape;
+            margin: 0mm !important;
+          }
+        }
+      </style>`
+    const pagCompleta = ` <div class="book"> ${paginasHtml} </div> ${css}`
+    return pagCompleta;
+  }
+
+  async gerarPDFEtiqueta(ordemdeservico: IOrdemDeServico) {
+    try {
+        const htmlCompleto = this.etiqueta_de_amostras(ordemdeservico);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlCompleto;
+        
+        // configurações importantes para renderização
+        tempDiv.style.position = 'absolute';
+        tempDiv.style.left = '-9999px';
+        tempDiv.style.width = '297mm'; 
+        tempDiv.style.height = '210mm'; 
+        tempDiv.style.overflow = 'visible';
+        
+        document.body.appendChild(tempDiv);
+
+        const paginas = tempDiv.querySelectorAll('.page') as NodeListOf<HTMLElement>;
+
+        const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        const imgWidth = 297;
+        const imgHeight = 210;
+
+        for (let i = 0; i < paginas.length; i++) {
+            if (i > 0) {
+                pdf.addPage();
+            }
+
+            const canvas = await html2canvas(paginas[i], {
+                scale: 2, // escala de qualidade
+                useCORS: true,
+                logging: false,
+                width: imgWidth * 3.78, // conversão de mm para pixels
+                height: imgHeight * 3.78, // conversão de mm para pixels
+                windowWidth: imgWidth * 3.78,
+                windowHeight: imgHeight * 3.78,
+                
+                // configurações para melhorar a renderização
+                removeContainer: false,
+                allowTaint: true,
+                proxy: undefined
+            });
+
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+            pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight, undefined, 'FAST');
+        }
+
+        pdf.save(`Etiqueta_${ordemdeservico.numeroOs}.pdf`);
+    } catch (error) {
+        console.error('Erro ao gerar PDF:', error);
+    } finally {
+        const tempDiv = document.querySelector('div[style*="absolute"]');
+        if (tempDiv) {
+            document.body.removeChild(tempDiv);
+        }
+    }
+}
 }

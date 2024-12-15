@@ -20,12 +20,12 @@ export class OrdemDeServicoService {
   
 
 
-  #setOrdemDeServico = signal<IOrdemDeServicoResponse| null>(null);
+  #setOrdemDeServico = signal<IOrdemDeServicoByOsResponse| null>(null);
   public getOrdemDeServico = this.#setOrdemDeServico.asReadonly();
 
-  public httpCriarOrdemDeServico(amostras:IAmostra,observacao:string): Observable<IOrdemDeServicoResponse> {
+  public httpCriarOrdemDeServico(amostras:IAmostra,observacao:string): Observable<IOrdemDeServicoByOsResponse> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
-    return this.#http.post<IOrdemDeServicoResponse>(this.#criarOsUrl(),{amostras,observacao} ,{ headers }).pipe(
+    return this.#http.post<IOrdemDeServicoByOsResponse>(this.#criarOsUrl(),{amostras,observacao} ,{ headers }).pipe(
       shareReplay(),
       tap((res) => {
         this.#setOrdemDeServico.set(res);

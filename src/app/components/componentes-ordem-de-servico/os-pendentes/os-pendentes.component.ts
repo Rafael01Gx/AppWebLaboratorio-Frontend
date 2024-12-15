@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatIcon } from '@angular/material/icon';
 import { NgxMaskPipe } from 'ngx-mask';
 import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.component';
+import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-generator-service.service';
 
 @Component({
   selector: 'app-os-pendentes',
@@ -35,10 +36,11 @@ export class OsPendentesComponent implements OnInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);
   #toast = inject(ToastrService)
   #dialog= inject(MatDialog)
+  #pdfService = inject(PdfGeneratorServiceService)
   listOs: IOrdensDeServico['ordemsDeServico'] = []; 
   
   dataSource = new MatTableDataSource(this.listOs);
-  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status','prazo_inicio_fim','excluir'];
+  displayedColumns: string[] = ['numeroOs', 'data_solicitacao', 'status','prazo_inicio_fim','etiqueta','excluir'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -112,5 +114,11 @@ getOsProgresso(os: IOrdemDeServico): number {
   }, 0);
   const progresso = somaPercentuais / qnt_keys;
   return progresso ;
+}
+gerarPDF_Etiqueta(ordemDeServico:IOrdemDeServico){
+  this.#pdfService.gerarPDFEtiqueta(ordemDeServico)
+}
+excluirEmAndamento(){
+  this.#toast.info('A exclusão da ordem de serviço em andamento não é permitida !')
 }
 }

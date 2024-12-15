@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Gerar Etiquetas de Impressão</h2>
+<mat-dialog-content>
+  Gostaria de gerar as etiquetas de impressão agora? Clique em "Sim" para
+  prosseguir. Se preferir, você pode fechar esta janela e imprimir as etiquetas
+  mais tarde na lista de amostras pendentes.
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="onNoClick()">Não</button>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="gerarAgora()">
+    Sim
+  </button>
+</mat-dialog-actions>

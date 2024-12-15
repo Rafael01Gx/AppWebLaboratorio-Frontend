@@ -27,6 +27,7 @@ import { RelatorioDeAnaliseComponent } from './components/relatorio-de-analise/r
 import { AmostrasComponent } from './pages/amostras/amostras.component';
 import { OsAnalyticsResolver } from './core/services/analytical-charts/OsAnalytics.resolver';
 
+
 export const routes: Routes = [
   {
     path: 'login',

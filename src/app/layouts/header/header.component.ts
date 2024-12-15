@@ -99,7 +99,7 @@ export class HeaderComponent implements OnInit {
   }
 
   exibirNotificacoes(){
-    this.hiddenNotification = false
+    this.hiddenNotification = !this.hiddenNotification
     setTimeout(() => {
       this.hiddenNotification = true
     }, 8000)

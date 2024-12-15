@@ -1,9 +1,9 @@
 @defer (on idle) {
   <mat-card>
 
-    <div class="tabela">
+    <div class="tabela-container">
             
-        <mat-form-field class="w-100">
+        <mat-form-field class="filter-field">
           <mat-label>Filtro</mat-label>
           <input
             matInput
@@ -13,8 +13,8 @@
           />
         </mat-form-field>
     
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource" matSort>
+        <div class="mat-elevation-z8 table-wrapper">
+          <table mat-table [dataSource]="dataSource" class="t-table" matSort>
     
             <ng-container matColumnDef="numeroOs">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Num.OS</th>
@@ -37,13 +37,17 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Prazo Inicio - Fim</th>
               <td mat-cell *matCellDef="let row">{{ row.prazo_inicio_fim }}</td>
             </ng-container>
+            <ng-container matColumnDef="etiqueta">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Etiqueta</th>
+              <td mat-cell *matCellDef="let row" (click)="gerarPDF_Etiqueta(row)" ><mat-icon>sell</mat-icon></td>
+            </ng-container>
             
             <ng-container matColumnDef="excluir">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir</th>
               <td  mat-cell *matCellDef="let row">
                 @if(row.status == "Aguardando Autorização" || row.status == "Autorizada"){
                 <mat-icon (click)="openDialogDelet(row._id)">delete</mat-icon>
-              }
+              }@else {<mat-icon (click)="excluirEmAndamento()" style="opacity: 0.5;">delete_forever</mat-icon>}
               </td>
             </ng-container>
     
@@ -61,6 +65,7 @@
     
           <mat-paginator
           [pageSizeOptions]="[10,20,30]"
+          class="sticky-paginator "
             aria-label="Selecione a página de usuários"
           ></mat-paginator>
         </div>
