@@ -21,18 +21,17 @@ import { ToastrService } from 'ngx-toastr';
 import {  NgClass, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  imports: [
-    LoginLayoutComponent,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,NgClass,NgIf
-  ],
-  providers: [LoginService, ToastrService],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss',
+    selector: 'app-signup',
+    imports: [
+        LoginLayoutComponent,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule, NgClass, NgIf
+    ],
+    providers: [LoginService, ToastrService],
+    templateUrl: './signup.component.html',
+    styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
 

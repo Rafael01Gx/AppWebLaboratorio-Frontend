@@ -26,11 +26,10 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-analytical-em-atraso',
-  standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './analytical-em-atraso.component.html',
-  styleUrl: './analytical-em-atraso.component.scss',
+    selector: 'app-analytical-em-atraso',
+    imports: [NgApexchartsModule],
+    templateUrl: './analytical-em-atraso.component.html',
+    styleUrl: './analytical-em-atraso.component.scss'
 })
 export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
   @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };

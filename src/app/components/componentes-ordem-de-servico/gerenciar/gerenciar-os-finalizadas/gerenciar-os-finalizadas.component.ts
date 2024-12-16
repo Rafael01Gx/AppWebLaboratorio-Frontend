@@ -14,16 +14,15 @@ import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'app-gerenciar-os-finalizadas',
-  standalone: true,
-  imports: [   MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCard,MatIcon],
-  templateUrl: './gerenciar-os-finalizadas.component.html',
-  styleUrl: './gerenciar-os-finalizadas.component.scss'
+    selector: 'app-gerenciar-os-finalizadas',
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCard, MatIcon],
+    templateUrl: './gerenciar-os-finalizadas.component.html',
+    styleUrl: './gerenciar-os-finalizadas.component.scss'
 })
 export class GerenciarOsFinalizadasComponent implements OnInit,AfterViewInit {
   #pdfService = inject(PdfGeneratorServiceService)

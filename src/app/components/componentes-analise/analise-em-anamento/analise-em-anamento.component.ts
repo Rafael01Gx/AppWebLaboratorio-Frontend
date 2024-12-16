@@ -16,11 +16,10 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 
 @Component({
-  selector: 'app-analise-em-anamento',
-  standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule,NgxMaskPipe],
-  templateUrl: './analise-em-anamento.component.html',
-  styleUrl: './analise-em-anamento.component.scss'
+    selector: 'app-analise-em-anamento',
+    imports: [MatTableModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule, NgxMaskPipe],
+    templateUrl: './analise-em-anamento.component.html',
+    styleUrl: './analise-em-anamento.component.scss'
 })
 export class AnaliseEmAnamentoComponent implements OnInit,AfterViewInit {
   

@@ -47,26 +47,25 @@ import {
 import { IResponseData } from '../../../shared/models/IResponseData';
 
 @Component({
-  selector: 'app-edit-config-analise',
-  standalone: true,
-  imports: [
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelect,
-    MatOption,
-    MatPaginator,
-    MatTableModule,
-    MatAutocompleteModule,
-    AsyncPipe,NgClass
-  ],
-  templateUrl: './edit-config-analise.component.html',
-  styleUrl: './edit-config-analise.component.scss',
+    selector: 'app-edit-config-analise',
+    imports: [
+        MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSelect,
+        MatOption,
+        MatPaginator,
+        MatTableModule,
+        MatAutocompleteModule,
+        AsyncPipe, NgClass
+    ],
+    templateUrl: './edit-config-analise.component.html',
+    styleUrl: './edit-config-analise.component.scss'
 })
 export class EditConfigAnaliseComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<EditConfigAnaliseComponent>);

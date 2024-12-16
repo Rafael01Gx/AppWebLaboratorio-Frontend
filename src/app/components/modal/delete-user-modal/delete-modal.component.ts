@@ -2,11 +2,10 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 @Component({
-  selector: 'app-delet-modal',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
-  templateUrl: './delete-modal.component.html',
-  styleUrl: './delete-modal.component.scss'
+    selector: 'app-delet-modal',
+    imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+    templateUrl: './delete-modal.component.html',
+    styleUrl: './delete-modal.component.scss'
 })
 export class DeletModalComponent {
   readonly dialogRef = inject(MatDialogRef<DeletModalComponent>);

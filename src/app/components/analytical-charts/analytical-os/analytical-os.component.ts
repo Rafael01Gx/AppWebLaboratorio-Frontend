@@ -27,11 +27,10 @@ export interface ChartOptions {
 }
 
 @Component({
-  selector: 'app-analytical-os',
-  standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './analytical-os.component.html',
-  styleUrl: './analytical-os.component.scss',
+    selector: 'app-analytical-os',
+    imports: [NgApexchartsModule],
+    templateUrl: './analytical-os.component.html',
+    styleUrl: './analytical-os.component.scss'
 })
 export class AnalyticalOsComponent implements OnInit,AfterViewInit {
 

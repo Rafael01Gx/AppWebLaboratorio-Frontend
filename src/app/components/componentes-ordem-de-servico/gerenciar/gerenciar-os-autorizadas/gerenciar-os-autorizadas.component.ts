@@ -11,16 +11,15 @@ import {IOrdemDeServico, IOrdemDeServicoResponse, IOrdensDeServico } from '../..
 import { DetalharOrdemDeServicoComponent } from '../../../modal/detalhar-ordem-de-servico/detalhar-ordem-de-servico.component';
 
 @Component({
-  selector: 'app-gerenciar-os-autorizadas',
-  standalone: true,
-  imports: [ MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCard],
-  templateUrl: './gerenciar-os-autorizadas.component.html',
-  styleUrl: './gerenciar-os-autorizadas.component.scss'
+    selector: 'app-gerenciar-os-autorizadas',
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCard],
+    templateUrl: './gerenciar-os-autorizadas.component.html',
+    styleUrl: './gerenciar-os-autorizadas.component.scss'
 })
 export class GerenciarOsAutorizadasComponent implements OnInit, AfterViewInit {
   #dialog = inject(MatDialog)

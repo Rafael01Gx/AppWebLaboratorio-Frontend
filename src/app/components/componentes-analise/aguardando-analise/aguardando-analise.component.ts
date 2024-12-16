@@ -15,11 +15,10 @@ import { HelpersService } from '../../../core/services/helpers/helpers.service';
 
 
 @Component({
-  selector: 'app-aguardando-analise',
-  standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
-  templateUrl: './aguardando-analise.component.html',
-  styleUrl: './aguardando-analise.component.scss'
+    selector: 'app-aguardando-analise',
+    imports: [MatTableModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
+    templateUrl: './aguardando-analise.component.html',
+    styleUrl: './aguardando-analise.component.scss'
 })
 export class AguardandoAnaliseComponent implements OnInit {
 

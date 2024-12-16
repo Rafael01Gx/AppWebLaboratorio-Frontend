@@ -24,31 +24,27 @@ import { NgClass } from '@angular/common';
 import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
-  selector: 'app-aguardando-autorizacao',
-  standalone: true,
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-  ],
-  imports: [
-    NgClass,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatPaginator,
-    MatInputModule,
-    MatSortModule,
-    MatPaginatorModule,
-  ],
-  templateUrl: './aguardando-autorizacao.component.html',
-  styleUrl: './aguardando-autorizacao.component.scss',
+    selector: 'app-aguardando-autorizacao',
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    imports: [
+        NgClass,
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatPaginator,
+        MatInputModule,
+        MatSortModule,
+        MatPaginatorModule,
+    ],
+    templateUrl: './aguardando-autorizacao.component.html',
+    styleUrl: './aguardando-autorizacao.component.scss'
 })
 export class AguardandoAutorizacaoComponent implements OnInit {
   #amostraService = inject(AmostraService);

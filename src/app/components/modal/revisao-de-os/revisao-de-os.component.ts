@@ -12,11 +12,10 @@ import { UserService } from '../../../core/services/user/user.service';
 import { IAnalista } from '../../../shared/interfaces/IAmostra.interface';
 
 @Component({
-  selector: 'app-revisao-de-os',
-  standalone: true,
-  imports: [MatCardModule,MatIcon,RelatorioDeAnaliseComponent,MatButton],
-  templateUrl: './revisao-de-os.component.html',
-  styleUrl: './revisao-de-os.component.scss'
+    selector: 'app-revisao-de-os',
+    imports: [MatCardModule, MatIcon, RelatorioDeAnaliseComponent, MatButton],
+    templateUrl: './revisao-de-os.component.html',
+    styleUrl: './revisao-de-os.component.scss'
 })
 export class RevisaoDeOsComponent implements AfterViewInit {
 dialogRef = inject(MatDialogRef<RevisaoDeOsComponent>);

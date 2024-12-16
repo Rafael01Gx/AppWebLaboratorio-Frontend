@@ -4,11 +4,10 @@ import { RouterLink } from '@angular/router';
 import { SidenavService } from '../../core/services/sidenav/exibir-txt.service';
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss',
+    selector: 'app-sidenav',
+    imports: [RouterLink, CommonModule],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent implements OnInit {
   ngOnInit() {

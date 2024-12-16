@@ -32,26 +32,25 @@ import { NgIf } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
-  selector: 'app-tipo-de-analise',
-  standalone: true,
-  imports: [
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatCard,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelect,
-    MatOption,
-    MatPaginator,
-    MatTableModule,
-    NgIf,ScrollingModule
-  ],
-  templateUrl: './tipo-de-analise.component.html',
-  styleUrl: './tipo-de-analise.component.scss',
+    selector: 'app-tipo-de-analise',
+    imports: [
+        MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        MatCard,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSelect,
+        MatOption,
+        MatPaginator,
+        MatTableModule,
+        NgIf, ScrollingModule
+    ],
+    templateUrl: './tipo-de-analise.component.html',
+    styleUrl: './tipo-de-analise.component.scss'
 })
 export class TipoDeAnaliseComponent implements OnInit {
   #toastr = inject(ToastrService);

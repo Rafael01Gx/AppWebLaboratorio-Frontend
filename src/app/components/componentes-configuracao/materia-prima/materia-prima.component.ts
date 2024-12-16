@@ -31,25 +31,24 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
 import { NgIf } from '@angular/common';
 //-----
 @Component({
-  selector: 'app-materia-prima',
-  standalone: true,
-  imports: [
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatCard,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelect,
-    MatOption,
-    MatPaginator,
-    MatTableModule,NgIf
-  ],
-  templateUrl: './materia-prima.component.html',
-  styleUrl: './materia-prima.component.scss',
+    selector: 'app-materia-prima',
+    imports: [
+        MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        MatCard,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSelect,
+        MatOption,
+        MatPaginator,
+        MatTableModule, NgIf
+    ],
+    templateUrl: './materia-prima.component.html',
+    styleUrl: './materia-prima.component.scss'
 })
 export class MateriaPrimaComponent implements OnInit {
   #toastr = inject(ToastrService);

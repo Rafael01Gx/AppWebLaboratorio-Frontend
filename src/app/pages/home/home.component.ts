@@ -6,17 +6,16 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    SidenavComponent,
-    MainComponent,
-    MatCard,
-    InfoPageComponent,
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+    selector: 'app-home',
+    imports: [
+        HeaderComponent,
+        SidenavComponent,
+        MainComponent,
+        MatCard,
+        InfoPageComponent,
+    ],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   @ViewChild('dashboard') chartElement!: ElementRef;

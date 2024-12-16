@@ -46,11 +46,10 @@ export type TSeries = {
 };
 
 @Component({
-  selector: 'app-analytical-demandas',
-  standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './analytical-demandas.component.html',
-  styleUrl: './analytical-demandas.component.scss',
+    selector: 'app-analytical-demandas',
+    imports: [NgApexchartsModule],
+    templateUrl: './analytical-demandas.component.html',
+    styleUrl: './analytical-demandas.component.scss'
 })
 export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
   @Input({ alias: 'widthAndHeight', required: true }) widthAndHeight!: {

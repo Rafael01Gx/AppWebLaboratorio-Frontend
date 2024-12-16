@@ -17,15 +17,14 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-user-profile',
-  standalone: true,
-  imports: [HeaderComponent,SidenavComponent,MainComponent,MatCard,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,NgxMaskDirective,RouterLink,MatButton ],
-  templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss'
+    selector: 'app-user-profile',
+    imports: [HeaderComponent, SidenavComponent, MainComponent, MatCard,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule, NgxMaskDirective, RouterLink, MatButton],
+    templateUrl: './user-profile.component.html',
+    styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit {
   pageIco = 'person'; //Materials icons name

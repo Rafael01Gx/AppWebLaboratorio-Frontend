@@ -20,23 +20,22 @@ import { IParametro, IParametros } from '../../../shared/interfaces/IParametros.
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-parametros',
-  standalone: true,
-  imports: [ MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatCard,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelect,
-    MatOption,
-    MatPaginator,
-    MatTableModule,NgIf],
-  templateUrl: './parametros.component.html',
-  styleUrl: './parametros.component.scss'
+    selector: 'app-parametros',
+    imports: [MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        MatCard,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSelect,
+        MatOption,
+        MatPaginator,
+        MatTableModule, NgIf],
+    templateUrl: './parametros.component.html',
+    styleUrl: './parametros.component.scss'
 })
 export class ParametrosComponent implements OnInit{
   #toastr = inject(ToastrService);

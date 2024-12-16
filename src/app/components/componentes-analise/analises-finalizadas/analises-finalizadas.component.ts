@@ -15,11 +15,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { LaudoAmostraComponent } from '../../modal/laudo-amostra/laudo-amostra.component';
 
 @Component({
-  selector: 'app-analises-finalizadas',
-  standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
-  templateUrl: './analises-finalizadas.component.html',
-  styleUrl: './analises-finalizadas.component.scss'
+    selector: 'app-analises-finalizadas',
+    imports: [MatTableModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
+    templateUrl: './analises-finalizadas.component.html',
+    styleUrl: './analises-finalizadas.component.scss'
 })
 export class AnalisesFinalizadasComponent  implements OnInit {
 

@@ -11,11 +11,10 @@ import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 
 
 @Component({
-  selector: 'app-painel-analises-preditivas',
-  standalone: true,
-  imports: [HeaderComponent,SidenavComponent,MainComponent,MatCard,AnalyticalOsComponent,AnalyticalEnsaiosComponent,AnalyticalDemandasComponent,AnalyticalEmAtrasoComponent,InfoPageComponent],
-  templateUrl: './painel-analises-preditivas.component.html',
-  styleUrl: './painel-analises-preditivas.component.scss'
+    selector: 'app-painel-analises-preditivas',
+    imports: [HeaderComponent, SidenavComponent, MainComponent, MatCard, AnalyticalOsComponent, AnalyticalEnsaiosComponent, AnalyticalDemandasComponent, AnalyticalEmAtrasoComponent, InfoPageComponent],
+    templateUrl: './painel-analises-preditivas.component.html',
+    styleUrl: './painel-analises-preditivas.component.scss'
 })
 export class PainelAnalisesPreditivasComponent implements AfterViewInit {
 @ViewChild('dashboard') chartElement!: ElementRef;

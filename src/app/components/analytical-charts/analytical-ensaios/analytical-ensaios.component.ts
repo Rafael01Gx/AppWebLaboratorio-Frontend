@@ -44,11 +44,10 @@ export type TOptions = {
 };
 
 @Component({
-  selector: 'app-analytical-ensaios',
-  standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './analytical-ensaios.component.html',
-  styleUrl: './analytical-ensaios.component.scss',
+    selector: 'app-analytical-ensaios',
+    imports: [NgApexchartsModule],
+    templateUrl: './analytical-ensaios.component.html',
+    styleUrl: './analytical-ensaios.component.scss'
 })
 export class AnalyticalEnsaiosComponent implements OnInit, AfterViewInit{
   @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };

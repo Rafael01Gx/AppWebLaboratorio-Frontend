@@ -16,19 +16,18 @@ import { DeletModalComponent } from '../../modal/delete-user-modal/delete-modal.
 import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-generator-service.service';
 
 @Component({
-  selector: 'app-os-pendentes',
-  standalone: true,
-  imports: [ 
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCard,
-    MatIcon,NgxMaskPipe
-  ],
-  templateUrl: './os-pendentes.component.html',
-  styleUrl: './os-pendentes.component.scss'
+    selector: 'app-os-pendentes',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCard,
+        MatIcon, NgxMaskPipe
+    ],
+    templateUrl: './os-pendentes.component.html',
+    styleUrl: './os-pendentes.component.scss'
 })
 export class OsPendentesComponent implements OnInit {
   pageIco = 'manage_accounts';

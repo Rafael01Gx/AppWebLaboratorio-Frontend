@@ -31,28 +31,27 @@ import { EStatus } from '../../../shared/Enum/status.enum';
 import { UserService } from '../../../core/services/user/user.service';
 
 @Component({
-  selector: 'app-lancamento-de-resultados',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatIcon,
-    MatInputModule,
-    ReactiveFormsModule,
-    NgClass,
-    MatSelectModule,
-    MatButtonModule,
-    CommonModule,
-    MatTableModule,
-    FormsModule,
-  ],
-  providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { subscriptSizing: 'dynamic' },
-    },
-  ],
-  templateUrl: './lancamento-de-resultados.component.html',
-  styleUrl: './lancamento-de-resultados.component.scss',
+    selector: 'app-lancamento-de-resultados',
+    imports: [
+        MatCardModule,
+        MatIcon,
+        MatInputModule,
+        ReactiveFormsModule,
+        NgClass,
+        MatSelectModule,
+        MatButtonModule,
+        CommonModule,
+        MatTableModule,
+        FormsModule,
+    ],
+    providers: [
+        {
+            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+            useValue: { subscriptSizing: 'dynamic' },
+        },
+    ],
+    templateUrl: './lancamento-de-resultados.component.html',
+    styleUrl: './lancamento-de-resultados.component.scss'
 })
 export class LancamentoDeResultadosComponent implements OnInit {
   @Input() title: string = '';

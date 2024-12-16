@@ -11,11 +11,10 @@ import { ConfiguracaoAnaliseListaComponent } from '../../components/componentes-
 
 
 @Component({
-  selector: 'app-configuracoes',
-  standalone: true,
-  imports: [HeaderComponent,SidenavComponent,MainComponent,MatTabsModule,ConfiguracaoAnaliseComponent,MateriaPrimaComponent,ParametrosComponent,TipoDeAnaliseComponent,ConfiguracaoAnaliseListaComponent],
-  templateUrl: './configuracoes.component.html',
-  styleUrl: './configuracoes.component.scss'
+    selector: 'app-configuracoes',
+    imports: [HeaderComponent, SidenavComponent, MainComponent, MatTabsModule, ConfiguracaoAnaliseComponent, MateriaPrimaComponent, ParametrosComponent, TipoDeAnaliseComponent, ConfiguracaoAnaliseListaComponent],
+    templateUrl: './configuracoes.component.html',
+    styleUrl: './configuracoes.component.scss'
 })
 export class ConfiguracoesComponent {
   pageIco = 'settings'; //Materials icons name

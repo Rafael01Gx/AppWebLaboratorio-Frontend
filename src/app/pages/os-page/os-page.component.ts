@@ -7,11 +7,10 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-os-page',
-  standalone: true,
-  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,RouterLinkActive,RouterOutlet],
-  templateUrl: './os-page.component.html',
-  styleUrl: './os-page.component.scss'
+    selector: 'app-os-page',
+    imports: [HeaderComponent, MainComponent, SidenavComponent, RouterLink, MatIcon, MatCardModule, RouterLinkActive, RouterOutlet],
+    templateUrl: './os-page.component.html',
+    styleUrl: './os-page.component.scss'
 })
 export class OsPageComponent {
   pageIco = 'description'; //Materials icons name

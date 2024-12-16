@@ -25,20 +25,19 @@ import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-detalhe-de-analise',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatInputModule,
-    NgxMaskDirective,
-    ReactiveFormsModule,
-    NgClass,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,CommonModule, DecimalFormatPipe
-  ],
-  templateUrl: './detalhe-de-analise.component.html',
-  styleUrl: './detalhe-de-analise.component.scss',
+    selector: 'app-detalhe-de-analise',
+    imports: [
+        MatCardModule,
+        MatInputModule,
+        NgxMaskDirective,
+        ReactiveFormsModule,
+        NgClass,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule, CommonModule, DecimalFormatPipe
+    ],
+    templateUrl: './detalhe-de-analise.component.html',
+    styleUrl: './detalhe-de-analise.component.scss'
 })
 export class DetalheDeAnaliseComponent implements OnInit {
   dialogRef = inject(MatDialogRef<DetalheDeAnaliseComponent>);
