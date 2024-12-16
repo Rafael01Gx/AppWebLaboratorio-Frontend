@@ -1,9 +1,10 @@
 import {
-  AfterViewInit,
   Component,
+  effect,
   inject,
   Input,
   OnInit,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -26,6 +27,7 @@ import {
   IDemandaEnsaios,
 } from '../../../shared/interfaces/IAnalyticals.interface';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
+import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -51,11 +53,14 @@ export type TSeries = {
     templateUrl: './analytical-demandas.component.html',
     styleUrl: './analytical-demandas.component.scss'
 })
-export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
-  @Input({ alias: 'widthAndHeight', required: true }) widthAndHeight!: {
-    width: number;
-    height: number;
-  };
+export class AnalyticalDemandasComponent implements OnInit {
+  @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
+    widthAndHeight: IWidthAndHeight
+  ) {
+    this.dimensoes.set(widthAndHeight);
+  }
+
+  public dimensoes = signal<IWidthAndHeight>({ width: 0, height: 0 });
   #helpService = inject(HelpersService);
   @ViewChild('chart') chart!: ChartComponent;
   private route = inject(ActivatedRoute);
@@ -63,10 +68,11 @@ export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initializeChartFromResolver();
   }
-  ngAfterViewInit(): void {
-    this.chartOptions.chart!.height = this.widthAndHeight.height;
-    this.chartOptions.chart!.width = "100%";
-  }
+constructor(){
+  effect(()=> {
+    this.ngOnInit()
+  })
+}
 
   private initializeChartFromResolver(): void {
     const formater = this.#helpService.getMonthAndWeek;
@@ -98,8 +104,8 @@ export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
       series: values,
       chart: {
         type: 'bar',
-        height: 350,
-        width: '100%',
+        height: this.dimensoes().height,
+        width: this.dimensoes().width,
         stacked: true,
       },
       plotOptions: {

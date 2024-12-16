@@ -181,21 +181,16 @@ export class TipoDeAnaliseComponent implements OnInit {
   }
 
   openDialogDelet(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string,
-    tipo_de_analise: ITipoAnalise
+    tipo_de_analise: ITipoDeAnalise
   ): void {
+    const id = tipo_de_analise._id;
     const dialogDelete = this.dialog.open(DeletModalComponent, {
-      width: '250px',
-      data: { ...tipo_de_analise },
-      enterAnimationDuration,
-      exitAnimationDuration,
-      
+      width: '250px',  
     });
 
     dialogDelete.afterClosed().subscribe((result) => {
       if (result) {
-        this.#tipoDeAnaliseService.httpDeletarTipoDeAnalise(result).subscribe({
+        this.#tipoDeAnaliseService.httpDeletarTipoDeAnalise(id).subscribe({
           next: () => {
             this.#toastr.success('Análise removida!');
             this.loadListAnalise();

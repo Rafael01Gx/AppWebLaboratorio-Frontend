@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  Input,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import {
@@ -12,6 +20,7 @@ import {
   ApexTitleSubtitle,
 } from 'ng-apexcharts';
 import { IEmAtrasoResultData } from '../../../shared/interfaces/IAnalyticals.interface';
+import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -26,17 +35,23 @@ export type ChartOptions = {
 };
 
 @Component({
-    selector: 'app-analytical-em-atraso',
-    imports: [NgApexchartsModule],
-    templateUrl: './analytical-em-atraso.component.html',
-    styleUrl: './analytical-em-atraso.component.scss'
+  selector: 'app-analytical-em-atraso',
+  imports: [NgApexchartsModule],
+  templateUrl: './analytical-em-atraso.component.html',
+  styleUrl: './analytical-em-atraso.component.scss',
 })
-export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
-  @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };
+export class AnalyticalEmAtrasoComponent implements OnInit {
+  @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
+    widthAndHeight: IWidthAndHeight
+  ) {
+    this.dimensoes.set(widthAndHeight);
+  }
+
+  public dimensoes = signal<IWidthAndHeight>({ width: 0, height: 0 });
   private route = inject(ActivatedRoute);
   public emAtrasoResultData!: IEmAtrasoResultData;
   public ensaios_em_atraso!: TData;
-  informacoes=false
+  informacoes = false;
 
   @ViewChild('chart') chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
@@ -44,11 +59,16 @@ export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initializeChartFromResolver();
+   
   }
-  ngAfterViewInit(): void {
-    this.chartOptions.chart!.height = this.widthAndHeight.height;
-    this.chartOptions.chart!.width = "100%";
+  constructor(){
+    effect(()=> {
+      this.ngOnInit()
+    })
   }
+  /*  ngAfterViewInit(): void {
+
+  } */
 
   private initializeChartFromResolver(): void {
     const resolvedData = this.route.snapshot.data['analyticsData'];
@@ -64,7 +84,9 @@ export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
         { y: [], x: [] }
       );
       this.ensaios_em_atraso = { ensaios: y, quantidades: x };
-      this.ensaios_em_atraso.quantidades.length ? this.informacoes=true : this.informacoes=false;
+      this.ensaios_em_atraso.quantidades.length
+        ? (this.informacoes = true)
+        : (this.informacoes = false);
       this.initChart(this.ensaios_em_atraso);
     }
   }
@@ -74,6 +96,8 @@ export class AnalyticalEmAtrasoComponent implements OnInit, AfterViewInit {
       series: data.quantidades,
       chart: {
         type: 'radialBar',
+        height: this.dimensoes().height,
+        width: this.dimensoes().width,
       },
       plotOptions: {
         radialBar: {

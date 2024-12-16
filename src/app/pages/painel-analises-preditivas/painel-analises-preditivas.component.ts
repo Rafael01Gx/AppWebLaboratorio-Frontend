@@ -1,10 +1,9 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, signal } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { AnalyticalDemandasComponent } from '../../components/analytical-charts/analytical-demandas/analytical-demandas.component';
 import { AnalyticalEmAtrasoComponent } from '../../components/analytical-charts/analytical-em-atraso/analytical-em-atraso.component';
 import { AnalyticalEnsaiosComponent } from '../../components/analytical-charts/analytical-ensaios/analytical-ensaios.component';
 import { AnalyticalOsComponent } from '../../components/analytical-charts/analytical-os/analytical-os.component';
-import { InfoPageComponent } from '../../components/info-page/info-page.component';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { MainComponent } from '../../layouts/main/main.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
@@ -12,20 +11,20 @@ import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 
 @Component({
     selector: 'app-painel-analises-preditivas',
-    imports: [HeaderComponent, SidenavComponent, MainComponent, MatCard, AnalyticalOsComponent, AnalyticalEnsaiosComponent, AnalyticalDemandasComponent, AnalyticalEmAtrasoComponent, InfoPageComponent],
+    imports: [HeaderComponent, SidenavComponent, MainComponent, MatCard, AnalyticalOsComponent, AnalyticalEnsaiosComponent, AnalyticalDemandasComponent, AnalyticalEmAtrasoComponent],
     templateUrl: './painel-analises-preditivas.component.html',
     styleUrl: './painel-analises-preditivas.component.scss'
 })
 export class PainelAnalisesPreditivasComponent implements AfterViewInit {
 @ViewChild('dashboard') chartElement!: ElementRef;
-public widthAndHeight!:{ width: number, height: number };
-  pageIco = 'monitoring'; //Materials icons name
+public widthAndHeight = signal<{ width: number, height: number}>({width: 0, height: 0});
+  pageIco = 'monitoring';
   pageTitle = 'Dashboard';
 
 
 public pass:boolean = false; 
   ngAfterViewInit(): void {
-    this.widthAndHeight = this.getChartDimensions()
+    setTimeout(() => {this.widthAndHeight.set(this.getChartDimensions())})
   }
 
   getChartDimensions(): { width: number, height: number }{

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ApexAxisChartSeries,
@@ -11,6 +11,7 @@ import {
   NgApexchartsModule,
   
 } from 'ng-apexcharts';
+import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
 
 export interface ChartOptions {
   series: ApexAxisChartSeries;
@@ -32,9 +33,14 @@ export interface ChartOptions {
     templateUrl: './analytical-os.component.html',
     styleUrl: './analytical-os.component.scss'
 })
-export class AnalyticalOsComponent implements OnInit,AfterViewInit {
+export class AnalyticalOsComponent implements OnInit {
+  @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
+    widthAndHeight: IWidthAndHeight
+  ) {
+    this.dimensoes.set(widthAndHeight);
+  }
 
-  @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };
+  public dimensoes = signal<IWidthAndHeight>({ width: 0, height: 0 });
   public chartOptions!: Partial<ChartOptions>;
   private route = inject(ActivatedRoute);
 
@@ -43,10 +49,11 @@ export class AnalyticalOsComponent implements OnInit,AfterViewInit {
     this.initializeChartFromResolver();
  
   }
-ngAfterViewInit(): void {
-  this.chartOptions.chart!.height = this.widthAndHeight.height;
-  this.chartOptions.chart!.width = "100%";
-}
+  constructor(){
+    effect(()=> {
+      this.ngOnInit()
+    })
+  }
   
 
   private initializeChartFromResolver(): void {
@@ -81,8 +88,8 @@ ngAfterViewInit(): void {
       ],
       chart: {
         type: 'line',
-        height:300,
-        width:"100%",
+        height:this.dimensoes().height,
+        width:this.dimensoes().width,
         stacked: true,
         toolbar: {
           show: true,

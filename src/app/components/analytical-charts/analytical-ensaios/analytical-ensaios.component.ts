@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ChartComponent,
@@ -17,6 +17,7 @@ import {
   ApexResponsive,
 } from 'ng-apexcharts';
 import { TEnsaiosData } from '../../../shared/interfaces/IAnalyticals.interface';
+import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -49,8 +50,15 @@ export type TOptions = {
     templateUrl: './analytical-ensaios.component.html',
     styleUrl: './analytical-ensaios.component.scss'
 })
-export class AnalyticalEnsaiosComponent implements OnInit, AfterViewInit{
-  @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };
+export class AnalyticalEnsaiosComponent implements OnInit{
+  @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
+    widthAndHeight: IWidthAndHeight
+  ) {
+    this.dimensoes.set(widthAndHeight);
+  }
+
+  public dimensoes = signal<IWidthAndHeight>({ width: 0, height: 0 });
+
   private route = inject(ActivatedRoute)
   @ViewChild('chart', { static: false }) chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
@@ -91,9 +99,10 @@ export class AnalyticalEnsaiosComponent implements OnInit, AfterViewInit{
 ngOnInit(): void {
   this.initializeChartFromResolver()
 }
-ngAfterViewInit(): void {
-  this.chartOptions.chart!.height = this.widthAndHeight.height;
-  this.chartOptions.chart!.width = "100%";
+constructor(){
+  effect(()=> {
+    this.ngOnInit()
+  })
 }
 
   private initializeChartFromResolver(): void {
@@ -119,8 +128,8 @@ ngAfterViewInit(): void {
 
       chart: {
         type: 'area',
-        height:350,
-        width: "100%"
+        height:this.dimensoes().height,
+        width:this.dimensoes().width
       },
       annotations: {
        
