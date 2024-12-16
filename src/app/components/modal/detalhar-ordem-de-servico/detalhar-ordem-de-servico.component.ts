@@ -1,5 +1,5 @@
 import { IAmostrasCollection } from './../../../shared/interfaces/IAmostra.interface';
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { IOrdemDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,7 +17,6 @@ import { IAmostrasCollection } from '../../../../shared/interfaces/IAmostra.inte
 import { EStatus } from '../../../../shared/Enum/status.enum';
 
 
-
 @Component({
   selector: 'app-gerenciar-os-aguardando-autorizacao',
   standalone: true,
@@ -33,11 +32,11 @@ import { EStatus } from '../../../../shared/Enum/status.enum';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatCard,MatIconModule,MatButtonModule,NgxMaskPipe],
+    MatCard,MatIconModule,MatButtonModule,NgxMaskPipe,MatPaginator],
   templateUrl: './gerenciar-os-aguardando-autorizacao.component.html',
   styleUrl: './gerenciar-os-aguardando-autorizacao.component.scss'
 })
-export class GerenciarOsAguardandoAutorizacaoComponent implements OnInit,AfterViewInit {
+export class GerenciarOsAguardandoAutorizacaoComponent implements OnInit {
 
   #ordemDeServicoService = inject(OrdemDeServicoService);
   
@@ -65,7 +64,6 @@ export class GerenciarOsAguardandoAutorizacaoComponent implements OnInit,AfterVi
     });
   }
   ngAfterViewInit() {
-
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

@@ -1,10 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { IConfiguracaoDeAnaliseResponse, IParametrosDeAnalise, IParametrosDeAnaliseCollection } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
+import { IConfiguracaoDeAnaliseResponse, IParametrosDeAnaliseCollection } from '../../../shared/interfaces/IConfiguracaoDeAnalise.interface';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { IMateriaPrima } from '../../../shared/interfaces/IMateriasPrimas.interface';
-import { ITipoAnalise } from '../../../shared/interfaces/ITipoDeAnalise.interface';
 
 @Injectable({
   providedIn: 'root'

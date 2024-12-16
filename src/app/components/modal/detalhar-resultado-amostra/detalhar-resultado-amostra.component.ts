@@ -1,10 +1,8 @@
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { IAmostrasCollection, IAnalista, IResultado, IResultadoValues } from '../../../shared/interfaces/IAmostra.interface';
-import { IOrdemDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { Component, inject, OnInit } from '@angular/core';
+import { IResultadoValues } from '../../../shared/interfaces/IAmostra.interface';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
-import { AmostraService } from '../../../core/services/amostra/amostra.service';
 
 @Component({
   selector: 'app-detalhar-resultado-amostra',

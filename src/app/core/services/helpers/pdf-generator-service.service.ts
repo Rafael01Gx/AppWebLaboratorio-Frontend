@@ -8,7 +8,7 @@ import {
   IResultado,
   IResultadoValues,
 } from '../../../shared/interfaces/IAmostra.interface';
-import { IOrdemDeServico, IOrdemDeServicoByOsResponse, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IOrdemDeServico, IOrdemDeServicoByOsResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { OrdemDeServicoService } from '../ordem-de-servico/ordem-de-servico.service';
 import { AmostraService } from '../amostra/amostra.service';
 import { HelpersService } from './helpers.service';

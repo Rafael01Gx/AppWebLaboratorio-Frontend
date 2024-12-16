@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { RelatorioDeAnaliseComponent } from '../../relatorio-de-analise/relatorio-de-analise.component';
 import { MatButton } from '@angular/material/button';
 import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/ordem-de-servico.service';
-import { IOrdemDeServico, IOrdemDeServicoResponse } from '../../../shared/interfaces/IOrdemDeservico.interface';
+import { IOrdemDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { EStatus } from '../../../shared/Enum/status.enum';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../core/services/user/user.service';

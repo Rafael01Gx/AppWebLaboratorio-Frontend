@@ -23,7 +23,6 @@ import {
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import {
-  IAnalyticResult,
   IDemandaEnsaios,
 } from '../../../shared/interfaces/IAnalyticals.interface';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';

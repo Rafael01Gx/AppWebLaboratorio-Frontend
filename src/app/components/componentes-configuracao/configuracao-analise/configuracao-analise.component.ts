@@ -1,7 +1,6 @@
-import { Component, Inject, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators,FormBuilder } from '@angular/forms';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard } from '@angular/material/card';
 import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +29,6 @@ import { AsyncPipe, NgClass } from '@angular/common';
   imports: [MatFormField,
     MatLabel,
     ReactiveFormsModule,
-    MatCard,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,

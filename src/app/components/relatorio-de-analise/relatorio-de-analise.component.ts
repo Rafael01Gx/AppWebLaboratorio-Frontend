@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, AfterViewInit } from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { IOrdemDeServico } from '../../shared/interfaces/IOrdemDeservico.interface';
 import { IAmostrasCollection, IAnalista, IResultado, IResultadoValues } from '../../shared/interfaces/IAmostra.interface';
 import { AmostraService } from '../../core/services/amostra/amostra.service';

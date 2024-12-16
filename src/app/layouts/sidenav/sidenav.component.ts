@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SidenavService } from '../../core/services/sidenav/exibir-txt.service';
 
@@ -39,7 +39,7 @@ export class SidenavComponent implements OnInit {
       ico: 'task',
       name: 'Amostras',
       link: '/amostras',
-      auth: ['Usuário']
+      auth: ['Usuário','Administrador']
     },
     {
       ico: 'task',
@@ -52,6 +52,12 @@ export class SidenavComponent implements OnInit {
       name: 'Gerenciar OS',
       link: '/gerenciar-os',
       auth: ['Administrador']
+    },
+    {
+      ico: 'dashboard',
+      name: 'Dashboard',
+      link: '/analises-preditivas',
+      auth: ['Operador','Administrador']
     },
 
     {

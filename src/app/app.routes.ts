@@ -26,6 +26,7 @@ import { OsFinalizadasComponent } from './components/componentes-ordem-de-servic
 import { RelatorioDeAnaliseComponent } from './components/relatorio-de-analise/relatorio-de-analise.component';
 import { AmostrasComponent } from './pages/amostras/amostras.component';
 import { OsAnalyticsResolver } from './core/services/analytical-charts/OsAnalytics.resolver';
+import { PainelAnalisesPreditivasComponent } from './pages/painel-analises-preditivas/painel-analises-preditivas.component';
 
 
 export const routes: Routes = [
@@ -52,6 +53,11 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'analises-preditivas',
+    component: PainelAnalisesPreditivasComponent,
     canActivate: [AuthGuard],
     resolve: {
       analyticsData: OsAnalyticsResolver

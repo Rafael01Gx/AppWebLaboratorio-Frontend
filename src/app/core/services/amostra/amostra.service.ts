@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { IAmostra, IAmostrasResponse, IResultadoCollection } from '../../../shared/interfaces/IAmostra.interface';
+import { IAmostra, IAmostrasResponse } from '../../../shared/interfaces/IAmostra.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';

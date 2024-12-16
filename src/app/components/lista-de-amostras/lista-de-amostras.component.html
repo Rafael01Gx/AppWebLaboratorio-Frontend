@@ -1,17 +1,17 @@
 @defer (on idle) {
 <mat-card>
-  <div class="tabela">
-    <mat-form-field class="w-100">
+  <div class="tabela-container">
+    <mat-form-field class="filter-field">
       <mat-label>Filtro</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="" #input />
     </mat-form-field>
 
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8 table-wrapper">
       <table
         mat-table
         [dataSource]="dataSource"
         multiTemplateDataRows
-        class="mat-elevation-z8"
+        class="mat-elevation-z8 t-table"
       >
         @for (column of displayedColumns; track column) {
         <ng-container matColumnDef="{{ column }}">
@@ -109,8 +109,9 @@
       </table>
 
       <mat-paginator
-        [pageSizeOptions]="[8, 15, 30, 50]"
+        [pageSizeOptions]="[10, 30, 50]"
         aria-label="Selecione a página de usuários"
+        class="sticky-paginator"
       ></mat-paginator>
     </div>
   </div>

@@ -29,7 +29,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AmostraService } from '../../../core/services/amostra/amostra.service';
 import { EStatus } from '../../../shared/Enum/status.enum';
 import { UserService } from '../../../core/services/user/user.service';
-import { IUserData } from '../../../shared/interfaces/IUser.interface';
 
 @Component({
   selector: 'app-lancamento-de-resultados',

@@ -9,7 +9,6 @@ import { OrdemDeServicoService } from '../../../core/services/ordem-de-servico/o
 import {IOrdemDeServicoResponse, IOrdensDeServico } from '../../../shared/interfaces/IOrdemDeservico.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { EStatus } from '../../../shared/Enum/status.enum';
-import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-generator-service.service';
 
 @Component({
   selector: 'app-os-aguardando-autorizacao',

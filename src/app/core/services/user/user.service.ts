@@ -4,7 +4,6 @@ import { environment } from '../../../../environments/environment';
 import { IUserData, IUserRecoveryPassword, IUserResponse } from '../../../shared/interfaces/IUser.interface';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { UsersResponse } from '../../../shared/models/response.type';
-import { UserResponse } from '../../../shared/models/userResponse.type';
 
 @Injectable({
   providedIn: 'root'

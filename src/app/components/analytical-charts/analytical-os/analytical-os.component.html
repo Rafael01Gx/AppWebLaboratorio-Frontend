@@ -1,20 +1,23 @@
-
-<div #chart class="chart">
-    <apx-chart
-      [series]="chartOptions.series!"
-      [chart]="chartOptions.chart!"
-      [yaxis]="chartOptions.yaxis!"
-      [xaxis]="chartOptions.xaxis!"
-      [labels]="chartOptions.labels!"
-      [stroke]="chartOptions.stroke!"
-      [title]="chartOptions.title!"
-      [dataLabels]="chartOptions.dataLabels!"
-      [fill]="chartOptions.fill!"
-      [tooltip]="chartOptions.tooltip!"
-
-    ></apx-chart> 
-    <div class="char-title">
-      Total de Ordens de Serviço X Finalizadas por Mês
-    </div>
-  </div>
+@defer () {
   
+<div #chart class="chart">
+  <apx-chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [yaxis]="chartOptions.yaxis!"
+    [xaxis]="chartOptions.xaxis!"
+    [labels]="chartOptions.labels!"
+    [stroke]="chartOptions.stroke!"
+    [title]="chartOptions.title!"
+    [dataLabels]="chartOptions.dataLabels!"
+    [fill]="chartOptions.fill!"
+    [tooltip]="chartOptions.tooltip!"
+
+  ></apx-chart> 
+  <div class="char-title">
+    Total de Ordens de Serviço X Finalizadas por Mês
+  </div>
+</div>
+
+
+}

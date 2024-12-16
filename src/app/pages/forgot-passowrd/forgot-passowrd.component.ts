@@ -5,10 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginLayoutComponent } from '../../components/login-layout/login-layout.component';
-import { LoginService } from '../../core/services/login/login.service';
-import { ILogin } from '../../shared/interfaces/lILogin.interface';
 import { emailValidator } from '../../shared/validators/email.validator';
-import { passwordValidator } from '../../shared/validators/password.validator';
 import { UserService } from '../../core/services/user/user.service';
 
 @Component({

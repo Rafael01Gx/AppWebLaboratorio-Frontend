@@ -10,7 +10,6 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import {
   IAmostra,
-  IResultado,
   IResultadoCollection,
 } from '../../../shared/interfaces/IAmostra.interface';
 import { NgxMaskDirective} from 'ngx-mask';

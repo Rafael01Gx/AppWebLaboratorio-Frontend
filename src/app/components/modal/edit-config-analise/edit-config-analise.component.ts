@@ -9,8 +9,7 @@ import {
 } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard } from '@angular/material/card';
-import { MatOption, MatOptgroup } from '@angular/material/core';
+import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   MatFormField,
@@ -54,7 +53,6 @@ import { IResponseData } from '../../../shared/models/IResponseData';
     MatFormField,
     MatLabel,
     ReactiveFormsModule,
-    MatCard,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,

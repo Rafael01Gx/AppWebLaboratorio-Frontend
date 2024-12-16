@@ -18,6 +18,9 @@
       align-items: center;
 
       margin-left: 10px;
+      &:hover{
+        cursor: pointer;
+      }
     }
     .text-container {
       flex-grow: 4;
