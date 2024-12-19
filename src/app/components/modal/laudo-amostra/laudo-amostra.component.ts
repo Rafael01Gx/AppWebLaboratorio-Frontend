@@ -7,11 +7,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-laudo-amostra',
-  standalone: true,
-  imports: [MatCardModule,MatIcon],
-  templateUrl: './laudo-amostra.component.html',
-  styleUrl: './laudo-amostra.component.scss'
+    selector: 'app-laudo-amostra',
+    imports: [MatCardModule, MatIcon],
+    templateUrl: './laudo-amostra.component.html',
+    styleUrl: './laudo-amostra.component.scss'
 })
 export class LaudoAmostraComponent implements OnInit {
 #helpersService = inject(HelpersService)

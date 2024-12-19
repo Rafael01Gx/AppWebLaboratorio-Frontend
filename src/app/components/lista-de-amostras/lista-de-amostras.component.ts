@@ -28,32 +28,28 @@ import { DetalharResultadoAmostraComponent } from '../modal/detalhar-resultado-a
 import { LaudoAmostraComponent } from '../modal/laudo-amostra/laudo-amostra.component';
 
 @Component({
-  selector: 'app-lista-de-amostras',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCard,
-    MatIconModule,
-    MatButtonModule,
-    KeyValuePipe,
-    MatProgressBarModule,
-  ],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-  ],
-  templateUrl: './lista-de-amostras.component.html',
-  styleUrl: './lista-de-amostras.component.scss',
+    selector: 'app-lista-de-amostras',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCard,
+        MatIconModule,
+        MatButtonModule,
+        KeyValuePipe,
+        MatProgressBarModule,
+    ],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    templateUrl: './lista-de-amostras.component.html',
+    styleUrl: './lista-de-amostras.component.scss'
 })
 export class ListaDeAmostrasComponent {
   status = EStatus;

@@ -7,11 +7,10 @@ import { HelpersService } from '../../core/services/helpers/helpers.service';
 
 
 @Component({
-  selector: 'app-relatorio-de-analise',
-  standalone: true,
-  imports: [],
-  templateUrl: './relatorio-de-analise.component.html',
-  styleUrl: './relatorio-de-analise.component.scss'
+    selector: 'app-relatorio-de-analise',
+    imports: [],
+    templateUrl: './relatorio-de-analise.component.html',
+    styleUrl: './relatorio-de-analise.component.scss'
 })
 export class RelatorioDeAnaliseComponent implements OnInit {
 #amoastraService = inject(AmostraService)

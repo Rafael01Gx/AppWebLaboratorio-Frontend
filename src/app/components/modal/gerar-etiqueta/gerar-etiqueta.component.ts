@@ -4,11 +4,10 @@ import { MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, Mat
 import { DeletModalComponent } from '../delete-user-modal/delete-modal.component';
 
 @Component({
-  selector: 'app-gerar-etiqueta',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
-  templateUrl: './gerar-etiqueta.component.html',
-  styleUrl: './gerar-etiqueta.component.scss'
+    selector: 'app-gerar-etiqueta',
+    imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+    templateUrl: './gerar-etiqueta.component.html',
+    styleUrl: './gerar-etiqueta.component.scss'
 })
 export class GerarEtiquetaComponent {
 readonly dialogRef = inject(MatDialogRef<DeletModalComponent>);

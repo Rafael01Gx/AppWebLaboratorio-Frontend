@@ -13,13 +13,13 @@ import { EStatus } from '../../../shared/Enum/status.enum';
 import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LaudoAmostraComponent } from '../../modal/laudo-amostra/laudo-amostra.component';
+import { MatCard } from '@angular/material/card';
 
 @Component({
-  selector: 'app-analises-finalizadas',
-  standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule,MatFormFieldModule,MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
-  templateUrl: './analises-finalizadas.component.html',
-  styleUrl: './analises-finalizadas.component.scss'
+    selector: 'app-analises-finalizadas',
+    imports: [MatCard,MatTableModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
+    templateUrl: './analises-finalizadas.component.html',
+    styleUrl: './analises-finalizadas.component.scss'
 })
 export class AnalisesFinalizadasComponent  implements OnInit {
 

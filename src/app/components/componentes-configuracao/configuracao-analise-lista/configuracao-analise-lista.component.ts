@@ -18,21 +18,20 @@ import { EditConfigAnaliseComponent } from '../../modal/edit-config-analise/edit
 import { IResponseData } from '../../../shared/models/IResponseData';
 
 @Component({
-  selector: 'app-configuracao-analise-lista',
-  standalone: true,
-  imports: [MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatCard,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatPaginator,
-    MatTableModule],
-  templateUrl: './configuracao-analise-lista.component.html',
-  styleUrl: './configuracao-analise-lista.component.scss'
+    selector: 'app-configuracao-analise-lista',
+    imports: [MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        MatCard,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatPaginator,
+        MatTableModule],
+    templateUrl: './configuracao-analise-lista.component.html',
+    styleUrl: './configuracao-analise-lista.component.scss'
 })
 
 export class ConfiguracaoAnaliseListaComponent implements OnInit {

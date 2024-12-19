@@ -7,11 +7,10 @@ import { MainComponent } from '../../layouts/main/main.component';
 import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 
 @Component({
-  selector: 'app-manage-os',
-  standalone: true,
-  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,RouterLinkActive,RouterOutlet],
-  templateUrl: './manage-os.component.html',
-  styleUrl: './manage-os.component.scss'
+    selector: 'app-manage-os',
+    imports: [HeaderComponent, MainComponent, SidenavComponent, RouterLink, MatIcon, MatCardModule, RouterLinkActive, RouterOutlet],
+    templateUrl: './manage-os.component.html',
+    styleUrl: './manage-os.component.scss'
 })
 export class ManageOsComponent {
   pageIco = 'manage_search'; //Materials icons name

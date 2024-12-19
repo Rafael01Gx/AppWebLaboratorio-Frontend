@@ -9,16 +9,15 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { UserService } from '../../core/services/user/user.service';
 
 @Component({
-  selector: 'app-forgot-passowrd',
-  standalone: true,
-  imports: [LoginLayoutComponent,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
-  templateUrl: './forgot-passowrd.component.html',
-  styleUrl: './forgot-passowrd.component.scss'
+    selector: 'app-forgot-passowrd',
+    imports: [LoginLayoutComponent,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+    ],
+    templateUrl: './forgot-passowrd.component.html',
+    styleUrl: './forgot-passowrd.component.scss'
 })
 export class ForgotPassowrdComponent {
   #router = inject(Router);

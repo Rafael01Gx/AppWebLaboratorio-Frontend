@@ -1,47 +1,56 @@
 :host{
 
+  mat-card{
+      display: flex;
+      max-height: 100%;
+      
       .tabela-container {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        overflow: hidden;
-  
-        .filter-field {
-          width: 100%;
-  
-          .mat-mdc-form-field-infix {
-            width: 100%;
-          }
-        }
-  
-        .table-wrapper {
+          display: flex;
+          flex-direction: column;
           flex-grow: 1;
-          overflow-y: auto;
-          position: relative;
-        }
-  
-        .analysis-table {
-          width: 100%;
-  
-          th, td {
-            text-align: left;
-            padding: 8px;
+          overflow: hidden;
+      
+          .filter-field {
+            width: 100%;
+      
+            .mat-mdc-form-field-infix {
+              width: 100%;
+            }
           }
+      
+          .table-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            position: relative;
+          }
+      
+          .t-table {
+            width: 100%;
+      
+            th {
+      
+              position: sticky;
+              top: 0;
+              z-index: 1;
+            }
 
-  
-          th {
-
+            td{
+              &:hover{
+                  cursor: pointer;
+                 
+              }
+          }
+          tr:hover>td{
+              background: var(--gray-100);
+          }
+          }
+      
+          .sticky-paginator {
             position: sticky;
-            top: 0;
-            z-index: 1;
+            bottom: 0;
+            z-index: 2;
           }
         }
-  
-        .sticky-paginator {
-          position: sticky;
-          bottom: 0;
-          z-index: 2;
-        }
-      }
-    
+
+  }
 }

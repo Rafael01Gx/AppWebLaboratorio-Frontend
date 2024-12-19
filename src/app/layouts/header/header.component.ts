@@ -9,11 +9,10 @@ import { UserService } from '../../core/services/user/user.service';
 import { INotifications, IUserData } from '../../shared/interfaces/IUser.interface';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [MatBadgeModule, MatButtonModule, MatIconModule, RouterLink, MatListModule, NgClass],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+    selector: 'app-header',
+    imports: [MatBadgeModule, MatButtonModule, MatIconModule, RouterLink, MatListModule, NgClass],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
   #userService = inject(UserService);

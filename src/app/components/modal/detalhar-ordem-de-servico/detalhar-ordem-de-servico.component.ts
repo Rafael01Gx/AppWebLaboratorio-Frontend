@@ -10,11 +10,10 @@ import { AutorizarOsComponent } from '../gerenciar-os/autorizar-os/autorizar-os.
 
 
 @Component({
-  selector: 'app-detalhar-ordem-de-servico',
-  standalone: true,
-  imports: [MatCardModule,MatIcon,NgxMaskPipe,MatButton],
-  templateUrl: './detalhar-ordem-de-servico.component.html',
-  styleUrl: './detalhar-ordem-de-servico.component.scss'
+    selector: 'app-detalhar-ordem-de-servico',
+    imports: [MatCardModule, MatIcon, NgxMaskPipe, MatButton],
+    templateUrl: './detalhar-ordem-de-servico.component.html',
+    styleUrl: './detalhar-ordem-de-servico.component.scss'
 })
 export class DetalharOrdemDeServicoComponent implements OnInit {
   

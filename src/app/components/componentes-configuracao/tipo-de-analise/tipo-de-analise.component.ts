@@ -32,26 +32,25 @@ import { NgIf } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
-  selector: 'app-tipo-de-analise',
-  standalone: true,
-  imports: [
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatCard,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelect,
-    MatOption,
-    MatPaginator,
-    MatTableModule,
-    NgIf,ScrollingModule
-  ],
-  templateUrl: './tipo-de-analise.component.html',
-  styleUrl: './tipo-de-analise.component.scss',
+    selector: 'app-tipo-de-analise',
+    imports: [
+        MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        MatCard,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSelect,
+        MatOption,
+        MatPaginator,
+        MatTableModule,
+        NgIf, ScrollingModule
+    ],
+    templateUrl: './tipo-de-analise.component.html',
+    styleUrl: './tipo-de-analise.component.scss'
 })
 export class TipoDeAnaliseComponent implements OnInit {
   #toastr = inject(ToastrService);
@@ -182,21 +181,16 @@ export class TipoDeAnaliseComponent implements OnInit {
   }
 
   openDialogDelet(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string,
-    tipo_de_analise: ITipoAnalise
+    tipo_de_analise: ITipoDeAnalise
   ): void {
+    const id = tipo_de_analise._id;
     const dialogDelete = this.dialog.open(DeletModalComponent, {
-      width: '250px',
-      data: { ...tipo_de_analise },
-      enterAnimationDuration,
-      exitAnimationDuration,
-      
+      width: '250px',  
     });
 
     dialogDelete.afterClosed().subscribe((result) => {
       if (result) {
-        this.#tipoDeAnaliseService.httpDeletarTipoDeAnalise(result).subscribe({
+        this.#tipoDeAnaliseService.httpDeletarTipoDeAnalise(id).subscribe({
           next: () => {
             this.#toastr.success('Análise removida!');
             this.loadListAnalise();

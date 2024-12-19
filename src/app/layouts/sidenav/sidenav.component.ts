@@ -4,11 +4,10 @@ import { RouterLink } from '@angular/router';
 import { SidenavService } from '../../core/services/sidenav/exibir-txt.service';
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss',
+    selector: 'app-sidenav',
+    imports: [RouterLink, CommonModule],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent implements OnInit {
   ngOnInit() {
@@ -42,7 +41,7 @@ export class SidenavComponent implements OnInit {
       auth: ['Usuário','Administrador']
     },
     {
-      ico: 'task',
+      ico: 'workspaces',
       name: 'Análises',
       link: '/analises',
       auth: ['Operador','Administrador']
@@ -59,13 +58,13 @@ export class SidenavComponent implements OnInit {
       link: '/analises-preditivas',
       auth: ['Operador','Administrador']
     },
-
+/*
     {
       ico: 'science',
       name: 'SGS',
       link: '',
       auth: ['Operador','Administrador']
-    },
+    }, */
     {
       ico: 'manage_accounts',
       name: 'Contas',

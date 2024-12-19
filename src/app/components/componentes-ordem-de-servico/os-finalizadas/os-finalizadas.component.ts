@@ -13,16 +13,15 @@ import { EStatus } from '../../../shared/Enum/status.enum';
 import { PdfGeneratorServiceService } from '../../../core/services/helpers/pdf-generator-service.service';
 
 @Component({
-  selector: 'app-os-finalizadas',
-  standalone: true,
-  imports: [MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCard,MatIconModule],
-  templateUrl: './os-finalizadas.component.html',
-  styleUrl: './os-finalizadas.component.scss'
+    selector: 'app-os-finalizadas',
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCard, MatIconModule],
+    templateUrl: './os-finalizadas.component.html',
+    styleUrl: './os-finalizadas.component.scss'
 })
 export class OsFinalizadasComponent implements OnInit, AfterViewInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);

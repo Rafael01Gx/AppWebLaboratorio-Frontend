@@ -11,16 +11,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { EStatus } from '../../../shared/Enum/status.enum';
 
 @Component({
-  selector: 'app-os-aguardando-autorizacao',
-  standalone: true,
-  imports: [    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCard],
-  templateUrl: './os-aguardando-autorizacao.component.html',
-  styleUrl: './os-aguardando-autorizacao.component.scss'
+    selector: 'app-os-aguardando-autorizacao',
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCard],
+    templateUrl: './os-aguardando-autorizacao.component.html',
+    styleUrl: './os-aguardando-autorizacao.component.scss'
 })
 export class OsAguardandoAutorizacaoComponent implements OnInit, AfterViewInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);

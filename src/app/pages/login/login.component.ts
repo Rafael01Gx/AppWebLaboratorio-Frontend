@@ -21,18 +21,17 @@ import { ToastrService } from 'ngx-toastr';
 import { ILogin } from '../../shared/interfaces/lILogin.interface';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    LoginLayoutComponent,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
-  providers: [LoginService, ToastrService],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+    selector: 'app-login',
+    imports: [
+        LoginLayoutComponent,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+    ],
+    providers: [LoginService, ToastrService],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   #router = inject(Router);

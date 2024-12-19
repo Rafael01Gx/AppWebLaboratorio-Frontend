@@ -34,24 +34,22 @@ import { DatePipe } from '@angular/common';
 import { EStatus } from '../../../../shared/Enum/status.enum';
 
 @Component({
-  selector: 'app-autorizar-os',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    FormsModule,
-    MatSelectModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatDialogModule
-  ],
-  providers: [provideNativeDateAdapter(),DatePipe],
-
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './autorizar-os.component.html',
-  styleUrl: './autorizar-os.component.scss',
+    selector: 'app-autorizar-os',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        FormsModule,
+        MatSelectModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatDialogModule
+    ],
+    providers: [provideNativeDateAdapter(), DatePipe],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './autorizar-os.component.html',
+    styleUrl: './autorizar-os.component.scss'
 })
 export class AutorizarOsComponent implements OnInit {
   #toastr = inject(ToastrService);

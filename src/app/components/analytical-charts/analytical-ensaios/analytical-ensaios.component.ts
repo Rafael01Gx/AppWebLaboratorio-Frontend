@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ChartComponent,
@@ -17,6 +17,8 @@ import {
   ApexResponsive,
 } from 'ng-apexcharts';
 import { TEnsaiosData } from '../../../shared/interfaces/IAnalyticals.interface';
+import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
+import { NgStyle } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -44,14 +46,21 @@ export type TOptions = {
 };
 
 @Component({
-  selector: 'app-analytical-ensaios',
-  standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './analytical-ensaios.component.html',
-  styleUrl: './analytical-ensaios.component.scss',
+    selector: 'app-analytical-ensaios',
+    imports: [NgApexchartsModule,NgStyle],
+    templateUrl: './analytical-ensaios.component.html',
+    styleUrl: './analytical-ensaios.component.scss'
 })
-export class AnalyticalEnsaiosComponent implements OnInit, AfterViewInit{
-  @Input({ alias:"widthAndHeight",required:true}) widthAndHeight!: { width: number, height: number };
+export class AnalyticalEnsaiosComponent implements OnInit{
+  public exibirGrafico:Boolean = false
+  @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
+    widthAndHeight: IWidthAndHeight
+  ) {
+    this.dimensoes.set(widthAndHeight);
+  }
+
+  public dimensoes = signal<IWidthAndHeight>({ width: 0, height: 0 });
+
   private route = inject(ActivatedRoute)
   @ViewChild('chart', { static: false }) chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
@@ -90,17 +99,21 @@ export class AnalyticalEnsaiosComponent implements OnInit, AfterViewInit{
   };
 
 ngOnInit(): void {
-  this.initializeChartFromResolver()
+  //this.initializeChartFromResolver()
 }
-ngAfterViewInit(): void {
-  this.chartOptions.chart!.height = this.widthAndHeight.height;
-  this.chartOptions.chart!.width = "100%";
+constructor() {
+  effect(() => {
+    const { width, height } = this.dimensoes();
+    this.initializeChartFromResolver()
+
+  });
 }
 
   private initializeChartFromResolver(): void {
     const resolvedData = this.route.snapshot.data['analyticsData'];
 
-    if (resolvedData.osData) {
+    if (resolvedData.ensaiosData.length >0) {
+    this.exibirGrafico = true
       this.initChart(
         resolvedData.ensaiosData
       );
@@ -109,8 +122,7 @@ ngAfterViewInit(): void {
 
 
   initChart(data:TEnsaiosData): void {
-    this.chartOptions = {
-      
+    this.chartOptions = {      
       series: [       
         {
           data: data,
@@ -120,8 +132,8 @@ ngAfterViewInit(): void {
 
       chart: {
         type: 'area',
-        height:350,
-        width: "100%"
+        height:this.dimensoes().height,
+        width:this.dimensoes().width
       },
       annotations: {
        

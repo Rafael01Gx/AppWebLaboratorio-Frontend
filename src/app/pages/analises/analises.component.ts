@@ -7,14 +7,13 @@ import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-analises',
-  standalone: true,
-  imports: [HeaderComponent,MainComponent,SidenavComponent,RouterLink,MatIcon,MatCardModule,RouterLinkActive,RouterOutlet],
-  templateUrl: './analises.component.html',
-  styleUrl: './analises.component.scss'
+    selector: 'app-analises',
+    imports: [HeaderComponent, MainComponent, SidenavComponent, RouterLink, MatIcon, MatCardModule, RouterLinkActive, RouterOutlet],
+    templateUrl: './analises.component.html',
+    styleUrl: './analises.component.scss'
 })
 export class AnalisesComponent {
-  pageIco = 'task'; //Materials icons name
+  pageIco = 'workspaces'; //Materials icons name
   pageTitle = 'Análises';
 
 

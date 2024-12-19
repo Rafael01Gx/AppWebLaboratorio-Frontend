@@ -5,11 +5,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 
 @Component({
-  selector: 'app-detalhar-resultado-amostra',
-  standalone: true,
-  imports: [],
-  templateUrl: './detalhar-resultado-amostra.component.html',
-  styleUrl: './detalhar-resultado-amostra.component.scss'
+    selector: 'app-detalhar-resultado-amostra',
+    imports: [],
+    templateUrl: './detalhar-resultado-amostra.component.html',
+    styleUrl: './detalhar-resultado-amostra.component.scss'
 })
 export class DetalharResultadoAmostraComponent implements OnInit {
   data= inject(MAT_DIALOG_DATA)

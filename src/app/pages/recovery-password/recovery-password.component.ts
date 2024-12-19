@@ -12,15 +12,14 @@ import { NgClass, NgIf } from '@angular/common';
 
 
 @Component({
-  selector: 'app-recovery-password',
-  standalone: true,
-  imports: [MatButtonModule,RouterLink,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,NgClass,NgIf],
-  templateUrl: './recovery-password.component.html',
-  styleUrl: './recovery-password.component.scss'
+    selector: 'app-recovery-password',
+    imports: [MatButtonModule, RouterLink,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule, NgClass, NgIf],
+    templateUrl: './recovery-password.component.html',
+    styleUrl: './recovery-password.component.scss'
 })
 export class RecoveryPasswordComponent implements OnInit {
 

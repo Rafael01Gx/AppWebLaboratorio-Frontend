@@ -1,9 +1,10 @@
 import {
-  AfterViewInit,
   Component,
+  effect,
   inject,
   Input,
   OnInit,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -26,6 +27,8 @@ import {
   IDemandaEnsaios,
 } from '../../../shared/interfaces/IAnalyticals.interface';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
+import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
+import { NgStyle } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -46,28 +49,36 @@ export type TSeries = {
 };
 
 @Component({
-  selector: 'app-analytical-demandas',
-  standalone: true,
-  imports: [NgApexchartsModule],
-  templateUrl: './analytical-demandas.component.html',
-  styleUrl: './analytical-demandas.component.scss',
+    selector: 'app-analytical-demandas',
+    imports: [NgApexchartsModule,NgStyle],
+    templateUrl: './analytical-demandas.component.html',
+    styleUrl: './analytical-demandas.component.scss'
 })
-export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
-  @Input({ alias: 'widthAndHeight', required: true }) widthAndHeight!: {
-    width: number;
-    height: number;
-  };
+export class AnalyticalDemandasComponent implements OnInit {
+  public exibirGrafico:Boolean = false
+
+  @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
+    widthAndHeight: IWidthAndHeight
+  ) {
+    this.dimensoes.set(widthAndHeight);
+  }
+
+  public dimensoes = signal<IWidthAndHeight>({ width: 0, height: 0 });
   #helpService = inject(HelpersService);
   @ViewChild('chart') chart!: ChartComponent;
   private route = inject(ActivatedRoute);
   public chartOptions!: Partial<ChartOptions>;
   ngOnInit(): void {
-    this.initializeChartFromResolver();
+   // this.initializeChartFromResolver();
   }
-  ngAfterViewInit(): void {
-    this.chartOptions.chart!.height = this.widthAndHeight.height;
-    this.chartOptions.chart!.width = "100%";
+  constructor() {
+    effect(() => {
+      const { width, height } = this.dimensoes();
+      this.initializeChartFromResolver()
+
+    });
   }
+  
 
   private initializeChartFromResolver(): void {
     const formater = this.#helpService.getMonthAndWeek;
@@ -76,6 +87,8 @@ export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
     let categories: string[] = [];
     let categoriesFormat: string[];
     if (resolvedData.demanda_ensaios) {
+
+    this.exibirGrafico = true
       for (let key in resolvedData.demanda_ensaios) {
         if (resolvedData.demanda_ensaios.hasOwnProperty(key)) {
           const data = resolvedData.demanda_ensaios[key].semana;
@@ -99,8 +112,8 @@ export class AnalyticalDemandasComponent implements OnInit, AfterViewInit {
       series: values,
       chart: {
         type: 'bar',
-        height: 350,
-        width: '100%',
+        height: this.dimensoes().height,
+        width: this.dimensoes().width,
         stacked: true,
       },
       plotOptions: {

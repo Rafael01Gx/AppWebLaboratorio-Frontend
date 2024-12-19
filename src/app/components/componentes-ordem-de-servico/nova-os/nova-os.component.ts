@@ -35,25 +35,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { GerarEtiquetaComponent } from '../../modal/gerar-etiqueta/gerar-etiqueta.component';
 
 @Component({
-  selector: 'app-nova-os',
-  standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCard,
-    MatTable,
-    MatTableModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatSelectModule
-  ,MatIcon,
-    MatDatepickerModule,NgIf,MatCheckboxModule
-  ],
-  templateUrl: './nova-os.component.html',
-  styleUrl: './nova-os.component.scss',
+    selector: 'app-nova-os',
+    providers: [provideNativeDateAdapter()],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCard,
+        MatTable,
+        MatTableModule,
+        MatButtonModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatIcon,
+        MatDatepickerModule, NgIf, MatCheckboxModule
+    ],
+    templateUrl: './nova-os.component.html',
+    styleUrl: './nova-os.component.scss'
 })
 export class NovaOsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;

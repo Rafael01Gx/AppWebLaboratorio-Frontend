@@ -34,32 +34,28 @@ import { Router } from '@angular/router';
 import { RevisaoDeOsComponent } from '../../../modal/revisao-de-os/revisao-de-os.component';
 
 @Component({
-  selector: 'app-gerenciar-os-em-execucao',
-  standalone: true,
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-  ],
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule,
-    NgxMaskPipe,
-    MatProgressBarModule,
-  ],
-  templateUrl: './gerenciar-os-em-execucao.component.html',
-  styleUrl: './gerenciar-os-em-execucao.component.scss',
+    selector: 'app-gerenciar-os-em-execucao',
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule,
+        NgxMaskPipe,
+        MatProgressBarModule,
+    ],
+    templateUrl: './gerenciar-os-em-execucao.component.html',
+    styleUrl: './gerenciar-os-em-execucao.component.scss'
 })
 export class GerenciarOsEmExecucaoComponent implements OnInit, AfterViewInit {
   #ordemDeServicoService = inject(OrdemDeServicoService);

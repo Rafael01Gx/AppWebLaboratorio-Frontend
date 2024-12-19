@@ -16,20 +16,19 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    SidenavComponent,
-    MainComponent,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,NgxMaskPipe
-  ],
-  templateUrl: './manage-accounts.component.html',
-  styleUrls: ['./manage-accounts.component.scss'],
+    selector: 'app-dashboard',
+    imports: [
+        HeaderComponent,
+        SidenavComponent,
+        MainComponent,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule, NgxMaskPipe
+    ],
+    templateUrl: './manage-accounts.component.html',
+    styleUrls: ['./manage-accounts.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   pageIco = 'manage_accounts'; // Materials icons name

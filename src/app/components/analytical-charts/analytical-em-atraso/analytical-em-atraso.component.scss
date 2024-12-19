@@ -12,7 +12,7 @@
     display: flex;
 
     .col-2{
-      width: 50%;
+      flex-grow: 1;
       height: 100%;
       display: flex;
       flex-flow: column;

@@ -24,22 +24,21 @@ import { AsyncPipe, NgClass } from '@angular/common';
 
 
 @Component({
-  selector: 'app-configuracao-analise',
-  standalone: true,
-  imports: [MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelect,
-    MatOption,
-    MatPaginator,
-    MatTableModule,MatAutocompleteModule,AsyncPipe,NgClass],
-  templateUrl: './configuracao-analise.component.html',
-  styleUrl: './configuracao-analise.component.scss'
+    selector: 'app-configuracao-analise',
+    imports: [MatFormField,
+        MatLabel,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSelect,
+        MatOption,
+        MatPaginator,
+        MatTableModule, MatAutocompleteModule, AsyncPipe, NgClass],
+    templateUrl: './configuracao-analise.component.html',
+    styleUrl: './configuracao-analise.component.scss'
 })
 export class ConfiguracaoAnaliseComponent implements OnInit{
 

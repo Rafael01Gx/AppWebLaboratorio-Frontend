@@ -12,14 +12,13 @@ import { ToastrService } from 'ngx-toastr';
 import { EUserLevels } from '../../../shared/Enum/userLevels.enum';
 
 @Component({
-  selector: 'app-user-modal',
-  standalone: true,
-  imports: [
-    MatFormFieldModule, MatInputModule, MatDialogModule,
-    FormsModule, MatSelectModule, MatButtonModule, MatCheckbox
-  ],
-  templateUrl: './user-modal.component.html',
-  styleUrls: ['./user-modal.component.scss']
+    selector: 'app-user-modal',
+    imports: [
+        MatFormFieldModule, MatInputModule, MatDialogModule,
+        FormsModule, MatSelectModule, MatButtonModule, MatCheckbox
+    ],
+    templateUrl: './user-modal.component.html',
+    styleUrls: ['./user-modal.component.scss']
 })
 export class UserModalComponent {
   #userService = inject(UserService);
