@@ -11,13 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 
 import {
   ApexNonAxisChartSeries,
-  ApexPlotOptions,
   ApexChart,
-  ApexLegend,
   ApexResponsive,
   ChartComponent,
-  NgApexchartsModule,
-  ApexTitleSubtitle,
+  NgApexchartsModule,ApexStroke
 } from 'ng-apexcharts';
 import { IEmAtrasoResultData } from '../../../shared/interfaces/IAnalyticals.interface';
 import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
@@ -25,13 +22,10 @@ import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
-  labels: string[];
-  colors: string[];
-  legend: ApexLegend;
-  plotOptions: ApexPlotOptions;
   responsive: ApexResponsive[];
-  title: ApexTitleSubtitle;
-  subtitle: ApexTitleSubtitle;
+  labels: any;
+  stroke: ApexStroke;
+  fill: ApexFill;
 };
 
 @Component({
@@ -53,18 +47,19 @@ export class AnalyticalEmAtrasoComponent implements OnInit {
   public ensaios_em_atraso!: TData;
   informacoes = false;
 
-  @ViewChild('chart') chart!: ChartComponent;
+  @ViewChild("chart") chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
-  public chartOptions2!: Partial<ChartOptions>;
 
   ngOnInit(): void {
     this.initializeChartFromResolver();
    
   }
-  constructor(){
-    effect(()=> {
-      this.ngOnInit()
-    })
+  constructor() {
+    effect(() => {
+      const { width, height } = this.dimensoes();
+      this.initializeChartFromResolver()
+
+    });
   }
   /*  ngAfterViewInit(): void {
 
@@ -93,64 +88,31 @@ export class AnalyticalEmAtrasoComponent implements OnInit {
 
   initChart(data: TData): void {
     this.chartOptions = {
-      series: data.quantidades,
+      series: this.ensaios_em_atraso.quantidades,
       chart: {
-        type: 'radialBar',
-        height: this.dimensoes().height,
-        width: this.dimensoes().width,
+        type: "polarArea",  
       },
-      plotOptions: {
-        radialBar: {
-          offsetY: 0,
-          offsetX: 0,
-          startAngle: 0,
-          endAngle: 270,
-          hollow: {
-            margin: 5,
-            size: '30%',
-            background: 'transparent',
-            image: undefined,
-          },
-          dataLabels: {
-            name: {
-              show: false,
-            },
-            value: {
-              show: false,
-            },
-          },
-        },
+      stroke: {
+        colors: ["#fff"]
       },
-      labels: data.ensaios,
-      legend: {
-        show: true,
-        floating: true,
-        fontSize: '12px',
-        position: 'left',
-        offsetX: 20,
-        offsetY: 20,
-        labels: {
-          useSeriesColors: true,
-        },
-        formatter: function (seriesName, opts) {
-          seriesName =
-            seriesName.length > 5 ? seriesName.slice(0, 5) + '...' : seriesName;
-          return seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex];
-        },
-        itemMargin: {
-          horizontal: 3,
-        },
+      fill: {
+        opacity: 0.8
       },
+      labels: this.ensaios_em_atraso.ensaios
+      ,
       responsive: [
         {
           breakpoint: 480,
           options: {
-            legend: {
-              show: false,
+            chart: {
+              width: 200
             },
-          },
-        },
-      ],
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
     };
   }
 }

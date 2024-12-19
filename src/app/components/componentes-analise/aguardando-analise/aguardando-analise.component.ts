@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,15 +12,16 @@ import { IAmostrasCollection, IAmostrasResponse, IAmostra } from '../../../share
 import { MatDialog } from '@angular/material/dialog';
 import { DetalheDeAnaliseComponent } from '../../modal/detalhe-de-analise/detalhe-de-analise.component';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
+import { MatCard } from '@angular/material/card';
 
 
 @Component({
     selector: 'app-aguardando-analise',
-    imports: [MatTableModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
+    imports: [MatTableModule, MatCard,MatButtonModule, MatIconModule, MatFormFieldModule, MatPaginator, MatInputModule, MatSortModule, MatPaginatorModule],
     templateUrl: './aguardando-analise.component.html',
     styleUrl: './aguardando-analise.component.scss'
 })
-export class AguardandoAnaliseComponent implements OnInit {
+export class AguardandoAnaliseComponent implements OnInit, AfterViewInit {
 
   #amostraService = inject(AmostraService)
   #toastr = inject(ToastrService)

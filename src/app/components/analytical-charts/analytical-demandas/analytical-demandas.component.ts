@@ -68,11 +68,14 @@ export class AnalyticalDemandasComponent implements OnInit {
   ngOnInit(): void {
     this.initializeChartFromResolver();
   }
-constructor(){
-  effect(()=> {
-    this.ngOnInit()
-  })
-}
+  constructor() {
+    effect(() => {
+      const { width, height } = this.dimensoes();
+      this.initializeChartFromResolver()
+
+    });
+  }
+  
 
   private initializeChartFromResolver(): void {
     const formater = this.#helpService.getMonthAndWeek;

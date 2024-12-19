@@ -49,10 +49,12 @@ export class AnalyticalOsComponent implements OnInit {
     this.initializeChartFromResolver();
  
   }
-  constructor(){
-    effect(()=> {
-      this.ngOnInit()
-    })
+  constructor() {
+    effect(() => {
+      const { width, height } = this.dimensoes();
+      this.initializeChartFromResolver()
+
+    });
   }
   
 

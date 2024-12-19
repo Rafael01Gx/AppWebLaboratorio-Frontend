@@ -18,7 +18,7 @@ import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 export class PainelAnalisesPreditivasComponent implements AfterViewInit {
 @ViewChild('dashboard') chartElement!: ElementRef;
 public widthAndHeight = signal<{ width: number, height: number}>({width: 0, height: 0});
-  pageIco = 'monitoring';
+  pageIco = 'dashboard';
   pageTitle = 'Dashboard';
 
 
@@ -30,7 +30,7 @@ public pass:boolean = false;
   getChartDimensions(): { width: number, height: number }{
     const chart = this.chartElement?.nativeElement;
    const tamanho = {
-     width:((chart.clientWidth/2) * 0.90),
+     width:((chart.clientWidth/2) * 0.95),
      height :((chart.clientHeight/2) * 0.87)
    }
     return chart? tamanho : {width:0, height:0};

@@ -13,7 +13,7 @@ import { MatCardModule } from '@angular/material/card';
     styleUrl: './analises.component.scss'
 })
 export class AnalisesComponent {
-  pageIco = 'task'; //Materials icons name
+  pageIco = 'workspaces'; //Materials icons name
   pageTitle = 'Análises';
 
 

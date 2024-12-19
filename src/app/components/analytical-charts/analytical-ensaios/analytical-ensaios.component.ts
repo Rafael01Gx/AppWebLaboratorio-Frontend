@@ -99,10 +99,12 @@ export class AnalyticalEnsaiosComponent implements OnInit{
 ngOnInit(): void {
   this.initializeChartFromResolver()
 }
-constructor(){
-  effect(()=> {
-    this.ngOnInit()
-  })
+constructor() {
+  effect(() => {
+    const { width, height } = this.dimensoes();
+    this.initializeChartFromResolver()
+
+  });
 }
 
   private initializeChartFromResolver(): void {
@@ -117,8 +119,7 @@ constructor(){
 
 
   initChart(data:TEnsaiosData): void {
-    this.chartOptions = {
-      
+    this.chartOptions = {      
       series: [       
         {
           data: data,

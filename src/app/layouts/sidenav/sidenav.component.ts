@@ -41,7 +41,7 @@ export class SidenavComponent implements OnInit {
       auth: ['Usuário','Administrador']
     },
     {
-      ico: 'task',
+      ico: 'workspaces',
       name: 'Análises',
       link: '/analises',
       auth: ['Operador','Administrador']

@@ -22,6 +22,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { NgClass } from '@angular/common';
 import { EStatus } from '../../../shared/Enum/status.enum';
+import { MatCard } from '@angular/material/card';
 
 @Component({
     selector: 'app-aguardando-autorizacao',
@@ -32,7 +33,7 @@ import { EStatus } from '../../../shared/Enum/status.enum';
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
-    imports: [
+    imports: [MatCard,
         NgClass,
         MatTableModule,
         MatButtonModule,
