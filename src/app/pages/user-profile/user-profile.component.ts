@@ -50,7 +50,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.#userService.httpCheckUser().subscribe(response => {
       this.#user.set(response);
-
       this.profileForm.patchValue({
         id: response._id,
         name: response.name,

@@ -1,6 +1,6 @@
 
   
-<div #chart class="chart">
+<div #chart class="chart" [ngStyle]="{'display:none': !exibirGrafico}">
   <apx-chart
     [series]="chartOptions.series!"
     [chart]="chartOptions.chart!"

@@ -58,13 +58,13 @@ export class SidenavComponent implements OnInit {
       link: '/analises-preditivas',
       auth: ['Operador','Administrador']
     },
-
+/*
     {
       ico: 'science',
       name: 'SGS',
       link: '',
       auth: ['Operador','Administrador']
-    },
+    }, */
     {
       ico: 'manage_accounts',
       name: 'Contas',

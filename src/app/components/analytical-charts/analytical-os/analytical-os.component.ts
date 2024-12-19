@@ -12,6 +12,7 @@ import {
   
 } from 'ng-apexcharts';
 import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
+import { NgStyle } from '@angular/common';
 
 export interface ChartOptions {
   series: ApexAxisChartSeries;
@@ -29,11 +30,12 @@ export interface ChartOptions {
 
 @Component({
     selector: 'app-analytical-os',
-    imports: [NgApexchartsModule],
+    imports: [NgApexchartsModule,NgStyle],
     templateUrl: './analytical-os.component.html',
     styleUrl: './analytical-os.component.scss'
 })
 export class AnalyticalOsComponent implements OnInit {
+  public exibirGrafico:Boolean = false
   @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
     widthAndHeight: IWidthAndHeight
   ) {
@@ -46,7 +48,7 @@ export class AnalyticalOsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.initializeChartFromResolver();
+   // this.initializeChartFromResolver();
  
   }
   constructor() {
@@ -60,8 +62,8 @@ export class AnalyticalOsComponent implements OnInit {
 
   private initializeChartFromResolver(): void {
     const resolvedData = this.route.snapshot.data['analyticsData'];
-
-    if (resolvedData.osData) {
+    if (resolvedData.osData && resolvedData.osData.total.length > 0) {
+    this.exibirGrafico = true
       this.configureChartOptions(
         resolvedData.osData.total, 
         resolvedData.osData.finalizadas, 

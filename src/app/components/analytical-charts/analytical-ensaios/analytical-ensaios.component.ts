@@ -18,6 +18,7 @@ import {
 } from 'ng-apexcharts';
 import { TEnsaiosData } from '../../../shared/interfaces/IAnalyticals.interface';
 import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
+import { NgStyle } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -46,11 +47,12 @@ export type TOptions = {
 
 @Component({
     selector: 'app-analytical-ensaios',
-    imports: [NgApexchartsModule],
+    imports: [NgApexchartsModule,NgStyle],
     templateUrl: './analytical-ensaios.component.html',
     styleUrl: './analytical-ensaios.component.scss'
 })
 export class AnalyticalEnsaiosComponent implements OnInit{
+  public exibirGrafico:Boolean = false
   @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
     widthAndHeight: IWidthAndHeight
   ) {
@@ -97,7 +99,7 @@ export class AnalyticalEnsaiosComponent implements OnInit{
   };
 
 ngOnInit(): void {
-  this.initializeChartFromResolver()
+  //this.initializeChartFromResolver()
 }
 constructor() {
   effect(() => {
@@ -110,7 +112,8 @@ constructor() {
   private initializeChartFromResolver(): void {
     const resolvedData = this.route.snapshot.data['analyticsData'];
 
-    if (resolvedData.osData) {
+    if (resolvedData.ensaiosData.length >0) {
+    this.exibirGrafico = true
       this.initChart(
         resolvedData.ensaiosData
       );

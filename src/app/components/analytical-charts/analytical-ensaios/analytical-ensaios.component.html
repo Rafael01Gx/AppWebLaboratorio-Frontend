@@ -1,5 +1,5 @@
 
-  <div class="chart">
+  <div class="chart" [ngStyle]="{'display:none': !exibirGrafico}">
     <!--<button
       (click)="updateOptions( 'all' )"
       [class.active]="activeOptionButton=='all'"
@@ -25,3 +25,4 @@
       Distribuição Diárias de Análises Solicitadas
     </div>
     </div>
+  

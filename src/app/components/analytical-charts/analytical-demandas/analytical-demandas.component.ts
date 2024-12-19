@@ -28,6 +28,7 @@ import {
 } from '../../../shared/interfaces/IAnalyticals.interface';
 import { HelpersService } from '../../../core/services/helpers/helpers.service';
 import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
+import { NgStyle } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -49,11 +50,13 @@ export type TSeries = {
 
 @Component({
     selector: 'app-analytical-demandas',
-    imports: [NgApexchartsModule],
+    imports: [NgApexchartsModule,NgStyle],
     templateUrl: './analytical-demandas.component.html',
     styleUrl: './analytical-demandas.component.scss'
 })
 export class AnalyticalDemandasComponent implements OnInit {
+  public exibirGrafico:Boolean = false
+
   @Input({ alias: 'widthAndHeight', required: true }) set inputDimensoes(
     widthAndHeight: IWidthAndHeight
   ) {
@@ -66,7 +69,7 @@ export class AnalyticalDemandasComponent implements OnInit {
   private route = inject(ActivatedRoute);
   public chartOptions!: Partial<ChartOptions>;
   ngOnInit(): void {
-    this.initializeChartFromResolver();
+   // this.initializeChartFromResolver();
   }
   constructor() {
     effect(() => {
@@ -84,6 +87,8 @@ export class AnalyticalDemandasComponent implements OnInit {
     let categories: string[] = [];
     let categoriesFormat: string[];
     if (resolvedData.demanda_ensaios) {
+
+    this.exibirGrafico = true
       for (let key in resolvedData.demanda_ensaios) {
         if (resolvedData.demanda_ensaios.hasOwnProperty(key)) {
           const data = resolvedData.demanda_ensaios[key].semana;

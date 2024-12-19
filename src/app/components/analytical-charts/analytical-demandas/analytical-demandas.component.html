@@ -1,5 +1,5 @@
 
-  <div id="chart">
+  <div id="chart" [ngStyle]="{'display:none': !exibirGrafico}">
     <apx-chart
       [series]="chartOptions.series!"
       [chart]="chartOptions.chart!"
@@ -18,5 +18,4 @@
   </div>
   </div>
  
-
 

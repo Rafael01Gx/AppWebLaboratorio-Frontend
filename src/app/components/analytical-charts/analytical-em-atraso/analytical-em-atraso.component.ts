@@ -18,6 +18,7 @@ import {
 } from 'ng-apexcharts';
 import { IEmAtrasoResultData } from '../../../shared/interfaces/IAnalyticals.interface';
 import { IWidthAndHeight } from '../../../shared/interfaces/IDimensoes.interface';
+import { NgStyle } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -30,7 +31,7 @@ export type ChartOptions = {
 
 @Component({
   selector: 'app-analytical-em-atraso',
-  imports: [NgApexchartsModule],
+  imports: [NgApexchartsModule,NgStyle],
   templateUrl: './analytical-em-atraso.component.html',
   styleUrl: './analytical-em-atraso.component.scss',
 })
@@ -45,13 +46,13 @@ export class AnalyticalEmAtrasoComponent implements OnInit {
   private route = inject(ActivatedRoute);
   public emAtrasoResultData!: IEmAtrasoResultData;
   public ensaios_em_atraso!: TData;
-  informacoes = false;
+  public exibirGrafico:Boolean = false
 
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
 
   ngOnInit(): void {
-    this.initializeChartFromResolver();
+  //  this.initializeChartFromResolver();
    
   }
   constructor() {
@@ -80,8 +81,8 @@ export class AnalyticalEmAtrasoComponent implements OnInit {
       );
       this.ensaios_em_atraso = { ensaios: y, quantidades: x };
       this.ensaios_em_atraso.quantidades.length
-        ? (this.informacoes = true)
-        : (this.informacoes = false);
+        ? (this.exibirGrafico = true)
+        : (this.exibirGrafico = false);
       this.initChart(this.ensaios_em_atraso);
     }
   }
