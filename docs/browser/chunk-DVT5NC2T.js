@@ -1,0 +1,1 @@
+import{ub as n}from"./chunk-YR66D3FA.js";import"./chunk-EQDQRRRY.js";var i=class o{transform(e,r){if(e==null)return"";let t=e.toFixed(r).replace(".",",").split(",");return t[0]=t[0].replace(/\B(?=(\d{3})+(?!\d))/g,"."),t.join(",")}static \u0275fac=function(r){return new(r||o)};static \u0275pipe=n({name:"decimalFormat",type:o,pure:!0})};export{i as DecimalFormatPipe};
